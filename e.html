@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F7E9CF">
+<title>وتواصوا — الصباح</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700&family=Amiri+Quran&family=Aref+Ruqaa:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F7EBD3;--bg2:#FFF8EC;
+  --glass:rgba(255,255,255,.55);--glass2:rgba(255,255,255,.25);--edge:rgba(120,90,40,.16);--sheen:rgba(255,255,255,.9);
+  --ink:#1F2A1E;--ink2:#4A5546;--mute:#7E8777;
+  --gold:#B8862B;--gold2:#E0B048;--gold-dim:rgba(184,134,43,.14);
+  --leaf:#3FA34D;--leafd:#2C7A3A;--wilt:#C9B48C;
+  --shadow:0 18px 40px rgba(90,60,20,.18);
+  color-scheme:light;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"Alexandria",system-ui,sans-serif;font-size:15px;line-height:1.55;overflow:hidden;font-variant-numeric:tabular-nums}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+button:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:12px}
+svg,img{display:block}
+h1,h2,p{margin:0}
+.brand{font-family:"Aref Ruqaa",serif;font-weight:700;color:var(--gold)}
+.ayah{font-family:"Amiri Quran","Amiri",serif}
+.device{position:relative;height:100%;max-width:430px;margin:0 auto;display:flex;flex-direction:column;background:var(--bg)}
+@media(min-width:720px){body{display:flex;align-items:center;justify-content:center;background:#E3D3B4}
+  .device{height:min(900px,calc(100% - 40px));width:400px;border-radius:44px;overflow:hidden;border:1px solid var(--edge);box-shadow:var(--shadow)}}
+.screen{flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:110px;scrollbar-width:none}
+.screen::-webkit-scrollbar{display:none}
+.pad{padding:0 20px}
+.nav{position:absolute;inset-inline:18px;bottom:calc(16px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(3,1fr);padding:6px;border-radius:26px;z-index:30;
+  background:linear-gradient(150deg,rgba(255,255,255,.75),rgba(255,255,255,.45));backdrop-filter:blur(22px) saturate(160%);-webkit-backdrop-filter:blur(22px) saturate(160%);
+  border:1px solid var(--edge);box-shadow:var(--shadow),inset 0 1px 0 var(--sheen)}
+.nav button{display:flex;flex-direction:column;align-items:center;gap:2px;height:52px;border-radius:20px;color:var(--mute);font-size:11.5px;font-weight:600;transition:color .2s,background .2s}
+.nav button[aria-current]{color:var(--gold);background:var(--gold-dim)}
+.nav svg{width:22px;height:22px}
+.card{border-radius:22px;padding:14px 16px;background:linear-gradient(150deg,var(--glass),var(--glass2));border:1px solid var(--edge);box-shadow:inset 0 1px 0 var(--sheen)}
+.row{display:flex;align-items:center;gap:10px}.between{justify-content:space-between}
+.mute{color:var(--mute)}.small{font-size:12.5px}.xs{font-size:11.5px}
+.pill{display:inline-flex;align-items:center;gap:5px;height:28px;padding:0 12px;border-radius:999px;font-size:12px;font-weight:600;background:rgba(255,255,255,.6);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--edge);color:var(--ink2)}
+.pill.gold{color:var(--gold);border-color:rgba(184,134,43,.35)}
+.pill.leaf{color:var(--leafd);border-color:rgba(63,163,77,.35)}
+
+.hero{position:relative;width:100%;aspect-ratio:390/560;overflow:hidden}
+.hero .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.hero .sun{position:absolute;top:70px;inset-inline-start:-40px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(255,236,170,.95),rgba(255,214,120,.35) 45%,transparent 70%);pointer-events:none}
+.hero .fadeb{position:absolute;inset-inline:0;bottom:0;height:30%;background:linear-gradient(180deg,transparent,var(--bg) 90%);pointer-events:none}
+.hero svg.tree{position:absolute;inset:0;width:100%;height:100%}
+.hdr{position:absolute;top:calc(14px + env(safe-area-inset-top));inset-inline:20px;display:flex;justify-content:space-between;align-items:center;z-index:3}
+.hdr .brand{font-size:28px;line-height:1}
+.goal{position:absolute;inset-inline:20px;top:calc(56px + env(safe-area-inset-top));text-align:center;z-index:3}
+.goal h1{font-size:19px;font-weight:600}
+.goal p{font-size:12px;color:var(--ink2);margin-top:1px}
+
+.act{display:flex;flex-direction:column;align-items:center;margin-top:-66px;position:relative;z-index:4}
+.big{position:relative;width:124px;height:124px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
+  background:radial-gradient(circle at 50% 25%,#FFFDF7,#F3E6C8 75%);border:1.5px solid rgba(184,134,43,.55);
+  box-shadow:0 18px 40px rgba(90,60,20,.22),0 0 0 8px rgba(224,176,72,.14),inset 0 1px 0 #fff}
+.big b{font-size:32px;line-height:1;font-weight:700;color:var(--gold)}
+.big span{font-size:11px;color:var(--mute);font-weight:500}
+.big.done{border-color:rgba(63,163,77,.7);box-shadow:0 18px 40px rgba(90,60,20,.22),0 0 0 8px rgba(63,163,77,.14),0 0 60px rgba(63,163,77,.25)}
+.big svg{width:36px;height:36px;color:var(--leaf)}
+.big .ring{position:absolute;inset:-1px;border-radius:50%;border:2px solid var(--gold2);opacity:0;pointer-events:none}
+.stat{display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+.goldline{margin:14px 24px 0;text-align:center;font-size:12px;color:var(--gold);font-weight:500}
+.word{margin:14px 20px 0;padding:16px 18px;border-radius:22px;background:linear-gradient(150deg,rgba(224,176,72,.18),rgba(255,255,255,.35));border:1px solid rgba(184,134,43,.22)}
+.word .ayah{font-size:21px;line-height:2;color:#6B4E12}
+.buddy{margin:12px 20px 0}
+.av{width:36px;height:36px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#fff;flex:none;background:linear-gradient(180deg,#5BBF6A,#2C7A3A)}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 16px;border-radius:14px;font-weight:600;font-size:13px;background:rgba(255,255,255,.7);border:1px solid var(--edge);transition:transform .12s}
+.btn:active{transform:scale(.96)}
+.dev{margin:18px 20px 0;padding:12px 14px;border-radius:18px;border:1px dashed var(--edge)}
+.dev input{width:100%;accent-color:var(--gold);margin-top:6px}
+.dev .xs{display:flex;justify-content:space-between}
+
+.kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.kpi .card{text-align:center;padding:12px 6px}
+.kpi b{display:block;font-size:26px;line-height:1.2;font-weight:700;color:var(--gold)}
+.kpi span{font-size:11px;color:var(--mute)}
+.garden{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.mini{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;padding:10px 10px 12px}
+.mini .thumb{position:relative;width:100%;aspect-ratio:1/1;border-radius:16px;overflow:hidden;margin-bottom:6px;background:linear-gradient(180deg,#FBEFD6,#F3DFB6)}
+.mini .thumb svg{position:absolute;inset:0;width:100%;height:100%}
+.mini b{font-size:13px;font-weight:600}
+.seed{border-style:dashed;justify-content:center;color:var(--mute);min-height:200px}
+.seed .s{width:44px;height:44px;border-radius:50%;background:var(--gold-dim);display:flex;align-items:center;justify-content:center;color:var(--gold)}
+.seed .s svg{width:22px;height:22px}
+
+.toast{position:absolute;left:50%;top:calc(16px + env(safe-area-inset-top));transform:translate(-50%,-160%);opacity:0;padding:10px 16px;border-radius:14px;font-weight:600;font-size:13px;z-index:80;width:max-content;max-width:88%;text-align:center;
+  background:#fff;border:1px solid var(--edge);box-shadow:var(--shadow);transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .25s}
+.toast.on{transform:translate(-50%,0);opacity:1}
+.spark{position:absolute;width:7px;height:7px;border-radius:50%;pointer-events:none;z-index:70}
+.fade{animation:fade .4s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+@media(prefers-reduced-motion:no-preference){
+  .br{transform-box:fill-box;transform-origin:var(--ox) var(--oy);animation:grow 1.1s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--b) * 45ms)}
+  @keyframes grow{from{transform:scale(.15)}}
+  .lf{transform-box:fill-box;transform-origin:0% 53%;animation:unfurl .55s cubic-bezier(.2,.9,.3,1.35) both;animation-delay:calc(.5s + var(--i) * 28ms)}
+  @keyframes unfurl{from{transform:scale(0) rotate(-50deg)}to{transform:scale(1) rotate(0)}}
+  .lf.new{animation:unfurlnew 1s cubic-bezier(.2,.9,.3,1.5) both;animation-delay:.1s}
+  @keyframes unfurlnew{0%{transform:scale(0) rotate(-70deg)}55%{transform:scale(1.5) rotate(8deg)}100%{transform:scale(1) rotate(0)}}
+  .bud{animation:bud 1.8s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+  @keyframes bud{0%,100%{transform:scale(.9);opacity:.7}50%{transform:scale(1.15);opacity:1}}
+  .fruit{transform-box:fill-box;transform-origin:center;animation:unfurl .7s cubic-bezier(.2,.9,.3,1.3) both;animation-delay:calc(.6s + var(--i) * 70ms)}
+  .sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 9s ease-in-out infinite}
+  @keyframes sway{0%,100%{transform:rotate(-.6deg)}50%{transform:rotate(.6deg)}}
+  .sway.gust{animation:gust 1.4s cubic-bezier(.3,.7,.3,1) 1}
+  @keyframes gust{0%{transform:rotate(0)}30%{transform:rotate(1.6deg)}60%{transform:rotate(-1deg)}100%{transform:rotate(0)}}
+  .big{transition:transform .25s cubic-bezier(.34,1.45,.5,1),box-shadow .5s,border-color .5s}
+  .big:active{transform:scale(.93)}
+  .big.pop{animation:pop .55s cubic-bezier(.34,1.45,.5,1)}
+  @keyframes pop{0%{transform:scale(.93)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
+  .big.pop .ring{animation:ring 1s ease-out both}
+  @keyframes ring{0%{transform:scale(1);opacity:.9}100%{transform:scale(2.6);opacity:0}}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="device" id="device">
+  <main class="screen" id="screen"></main>
+  <nav class="nav" id="nav" aria-label="التنقل"></nav>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="bark" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5A3B22"/><stop offset=".45" stop-color="#8A5E3A"/><stop offset="1" stop-color="#A97A50"/></linearGradient>
+  <linearGradient id="barkb" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6B4729"/><stop offset="1" stop-color="#B08458"/></linearGradient>
+  <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A9E26A"/><stop offset="1" stop-color="#3C9A3F"/></linearGradient>
+  <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8FD85C"/><stop offset="1" stop-color="#2F8A3C"/></linearGradient>
+  <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C4EC7A"/><stop offset="1" stop-color="#4FAE49"/></linearGradient>
+  <linearGradient id="g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7FCB55"/><stop offset="1" stop-color="#2B7A38"/></linearGradient>
+  <linearGradient id="gme" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D7F59A"/><stop offset="1" stop-color="#43B04A"/></linearGradient>
+  <linearGradient id="gw" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E9DDB9"/><stop offset="1" stop-color="#C9B48C"/></linearGradient>
+  <radialGradient id="fr" cx="35%" cy="35%" r="70%"><stop offset="0" stop-color="#FFF3B0"/><stop offset=".55" stop-color="#F2B63B"/><stop offset="1" stop-color="#B8761A"/></radialGradient>
+  <radialGradient id="glow"><stop offset="0" stop-color="#FFE38A" stop-opacity=".9"/><stop offset="1" stop-color="#FFE38A" stop-opacity="0"/></radialGradient>
+  <filter id="sh" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#3B2A10" flood-opacity=".35"/></filter>
+</defs></svg>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+function N(n){return Number(n).toLocaleString("ar-EG")}
+var I={tree:'<path d="M12 21v-6M12 15c-4 0-7-3-7-7 3 0 5 1 7 3 2-2 4-3 7-3 0 4-3 7-7 7z"/>',
+ users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c1-3.5 3.5-5.5 6.5-5.5s5.5 2 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c1.8.8 3 2.6 3.5 5.2"/>',
+ garden:'<path d="M4 20h16M7 20v-5a3 3 0 0 1 6 0v5M15 20v-8a3 3 0 0 1 6 0v8"/><circle cx="10" cy="7" r="3"/><circle cx="18" cy="5" r="2"/>',
+ check:'<path d="M5 12.5 10 17.5 19 7"/>',seed:'<path d="M12 3c5 0 8 4 8 9-5 0-8-4-8-9zM12 3c-5 0-8 4-8 9 5 0 8-4 8-9zM12 12v9"/>'};
+function ic(n,w){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="'+(w||1.9)+'" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+I[n]+'</svg>'}
+var BG="art/bg-morning.jpg";
+var MISS={3:[3,7,9,10,11,17,22],4:[2,6,11,12,19,20,21,25],1:[4,16],7:[8,23],9:[5,9,12,13,27],5:[10],2:[],6:[14,28],8:[18],10:[26,29],11:[6,15,24],0:[7]};
+var WORDS=[["كَلِمَةً طَيِّبَةً كَشَجَرَةٍ طَيِّبَةٍ أَصْلُهَا ثَابِتٌ وَفَرْعُهَا فِي السَّمَاءِ","إبراهيم ٢٤"],["تُؤْتِي أُكُلَهَا كُلَّ حِينٍ بِإِذْنِ رَبِّهَا","إبراهيم ٢٥"],["أحبُّ الأعمال إلى الله أدومُها وإن قلَّ","متفق عليه"],["وَتَوَاصَوْا بِالْحَقِّ وَتَوَاصَوْا بِالصَّبْرِ","العصر ٣"],["فَاسْتَبِقُوا الْخَيْرَاتِ","البقرة ١٤٨"]];
+var Q=new URLSearchParams(location.search);
+var S={tab:Q.get("tab")||"tree",day:+(Q.get("day")||12),done:Q.get("done")==="1",newLeaf:false,goal:"القراءة، ديسمبر",sub:"١٠ صفحات يوميًا",dedic:"لأبي، رحمه الله"};
+
+/* الشجرة: viewBox 390×560. الجذع من (195,520) إلى التاج (195,330). ١٢ غصنًا بمنحنيات مكعبة. */
+function geo(i){
+  var ang=(i/11-.5)*168,a=ang*Math.PI/180,k=1-Math.abs(ang)/84;
+  var J=[0,-7,5,-4,8,-5,3,-8,6,-3,7,-6];var y0=398-k*78+J[i],s={x:195,y:y0};
+  var L=118+k*62+J[i]*1.6,dir={x:Math.sin(a),y:-Math.cos(a)};
+  var c1={x:s.x+dir.x*L*.35+(ang<0?-22:22),y:s.y+dir.y*L*.35-10};
+  var c2={x:s.x+dir.x*L*.75+(ang<0?10:-10)+J[i],y:s.y+dir.y*L*.75-46};
+  var e={x:s.x+dir.x*L,y:s.y+dir.y*L-26};
+  return {s:s,c1:c1,c2:c2,e:e};
+}
+function bez(g,t){var u=1-t;return {x:u*u*u*g.s.x+3*u*u*t*g.c1.x+3*u*t*t*g.c2.x+t*t*t*g.e.x,y:u*u*u*g.s.y+3*u*u*t*g.c1.y+3*u*t*t*g.c2.y+t*t*t*g.e.y}}
+function tan(g,t){var p=bez(g,Math.max(0,t-.01)),q=bez(g,Math.min(1,t+.01));return Math.atan2(q.y-p.y,q.x-p.x)}
+function taper(g,tEnd,w0,w1){var L=[],R=[],n=16;for(var k=0;k<=n;k++){var t=tEnd*k/n,p=bez(g,t),a=tan(g,t)+Math.PI/2,w=(w0*(1-t)+w1*t)/2;
+  L.push((p.x+Math.cos(a)*w).toFixed(1)+" "+(p.y+Math.sin(a)*w).toFixed(1));R.push((p.x-Math.cos(a)*w).toFixed(1)+" "+(p.y-Math.sin(a)*w).toFixed(1))}
+  return "M"+L.join(" L")+" L"+R.reverse().join(" L")+"Z"}
+function leafState(r,d,day,done){if(d>day)return null;if(r===0&&d===day)return done?"d":"p";return (MISS[r]||[]).indexOf(d)>-1?"m":"d"}
+function rate(r,day,done){var dd=0,tt=0;for(var d=1;d<=day;d++){var s=leafState(r,d,day,done);if(s==="p")continue;tt++;if(s==="d")dd++}return tt?dd/tt:0}
+/* ورقة حقيقية: نصل بعِرق أوسط ولمعة، تتصل بالغصن من قاعدتها */
+function leaf(x,y,deg,sc,fill,extra){
+  return '<g transform="translate('+x+' '+y+') rotate('+deg+') scale('+sc+')"><g class="lf'+(extra||'')+'">'+
+   '<path d="M0 0 C3 -6 11 -8 18 -1 C11 7 3 6 0 0Z" fill="'+fill+'" filter="url(#sh)"/>'+
+   '<path d="M1 0 Q9 -1 16.5 -1" fill="none" stroke="rgba(255,255,255,.55)" stroke-width=".8"/>'+
+   '<path d="M3 -1.5 C6 -4 10 -5 13 -3.5" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.2" stroke-linecap="round"/></g></g>';
+}
+var G=["url(#g1)","url(#g2)","url(#g3)","url(#g4)"];
+function treeSVG(o){
+  var day=o.day,done=o.done,mini=o.mini;
+  var h='<svg class="tree" viewBox="'+(mini?'60 170 270 270':'0 0 390 560')+'" role="img" aria-label="شجرة الدفعة، اليوم '+N(day)+'"><g class="'+(mini?'':'sway')+'" id="swayg">';
+  /* ظل أرضي وجذع بظلال */
+  h+='<ellipse cx="195" cy="524" rx="92" ry="9" fill="rgba(90,60,20,.18)"/>';
+  h+='<path d="M176 526 C180 470 186 420 190 338 C192 326 198 326 200 338 C204 420 210 470 214 526 Z" fill="url(#bark)"/>';
+  h+='<path d="M186 500 C188 450 190 400 192 350" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="2"/>';
+  var br='',lv='',fr='';
+  for(var i=0;i<12;i++){
+    var g=geo(i),tEnd=Math.min(30,day)/30;
+    br+='<path d="'+taper(g,1,1.2,.5)+'" fill="rgba(90,60,20,.12)"/>';
+    br+='<path class="br" style="--b:'+i+';--ox:'+g.s.x+'px;--oy:'+g.s.y+'px" d="'+taper(g,Math.max(.12,tEnd),i===0?7.5:6,1.8)+'" fill="url(#barkb)"/>';
+    for(var d=1;d<=30;d++){
+      var st=leafState(i,d,day,done);if(!st)continue;
+      var t=.1+.9*d/30,p=bez(g,t),a=tan(g,t),side=(d%2?1:-1);
+      var deg=a*180/Math.PI+(side>0?-42:42)+(side>0?0:180)+((d*7)%21-10);
+      var px=p.x+Math.cos(a+Math.PI/2)*3.5*side,py=p.y+Math.sin(a+Math.PI/2)*3.5*side;
+      if(st==="p")lv+='<g class="bud"><circle cx="'+px+'" cy="'+py+'" r="12" fill="url(#glow)"/><path transform="translate('+px+' '+py+') rotate('+deg+')" d="M0 0 C2 -4 7 -5 11 -1 C7 4 2 3 0 0Z" fill="#F3E2A8" stroke="#D9A62E" stroke-width="1.2"/></g>';
+      else if(st==="m")lv+=leaf(px,py,deg+26,.72,"url(#gw)");
+      else{var nw=(i===0&&d===day&&o.newLeaf);lv+=(nw?'<circle class="lf new" style="transform-origin:center" cx="'+px+'" cy="'+py+'" r="22" fill="url(#glow)"/>':'')+leaf(px,py,deg,(i===0?.98:.86)+((d*5)%7)/40,i===0?"url(#gme)":G[(d+i)%4],nw?' new':'')}
+    }
+    if(day>=30&&rate(i,day,done)>=.8)fr+='<g class="fruit" style="--i:'+i+'"><circle cx="'+g.e.x+'" cy="'+(g.e.y-3)+'" r="6" fill="url(#fr)" filter="url(#sh)"/><circle cx="'+(g.e.x-2)+'" cy="'+(g.e.y-5)+'" r="1.6" fill="#fff" opacity=".8"/></g>';
+    if(i===0&&!mini){var tp=bez(g,.1+.9*Math.min(30,day)/30);h+='<text x="'+(tp.x-16)+'" y="'+(tp.y-16)+'" font-size="12" font-weight="700" fill="#6B4E12" text-anchor="middle" font-family="Alexandria,sans-serif">أنت</text>'}
+  }
+  return h+br+lv+fr+'</g></svg>';
+}
+function doneCount(){var c=0;for(var r=0;r<12;r++)if(leafState(r,S.day,S.day,S.done)==="d")c++;return c}
+function cohortRate(){var s=0;for(var r=0;r<12;r++)s+=rate(r,S.day,S.done);return Math.round(s/12*100)}
+function vTree(){
+  var w=WORDS[S.day%WORDS.length],harvest=S.day>=30,c=doneCount(),bd=leafState(1,S.day,S.day,S.done)==="d";
+  return '<div class="hero"><img class="bg" src="'+BG+'" alt=""><div class="sun"></div>'+treeSVG({day:S.day,done:S.done,newLeaf:S.newLeaf})+'<div class="fadeb"></div>'+
+  '<div class="hdr"><span class="brand">وتواصوا</span><span class="pill gold">اليوم '+N(S.day)+' من '+N(30)+'</span></div>'+
+  '<div class="goal"><h1>'+S.goal+'</h1><p>'+S.sub+' · ١٢ غصنًا على سدرة واحدة</p></div></div>'+
+  '<div class="act">'+(harvest?'<button class="big done" data-act="harvest"><i class="ring"></i>'+ic("check",2.6)+'<span>حصاد</span></button>':
+   '<button class="big'+(S.done?' done':'')+'" data-act="check" aria-pressed="'+S.done+'"><i class="ring"></i>'+(S.done?ic("check",2.6)+'<span>ورقتك اليوم</span>':'<b>تم</b><span>اضغط عند الإنجاز</span>')+'</button>')+
+  '<div class="stat"><span class="pill leaf">'+N(c)+' من ١٢ وضعوا ورقتهم</span><span class="pill">الشجرة '+N(cohortRate())+'٪</span></div></div>'+
+  '<p class="goldline">عند الحصاد تُغرس سدرة حقيقية في الدوحة · هدية '+S.dedic+'</p>'+
+  '<div class="word"><p class="ayah">'+w[0]+'</p><p class="xs mute">'+w[1]+' · كلمة اليوم</p></div>'+
+  '<div class="card buddy row"><span class="av">م</span><div style="flex:1"><b class="small">رفيقك محمد</b><div class="xs" style="color:'+(bd?'var(--leafd)':'var(--mute)')+'">'+(bd?'غصنه أخضر اليوم':'غصنه بلا ورقة بعد')+'</div></div><button class="btn" data-act="nudge">'+(bd?'باركله':'اطمئن عليه')+'</button></div>'+
+  '<div class="dev"><div class="row between"><b class="small">تجربة: شاهد الشجرة تورق</b><span class="xs mute">اسحب</span></div><input type="range" min="1" max="30" value="'+S.day+'" id="dayS" aria-label="اليوم"><div class="xs mute"><span>اليوم ١</span><span>الحصاد ٣٠</span></div></div>';
+}
+function vGarden(){
+  var trees=[{n:"رمضان: ختمة",r:93},{n:"المشي، أبريل",r:77},{n:"الفجر، يونيو",r:85}];
+  var h='<div class="pad" style="padding-top:calc(16px + env(safe-area-inset-top))"><div class="row between"><span class="brand" style="font-size:28px">وتواصوا</span><span class="pill gold">'+ic("garden")+'بستاني</span></div>'+
+  '<h1 style="font-size:22px;font-weight:600;margin-top:12px">بستان خالد</h1><p class="mute small">كل سدرة دفعة أكملتها مع ناسها. البستان لا يُهدم، فقط يكبر.</p>'+
+  '<div class="kpi"><div class="card"><b>'+N(3+(S.day>=30?1:0))+'</b><span>أشجار</span></div><div class="card"><b>'+N(97+S.day)+'</b><span>ورقة</span></div><div class="card"><b>'+N(3)+'</b><span>سدرات حقيقية</span></div></div><div class="garden">';
+  trees.forEach(function(t,i){h+='<div class="card mini"><div class="thumb">'+treeSVG({day:30,done:true,mini:true})+'</div><b>'+t.n+'</b><span class="xs mute">'+N(t.r)+'٪ · سدرة رقم '+N(1041+i*37)+'</span><span class="pill leaf" style="height:22px;font-size:10.5px">مغروسة في الدوحة</span></div>'});
+  h+='<div class="card mini" style="border-color:rgba(184,134,43,.45)"><div class="thumb">'+treeSVG({day:S.day,done:S.done,mini:true})+'</div><b>'+S.goal+'</b><span class="xs" style="color:var(--gold)">تورق الآن · اليوم '+N(S.day)+'</span></div>';
+  h+='<button class="card mini seed" data-act="join"><span class="s">'+ic("seed")+'</span><b>ازرع السدرة القادمة</b><span class="xs mute">تبدأ ١ يناير</span></button></div>'+
+  '<button class="card" style="margin-top:12px;width:100%;text-align:start" data-act="visit"><div class="row between"><b class="small">غابة وتواصوا، الدوحة</b><span class="pill leaf">'+N(3214)+' سدرة حقيقية</span></div><p class="xs mute" style="margin-top:4px">كل دفعة أكملت شجرتها غُرست باسمها سدرة بلوحة فيها الإهداء.</p></button></div>';
+  return h;
+}
+var TABS=[["tree","tree","الشجرة"],["cohort","users","الأغصان"],["garden","garden","بستاني"]];
+function render(){
+  var v=S.tab==="garden"?vGarden():S.tab==="cohort"?'<div class="pad" style="padding-top:calc(60px + env(safe-area-inset-top))"><p class="mute">شاشة الأغصان: الخطوة التالية.</p></div>':vTree();
+  $("screen").innerHTML='<div class="fade">'+v+'</div>';
+  $("nav").innerHTML=TABS.map(function(x){return '<button data-go="'+x[0]+'"'+(S.tab===x[0]?' aria-current="page"':'')+'>'+ic(x[1])+'<span>'+x[2]+'</span></button>'}).join("");
+  S.newLeaf=false;
+}
+var tT;function toast(m){var el=$("toast");el.textContent=m;el.classList.add("on");clearTimeout(tT);tT=setTimeout(function(){el.classList.remove("on")},2600)}
+function spark(x,y){if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;var host=$("device"),r=host.getBoundingClientRect(),cols=["#FFD75E","#FFF0B3","#8FD85C","#E0B048"];
+  for(var i=0;i<24;i++){var s=document.createElement("i");s.className="spark";s.style.background=cols[i%4];s.style.boxShadow="0 0 8px "+cols[i%4];s.style.left=(x-r.left)+"px";s.style.top=(y-r.top)+"px";host.appendChild(s);
+    var a=-Math.PI/2+(Math.random()-.5)*1.5,d=110+Math.random()*170;
+    s.animate([{transform:"translate(0,0) scale(1)",opacity:1},{transform:"translate("+Math.cos(a)*d+"px,"+Math.sin(a)*d+"px) scale(.2)",opacity:0}],{duration:1000+Math.random()*500,easing:"cubic-bezier(.2,.8,.2,1)"}).onfinish=(function(el){return function(){el.remove()}})(s)}}
+document.addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;var d=b.dataset;
+  if(d.go){S.tab=d.go;render();$("screen").scrollTop=0;return}
+  if(d.act==="check"){var rc=b.getBoundingClientRect();S.done=!S.done;S.newLeaf=S.done;render();
+    if(S.done){document.querySelector(".big").classList.add("pop");var sg=$("swayg");if(sg)sg.classList.add("gust");spark(rc.left+rc.width/2,rc.top+rc.height/2);if(navigator.vibrate)navigator.vibrate([12,40,18]);toast("تفتّحت ورقتك. "+N(doneCount())+" من ١٢ اليوم")}
+    else toast("أزلنا ورقة اليوم")}
+  else if(d.act==="nudge")toast("وصلته رسالة لطيفة باسمك");
+  else if(d.act==="harvest")toast("الحصاد: شاشة الشهادة هي الخطوة التالية");
+  else if(d.act==="join")toast("الدفعة القادمة تفتح يوم ٢٥ ديسمبر. سنذكّرك.");
+  else if(d.act==="visit")toast("غابة وتواصوا، منطقة الروضة.");
+});
+document.addEventListener("input",function(e){if(e.target.id==="dayS"){S.day=+e.target.value;if(S.day<12)S.done=true;if(S.day>12)S.done=false;var sv=$("screen").scrollTop;render();$("screen").scrollTop=sv}});
+if(Q.get("w"))$("device").style.maxWidth=Q.get("w")+"px";render();
+if(Q.get("auto"))setTimeout(function(){var b=document.querySelector("[data-act=check]");if(b)b.click()},1500);
+})();
+</script>
+</body>
+</html>
