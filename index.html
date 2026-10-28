@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>وتواصوا — الاتجاه أ: سدرة الليل</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700&family=Amiri+Quran&family=Aref+Ruqaa:wght@700&display=swap" rel="stylesheet">
+<style>
+/* ===== الاتجاه أ: سدرة الليل ===== */
+:root{
+  --bg0:#070B16;--bg1:#101A33;--bg2:#1A2447;
+  --glass:rgba(255,255,255,.07);--glass2:rgba(255,255,255,.035);--edge:rgba(255,255,255,.14);--sheen:rgba(255,255,255,.18);
+  --ink:#F2F4FA;--ink2:#C3CADB;--mute:#8B95AE;
+  --gold:#F0CE83;--gold2:#E2B35E;--gold-dim:rgba(240,206,131,.16);
+  --leaf:#4EDBA0;--leaf2:#B6F3D6;--leaf-dark:#1C8D62;--wilt:#7A6A58;
+  --bark0:#4A3322;--bark1:#8C6A45;
+  --shadow:0 20px 50px rgba(0,0,0,.5);
+  --on-gold:#1A1405;
+  color-scheme:dark;
+}
+:root[data-theme="light"]{
+  --bg0:#F3F0E8;--bg1:#FFFFFF;--bg2:#E8EEF7;
+  --glass:rgba(20,28,50,.05);--glass2:rgba(20,28,50,.02);--edge:rgba(20,28,50,.12);--sheen:rgba(255,255,255,.9);
+  --ink:#141B2E;--ink2:#3C4661;--mute:#6B7590;
+  --gold:#9C7628;--gold2:#7E5D18;--gold-dim:rgba(156,118,40,.12);
+  --leaf:#1E9F6C;--leaf2:#7BDBB0;--leaf-dark:#136E4A;--wilt:#B9A58B;
+  --bark0:#5E4530;--bark1:#A27E55;
+  --shadow:0 16px 40px rgba(20,28,50,.14);
+  --on-gold:#fff;
+  color-scheme:light;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0}
+body{background:var(--bg0);color:var(--ink);font-family:"Alexandria",system-ui,sans-serif;font-size:15px;line-height:1.55;overflow:hidden;font-variant-numeric:tabular-nums}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+button:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:12px}
+svg{display:block}
+h1,h2,p{margin:0}
+.brand{font-family:"Aref Ruqaa",serif;font-weight:700;color:var(--gold);letter-spacing:0}
+.ayah{font-family:"Amiri Quran","Amiri",serif}
+
+/* الجهاز */
+.device{position:relative;height:100%;max-width:430px;margin:0 auto;display:flex;flex-direction:column;
+  background:radial-gradient(120% 60% at 50% -10%,var(--bg2),transparent 60%),linear-gradient(180deg,var(--bg1),var(--bg0) 70%)}
+@media(min-width:720px){body{display:flex;align-items:center;justify-content:center;background:#02040A}
+  .device{height:min(900px,calc(100% - 40px));width:400px;border-radius:44px;overflow:hidden;border:1px solid var(--edge);box-shadow:var(--shadow)}}
+.screen{flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:110px;scrollbar-width:none}
+.screen::-webkit-scrollbar{display:none}
+.pad{padding:0 20px}
+
+/* شريط التنقل الزجاجي */
+.nav{position:absolute;inset-inline:18px;bottom:calc(16px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(3,1fr);padding:6px;border-radius:26px;z-index:30;
+  background:linear-gradient(150deg,var(--glass),var(--glass2));backdrop-filter:blur(22px) saturate(160%);-webkit-backdrop-filter:blur(22px) saturate(160%);
+  border:1px solid var(--edge);box-shadow:var(--shadow),inset 0 1px 0 var(--sheen)}
+.nav button{display:flex;flex-direction:column;align-items:center;gap:2px;height:52px;border-radius:20px;color:var(--mute);font-size:11.5px;font-weight:600;transition:color .2s,background .2s}
+.nav button[aria-current]{color:var(--gold);background:var(--gold-dim)}
+.nav svg{width:22px;height:22px}
+
+/* الزجاج */
+.card{border-radius:22px;padding:14px 16px;background:linear-gradient(150deg,var(--glass),var(--glass2));border:1px solid var(--edge);box-shadow:inset 0 1px 0 var(--sheen)}
+.row{display:flex;align-items:center;gap:10px}.between{justify-content:space-between}
+.mute{color:var(--mute)}.small{font-size:12.5px}.xs{font-size:11.5px}
+.pill{display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 11px;border-radius:999px;font-size:11.5px;font-weight:600;background:var(--glass);border:1px solid var(--edge);color:var(--ink2)}
+.pill.gold{color:var(--gold);background:var(--gold-dim);border-color:transparent}
+.pill.leaf{color:var(--leaf);background:rgba(78,219,160,.12);border-color:transparent}
+
+/* شاشة الشجرة */
+.hdr{position:absolute;top:calc(14px + env(safe-area-inset-top));inset-inline:20px;display:flex;justify-content:space-between;align-items:center;z-index:3}
+.hdr .brand{font-size:26px;line-height:1}
+.stage{position:relative;padding-top:calc(54px + env(safe-area-inset-top))}
+.stars{position:absolute;inset:0;pointer-events:none;opacity:1;background-image:
+  radial-gradient(1px 1px at 12% 18%,#fff 50%,transparent 51%),radial-gradient(1.4px 1.4px at 70% 12%,#fff 50%,transparent 51%),
+  radial-gradient(1px 1px at 40% 9%,#fff 50%,transparent 51%),radial-gradient(1px 1px at 88% 30%,#fff 50%,transparent 51%),
+  radial-gradient(1px 1px at 6% 42%,#fff 50%,transparent 51%),radial-gradient(1.2px 1.2px at 56% 26%,#fff 50%,transparent 51%),
+  radial-gradient(1px 1px at 24% 54%,#fff 50%,transparent 51%),radial-gradient(1px 1px at 82% 52%,#fff 50%,transparent 51%),
+  radial-gradient(1px 1px at 33% 36%,#fff 50%,transparent 51%)}
+:root[data-theme="light"] .stars{opacity:0}
+.halo{position:absolute;top:40px;left:50%;width:300px;height:300px;transform:translateX(-50%);border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(240,206,131,.18),transparent 65%)}
+:root[data-theme="light"] .halo{background:radial-gradient(circle,rgba(255,255,255,.9),transparent 65%)}
+.goal{text-align:center;position:relative;z-index:2;padding:0 20px}
+.goal h1{font-size:20px;font-weight:600}
+.goal p{font-size:12.5px;color:var(--mute);margin-top:2px}
+svg.tree{width:100%;height:auto;position:relative;z-index:1;margin-top:-6px}
+
+/* زر تم */
+.act{display:flex;flex-direction:column;align-items:center;margin-top:-30px;position:relative;z-index:4}
+.big{position:relative;width:118px;height:118px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  background:radial-gradient(circle at 50% 28%,var(--bg2),var(--bg0));border:1px solid var(--edge);
+  box-shadow:0 18px 44px rgba(0,0,0,.45),0 0 0 10px var(--gold-dim),inset 0 1px 0 var(--sheen);
+  transition:box-shadow .5s,border-color .5s}
+:root[data-theme="light"] .big{background:radial-gradient(circle at 50% 28%,#fff,#E9E4D8)}
+.big b{font-size:30px;line-height:1;font-weight:700}
+.big span{font-size:11px;color:var(--mute);font-weight:500}
+.big.done{border-color:rgba(78,219,160,.6);box-shadow:0 18px 44px rgba(0,0,0,.45),0 0 0 10px rgba(78,219,160,.16),0 0 70px rgba(78,219,160,.28)}
+.big.done b{color:var(--leaf)}
+.big svg{width:34px;height:34px;color:var(--leaf)}
+.big .ring{position:absolute;inset:-1px;border-radius:50%;border:2px solid var(--gold);opacity:0;pointer-events:none}
+.stat{display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+.goldline{margin:14px 20px 0;text-align:center;font-size:12px;color:var(--gold)}
+.word{margin:14px 20px 0;padding:16px 18px;border-radius:22px;background:linear-gradient(150deg,var(--gold-dim),transparent);border:1px solid rgba(240,206,131,.22)}
+.word .ayah{font-size:20px;line-height:2;color:var(--gold)}
+.buddy{margin:12px 20px 0}
+.av{width:34px;height:34px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#0B1020;flex:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 16px;border-radius:14px;font-weight:600;font-size:13px;background:var(--glass);border:1px solid var(--edge);transition:transform .12s}
+.btn:active{transform:scale(.96)}
+.btn.gold{background:linear-gradient(180deg,var(--gold),var(--gold2));color:var(--on-gold);border-color:transparent;box-shadow:0 10px 26px rgba(226,179,94,.3)}
+.dev{margin:18px 20px 0;padding:12px 14px;border-radius:18px;border:1px dashed var(--edge)}
+.dev input{width:100%;accent-color:var(--gold);margin-top:6px}
+.dev .xs{display:flex;justify-content:space-between}
+
+/* بستاني */
+.kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.kpi .card{text-align:center;padding:12px 6px}
+.kpi b{display:block;font-size:24px;line-height:1.2;font-weight:700}
+.kpi span{font-size:11px;color:var(--mute)}
+.garden{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.mini{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;padding:12px 10px}
+.mini svg{width:100%;height:auto}
+.mini b{font-size:13px;font-weight:600}
+.seed{border-style:dashed;justify-content:center;color:var(--mute);min-height:170px}
+.seed .s{width:44px;height:44px;border-radius:50%;background:var(--gold-dim);display:flex;align-items:center;justify-content:center;color:var(--gold)}
+.seed .s svg{width:22px;height:22px}
+
+/* التنبيه والشرر */
+.toast{position:absolute;left:50%;top:calc(16px + env(safe-area-inset-top));transform:translate(-50%,-160%);opacity:0;padding:10px 16px;border-radius:14px;font-weight:600;font-size:13px;z-index:80;width:max-content;max-width:88%;text-align:center;
+  background:var(--bg1);border:1px solid var(--edge);box-shadow:var(--shadow);transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .25s}
+.toast.on{transform:translate(-50%,0);opacity:1}
+.spark{position:absolute;width:6px;height:6px;border-radius:50% 50% 50% 0;pointer-events:none;z-index:70}
+.fade{animation:fade .4s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* الحركة: فتح واحد، وإنجاز واحد */
+@media(prefers-reduced-motion:no-preference){
+  .branch{animation:grow 1.2s cubic-bezier(.2,.8,.2,1) both}
+  @keyframes grow{from{clip-path:inset(0 0 0 0 round 0)}}
+  .lf{transform-box:fill-box;transform-origin:center;animation:leafin .5s cubic-bezier(.2,.9,.3,1.3) both;animation-delay:calc(.35s + var(--i) * 28ms)}
+  @keyframes leafin{from{transform:scale(0)}to{transform:scale(1)}}
+  .lf.new{animation:leafnew 1s cubic-bezier(.2,.9,.3,1.4) both;animation-delay:.08s}
+  @keyframes leafnew{0%{transform:scale(0) rotate(-40deg)}55%{transform:scale(1.6)}100%{transform:scale(1)}}
+  .pend{animation:pend 1.8s ease-in-out infinite}
+  @keyframes pend{0%,100%{opacity:.45}50%{opacity:1}}
+  .fruit{transform-box:fill-box;transform-origin:center;animation:leafin .7s cubic-bezier(.2,.9,.3,1.3) both;animation-delay:calc(.5s + var(--i) * 70ms)}
+  .big{transition:transform .25s cubic-bezier(.34,1.45,.5,1),box-shadow .5s,border-color .5s}
+  .big:active{transform:scale(.93)}
+  .big.pop{animation:pop .55s cubic-bezier(.34,1.45,.5,1)}
+  @keyframes pop{0%{transform:scale(.93)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
+  .big.pop .ring{animation:ring .9s ease-out both}
+  @keyframes ring{0%{transform:scale(1);opacity:.9}100%{transform:scale(2.4);opacity:0}}
+  .halo.flash{animation:flash 1.2s ease-out}
+  @keyframes flash{30%{background:radial-gradient(circle,rgba(78,219,160,.3),transparent 65%)}}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* لوحة الاتجاه (للعرض فقط) */
+.meta{position:fixed;inset-inline-start:16px;top:16px;width:300px;z-index:99;font-size:13px;line-height:1.7;color:#DDE3F0;display:none}
+@media(min-width:1100px){.meta{display:block}}
+.meta h2{font-size:15px;color:#F0CE83;margin-bottom:6px}
+.meta .sw{display:flex;gap:6px;margin:8px 0}
+.meta .sw i{width:26px;height:26px;border-radius:8px;border:1px solid rgba(255,255,255,.15)}
+.meta .tools{display:flex;gap:8px;margin-top:10px}
+.meta .tools button,.topbtn{height:36px;padding:0 12px;border-radius:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:#fff;font-size:12px}
+.topbtn{position:absolute;z-index:40;top:calc(14px + env(safe-area-inset-top));inset-inline-end:20px;display:none}
+</style>
+</head>
+<body>
+<aside class="meta">
+  <h2>الاتجاه أ: سدرة الليل</h2>
+  <div>شجرة تنمو تحت سماء الدوحة ليلًا؛ زجاج هادئ، ذهب على كحلي، وورق مضيء. الأقرب لذوق الحصن، مصقول أكثر.</div>
+  <div class="sw"><i style="background:#070B16"></i><i style="background:#1A2447"></i><i style="background:#F0CE83"></i><i style="background:#4EDBA0"></i><i style="background:#8C6A45"></i><i style="background:#7A6A58"></i></div>
+  <div><b>الخطوط:</b> Alexandria للواجهة · Amiri Quran للآيات · Aref Ruqaa للاسم</div>
+  <div><b>مبدأ الحركة:</b> «نَفَس واحد»: عند الفتح الأغصان تمتد والورق يتفتح بترتيب الأيام؛ عند «تم» الزر ينبض بزنبرك، حلقة ذهبية تتسع، ورقتك تنبثق بوهج أخضر وشرر يصعد للشجرة. لا شيء آخر يتحرك.</div>
+  <div class="tools"><button data-theme-toggle>ليلي / نهاري</button></div>
+</aside>
+<div class="device" id="device">
+  <main class="screen" id="screen"></main>
+  <nav class="nav" id="nav" aria-label="التنقل"></nav>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="bark" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="var(--bark0)"/><stop offset="1" stop-color="var(--bark1)"/></linearGradient>
+  <linearGradient id="lf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--leaf2)"/><stop offset="1" stop-color="var(--leaf-dark)"/></linearGradient>
+  <radialGradient id="fr" cx="35%" cy="35%" r="70%"><stop offset="0" stop-color="#FFF4CC"/><stop offset=".5" stop-color="#F0CE83"/><stop offset="1" stop-color="#9C7628"/></radialGradient>
+  <radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#4EDBA0" stop-opacity=".6"/><stop offset="1" stop-color="#4EDBA0" stop-opacity="0"/></radialGradient>
+  <radialGradient id="gglow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#F0CE83" stop-opacity=".5"/><stop offset="1" stop-color="#F0CE83" stop-opacity="0"/></radialGradient>
+</defs></svg>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+function N(n){return Number(n).toLocaleString("ar-EG")}
+var I={tree:'<path d="M12 21v-6M12 15c-4 0-7-3-7-7 3 0 5 1 7 3 2-2 4-3 7-3 0 4-3 7-7 7z"/>',
+ users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c1-3.5 3.5-5.5 6.5-5.5s5.5 2 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c1.8.8 3 2.6 3.5 5.2"/>',
+ garden:'<path d="M4 20h16M7 20v-5a3 3 0 0 1 6 0v5M15 20v-8a3 3 0 0 1 6 0v8"/><circle cx="10" cy="7" r="3"/><circle cx="18" cy="5" r="2"/>',
+ check:'<path d="M5 12.5 10 17.5 19 7"/>',seed:'<path d="M12 3c5 0 8 4 8 9-5 0-8-4-8-9zM12 3c-5 0-8 4-8 9 5 0 8-4 8-9zM12 12v9"/>'};
+function ic(n,w){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="'+(w||1.9)+'" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+I[n]+'</svg>'}
+var COL=["#F0D58E","#8FD3B6","#9DB7F5","#F5A9B8","#C9B3F2","#F7C59F","#A6E3E9","#E8D27A","#B5E48C","#FFB4A2","#BDB2FF","#9BF6FF"];
+var NAMES=["أنت","محمد","عبدالله","يوسف","طارق","عمر","سامي","مازن","حسن","علي","زياد","فهد"];
+var MISS={3:[3,7,9,10,11,17,22],4:[2,6,11,12,19,20,21,25],1:[4,16],7:[8,23],9:[5,9,12,13,27],5:[10],2:[],6:[14,28],8:[18],10:[26,29],11:[6,15,24],0:[7]};
+var WORDS=[["كَلِمَةً طَيِّبَةً كَشَجَرَةٍ طَيِّبَةٍ أَصْلُهَا ثَابِتٌ وَفَرْعُهَا فِي السَّمَاءِ","إبراهيم ٢٤"],["تُؤْتِي أُكُلَهَا كُلَّ حِينٍ بِإِذْنِ رَبِّهَا","إبراهيم ٢٥"],["أحبُّ الأعمال إلى الله أدومُها وإن قلَّ","متفق عليه"],["وَتَوَاصَوْا بِالْحَقِّ وَتَوَاصَوْا بِالصَّبْرِ","العصر ٣"],["فَاسْتَبِقُوا الْخَيْرَاتِ","البقرة ١٤٨"]];
+var Q=new URLSearchParams(location.search);var S={tab:Q.get("tab")||"tree",day:+(Q.get("day")||12),done:Q.get("done")==="1",newLeaf:false,goal:"القراءة، ديسمبر",sub:"١٠ صفحات يوميًا",dedic:"لأبي، رحمه الله"};
+
+/* ---- هندسة الشجرة: جذع + ١٢ غصنًا بمنحنيات مكعبة ---- */
+function geo(i){
+  var ang=(i/11-.5)*160,a=ang*Math.PI/180,k=1-Math.abs(ang)/80;
+  var y0=405-k*105,s={x:195,y:y0};
+  var L=120+k*70,dir={x:Math.sin(a),y:-Math.cos(a)};
+  var c1={x:s.x+dir.x*L*.35+(ang<0?-14:14),y:s.y+dir.y*L*.35-18};
+  var c2={x:s.x+dir.x*L*.75+(ang<0?6:-6),y:s.y+dir.y*L*.75-40};
+  var e={x:s.x+dir.x*L,y:s.y+dir.y*L-30};
+  return {s:s,c1:c1,c2:c2,e:e};
+}
+function bez(g,t){var u=1-t;return {x:u*u*u*g.s.x+3*u*u*t*g.c1.x+3*u*t*t*g.c2.x+t*t*t*g.e.x,y:u*u*u*g.s.y+3*u*u*t*g.c1.y+3*u*t*t*g.c2.y+t*t*t*g.e.y}}
+function tan(g,t){var p=bez(g,Math.max(0,t-.01)),q=bez(g,Math.min(1,t+.01));return Math.atan2(q.y-p.y,q.x-p.x)}
+/* غصن متدرج السمك: مضلع مغلق حول المنحنى */
+function taper(g,tEnd,w0,w1){
+  var L=[],R=[],n=16;
+  for(var k=0;k<=n;k++){var t=tEnd*k/n,p=bez(g,t),a=tan(g,t)+Math.PI/2,w=(w0*(1-t)+w1*t)/2;
+    L.push((p.x+Math.cos(a)*w).toFixed(1)+" "+(p.y+Math.sin(a)*w).toFixed(1));R.push((p.x-Math.cos(a)*w).toFixed(1)+" "+(p.y-Math.sin(a)*w).toFixed(1));}
+  return "M"+L.join(" L")+" L"+R.reverse().join(" L")+"Z";
+}
+function leafState(r,d,day,done){if(d>day)return null;if(r===0&&d===day)return done?"d":"p";return (MISS[r]||[]).indexOf(d)>-1?"m":"d"}
+function rate(r,day,done){var dd=0,tt=0;for(var d=1;d<=day;d++){var s=leafState(r,d,day,done);if(s==="p")continue;tt++;if(s==="d")dd++}return tt?dd/tt:0}
+
+function treeSVG(o){
+  var day=o.day,done=o.done,mini=o.mini,h='';
+  h+='<svg class="tree" viewBox="0 '+(mini?'70':'0')+' 390 '+(mini?'400':'500')+'" role="img" aria-label="شجرة الدفعة، اليوم '+N(day)+'">';
+  if(!mini)h+='<ellipse cx="195" cy="486" rx="150" ry="14" fill="rgba(0,0,0,.25)"/>';
+  h+='<path d="M180 488 Q186 400 191 300 Q195 288 199 300 Q204 400 210 488 Z" fill="url(#bark)"/>';
+  var br='',lv='',fr='';
+  for(var i=0;i<12;i++){
+    var g=geo(i),tEnd=Math.min(30,day)/30;
+    br+='<path class="branch" d="'+taper(g,1,.8,.4)+'" fill="var(--edge)" opacity=".35"/>';
+    br+='<path class="branch" d="'+taper(g,tEnd,i===0?6:4.6,1.4)+'" fill="url(#bark)"/>';
+    for(var d=1;d<=30;d++){
+      var st=leafState(i,d,day,done);if(!st)continue;
+      var t=d/30,p=bez(g,t),a=tan(g,t),side=(d%2?1:-1),off=7;
+      var px=p.x+Math.cos(a+Math.PI/2)*off*side,py=p.y+Math.sin(a+Math.PI/2)*off*side,rot=a*180/Math.PI+(side>0?38:-38);
+      if(st==="p")lv+='<g class="pend"><circle cx="'+px+'" cy="'+py+'" r="13" fill="url(#gglow)"/><ellipse cx="'+px+'" cy="'+py+'" rx="7" ry="3.6" transform="rotate('+rot+' '+px+' '+py+')" fill="none" stroke="var(--gold)" stroke-width="1.5"/></g>';
+      else if(st==="m")lv+='<g class="lf" style="--i:'+d+'"><ellipse cx="'+px+'" cy="'+py+'" rx="5" ry="2.4" transform="rotate('+(rot+22)+' '+px+' '+py+')" fill="var(--wilt)" opacity=".55"/></g>';
+      else{var nw=(i===0&&d===day&&o.newLeaf);lv+='<g class="lf'+(nw?' new':'')+'" style="--i:'+d+'">'+(nw?'<circle cx="'+px+'" cy="'+py+'" r="16" fill="url(#glow)"/>':'')+'<ellipse cx="'+px+'" cy="'+py+'" rx="6.6" ry="3.2" transform="rotate('+rot+' '+px+' '+py+')" fill="url(#lf)"'+(i===0?' stroke="rgba(240,206,131,.75)" stroke-width=".8"':'')+'/></g>'}
+    }
+    if(day>=30&&rate(i,day,done)>=.8)fr+='<g class="fruit" style="--i:'+i+'"><circle cx="'+g.e.x+'" cy="'+(g.e.y-2)+'" r="10" fill="url(#gglow)"/><circle cx="'+g.e.x+'" cy="'+(g.e.y-2)+'" r="5.5" fill="url(#fr)"/></g>';
+    if(i===0&&!mini){var tp=bez(g,tEnd);h+='<text x="'+(tp.x-18)+'" y="'+(tp.y-12)+'" font-size="11" font-weight="600" fill="var(--gold)" text-anchor="middle" font-family="Alexandria,sans-serif">أنت</text>'}
+  }
+  return h+br+lv+fr+'</svg>';
+}
+
+/* ---- الشاشات ---- */
+function doneCount(){var c=0;for(var r=0;r<12;r++)if(leafState(r,S.day,S.day,S.done)==="d")c++;return c}
+function cohortRate(){var s=0;for(var r=0;r<12;r++)s+=rate(r,S.day,S.done);return Math.round(s/12*100)}
+function fruitCount(){var c=0;for(var r=0;r<12;r++)if(rate(r,30,S.done)>=.8)c++;return c}
+function vTree(){
+  var w=WORDS[S.day%WORDS.length],harvest=S.day>=30,c=doneCount(),bd=leafState(1,S.day,S.day,S.done)==="d";
+  return '<div class="stage"><div class="stars"></div><div class="halo" id="halo"></div>'+
+  '<div class="hdr"><span class="brand">وتواصوا</span><span class="pill gold">اليوم '+N(S.day)+' / '+N(30)+'</span></div>'+
+  '<div class="goal"><h1>'+S.goal+'</h1><p>'+S.sub+' · ١٢ غصنًا على شجرة واحدة</p></div>'+
+  treeSVG({day:S.day,done:S.done,newLeaf:S.newLeaf})+'</div>'+
+  '<div class="act">'+(harvest?'<button class="big done" data-act="harvest"><i class="ring"></i>'+ic("check",2.6)+'<span>حصاد</span></button>':
+   '<button class="big'+(S.done?' done':'')+'" data-act="check" aria-pressed="'+S.done+'"><i class="ring"></i>'+(S.done?ic("check",2.6)+'<span>ورقتك اليوم</span>':'<b>تم</b><span>اضغط عند الإنجاز</span>')+'</button>')+
+  '<div class="stat"><span class="pill leaf">'+N(c)+' من ١٢ وضعوا ورقتهم</span><span class="pill">الشجرة '+N(cohortRate())+'٪</span></div></div>'+
+  '<p class="goldline">عند الحصاد تُغرس سدرة حقيقية في الدوحة · هدية '+S.dedic+'</p>'+
+  '<div class="word"><p class="ayah">'+w[0]+'</p><p class="xs mute">'+w[1]+' · كلمة اليوم</p></div>'+
+  '<div class="card buddy row"><span class="av" style="background:'+COL[1]+'">م</span><div style="flex:1"><b class="small">رفيقك محمد</b><div class="xs" style="color:'+(bd?'var(--leaf)':'var(--mute)')+'">'+(bd?'غصنه أخضر اليوم':'غصنه بلا ورقة بعد')+'</div></div><button class="btn" data-act="nudge">'+(bd?'باركله':'اطمئن عليه')+'</button></div>'+
+  '<div class="dev"><div class="row between"><b class="small">تجربة: شاهد الشجرة تكبر</b><span class="xs mute">اسحب</span></div><input type="range" min="1" max="30" value="'+S.day+'" id="dayS" aria-label="اليوم"><div class="xs mute"><span>اليوم ١</span><span>الحصاد ٣٠</span></div></div>';
+}
+function vGarden(){
+  var trees=[{n:"رمضان: ختمة",r:93},{n:"المشي، أبريل",r:77},{n:"الفجر، يونيو",r:85}];
+  var h='<div class="pad" style="padding-top:calc(16px + env(safe-area-inset-top))"><div class="row between"><span class="brand" style="font-size:26px">وتواصوا</span><span class="pill gold">'+ic("garden")+'بستاني</span></div>'+
+  '<h1 style="font-size:22px;font-weight:600;margin-top:12px">بستان خالد</h1><p class="mute small">كل شجرة دفعة أكملتها مع ناسها. البستان لا يُهدم، فقط يكبر.</p>'+
+  '<div class="kpi"><div class="card"><b>'+N(3+(S.day>=30?1:0))+'</b><span>أشجار</span></div><div class="card"><b>'+N(97+S.day)+'</b><span>ورقة</span></div><div class="card"><b>'+N(3)+'</b><span>سدرات حقيقية</span></div></div><div class="garden">';
+  trees.forEach(function(t,i){h+='<div class="card mini">'+treeSVG({day:30,done:true,mini:true})+'<b>'+t.n+'</b><span class="xs mute">'+N(t.r)+'٪ · سدرة رقم '+N(1041+i*37)+'</span><span class="pill leaf" style="height:22px;font-size:10.5px">مغروسة في الدوحة</span></div>'});
+  h+='<div class="card mini" style="border-color:rgba(240,206,131,.45)">'+treeSVG({day:S.day,done:S.done,mini:true})+'<b>'+S.goal+'</b><span class="xs" style="color:var(--gold)">تنمو الآن · اليوم '+N(S.day)+'</span></div>';
+  h+='<button class="card mini seed" data-act="join"><span class="s">'+ic("seed")+'</span><b>ازرع الشجرة القادمة</b><span class="xs mute">تبدأ ١ يناير</span></button></div>'+
+  '<button class="card" style="margin-top:12px;width:100%;text-align:start" data-act="visit"><div class="row between"><b class="small">غابة وتواصوا، الدوحة</b><span class="pill leaf">'+N(3214)+' سدرة حقيقية</span></div><p class="xs mute" style="margin-top:4px">كل دفعة أكملت شجرتها غُرست باسمها سدرة بلوحة فيها الإهداء. تقدر تزورها وتصوّر جنبها.</p></button></div>';
+  return h;
+}
+var TABS=[["tree","tree","الشجرة"],["cohort","users","الأغصان"],["garden","garden","بستاني"]];
+function render(){
+  var v=S.tab==="garden"?vGarden():S.tab==="cohort"?'<div class="pad" style="padding-top:calc(60px + env(safe-area-inset-top))"><p class="mute">شاشة الأغصان تُبنى بعد اختيار الاتجاه.</p></div>':vTree();
+  $("screen").innerHTML='<div class="fade">'+v+'</div>';
+  $("nav").innerHTML=TABS.map(function(x){return '<button data-go="'+x[0]+'"'+(S.tab===x[0]?' aria-current="page"':'')+'>'+ic(x[1])+'<span>'+x[2]+'</span></button>'}).join("");
+  S.newLeaf=false;
+}
+var tT;function toast(m){var el=$("toast");el.textContent=m;el.classList.add("on");clearTimeout(tT);tT=setTimeout(function(){el.classList.remove("on")},2600)}
+function spark(x,y){if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;var host=$("device"),r=host.getBoundingClientRect(),cols=["#4EDBA0","#B6F3D6","#F0CE83","#E2B35E"];
+  for(var i=0;i<26;i++){var s=document.createElement("i");s.className="spark";s.style.background=cols[i%4];s.style.left=(x-r.left)+"px";s.style.top=(y-r.top)+"px";host.appendChild(s);
+    var a=-Math.PI/2+(Math.random()-.5)*1.6,d=90+Math.random()*140;
+    s.animate([{transform:"translate(0,0) scale(1)",opacity:1},{transform:"translate("+Math.cos(a)*d+"px,"+Math.sin(a)*d+"px) scale(.3)",opacity:0}],{duration:900+Math.random()*500,easing:"cubic-bezier(.2,.8,.2,1)"}).onfinish=(function(el){return function(){el.remove()}})(s)}}
+
+document.addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;var d=b.dataset;
+  if(b.hasAttribute("data-theme-toggle")){var r=document.documentElement;r.dataset.theme=r.dataset.theme==="light"?"":"light";return}
+  if(d.go){S.tab=d.go;render();$("screen").scrollTop=0;return}
+  if(d.act==="check"){
+    var rc=b.getBoundingClientRect();S.done=!S.done;S.newLeaf=S.done;render();
+    if(S.done){var nb=document.querySelector(".big");nb.classList.add("pop");$("halo").classList.add("flash");spark(rc.left+rc.width/2,rc.top+rc.height/2);
+      if(navigator.vibrate)navigator.vibrate([12,40,18]);toast("نبتت ورقتك. "+N(doneCount())+" من ١٢ اليوم")}
+    else toast("أزلنا ورقة اليوم");
+  }
+  else if(d.act==="nudge")toast("وصلته رسالة لطيفة باسمك");
+  else if(d.act==="harvest")toast("الحصاد: شاشة الشهادة تُبنى بعد اختيار الاتجاه");
+  else if(d.act==="join")toast("الدفعة القادمة تفتح يوم ٢٥ ديسمبر. سنذكّرك.");
+  else if(d.act==="visit")toast("غابة وتواصوا، منطقة الروضة.");
+});
+document.addEventListener("input",function(e){if(e.target.id==="dayS"){S.day=+e.target.value;if(S.day<12)S.done=true;if(S.day>12)S.done=false;var sv=$("screen").scrollTop;render();$("screen").scrollTop=sv}});
+if(Q.get("w"))$("device").style.maxWidth=Q.get("w")+"px";render();if(Q.get("auto"))setTimeout(function(){var b=document.querySelector("[data-act=check]");if(b)b.click()},1500);
+})();
+</script>
+</body>
+</html>

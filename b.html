@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>وتواصوا — الاتجاه ب: دفتر البستاني</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Scheherazade+New:wght@400;700&family=Rakkas&display=swap" rel="stylesheet">
+<style>
+/* ===== الاتجاه ب: دفتر البستاني (ورق وحبر) ===== */
+:root{
+  --paper:#F6F1E6;--paper2:#EFE7D6;--paper3:#E6DCC6;
+  --ink:#1F1A14;--ink2:#4A4238;--mute:#857A6A;--line:rgba(31,26,20,.14);--line2:rgba(31,26,20,.28);
+  --clay:#B5542E;--clay2:#8E3F21;--clay-dim:rgba(181,84,46,.12);
+  --olive:#5E7A3A;--olive2:#8FAE5C;--olive-dark:#3C5224;--wilt:#C7B79A;
+  --saffron:#C98A1B;
+  --shadow:0 10px 30px rgba(60,45,20,.12);
+  color-scheme:light;
+}
+:root[data-theme="dark"]{
+  --paper:#1C1813;--paper2:#262019;--paper3:#2F2820;
+  --ink:#F1EADB;--ink2:#CFC4AE;--mute:#9A8F7C;--line:rgba(241,234,219,.14);--line2:rgba(241,234,219,.28);
+  --clay:#E07A4E;--clay2:#F09A72;--clay-dim:rgba(224,122,78,.14);
+  --olive:#8FAE5C;--olive2:#B9D48A;--olive-dark:#5E7A3A;--wilt:#5D5345;
+  --saffron:#E6B04A;
+  --shadow:0 10px 30px rgba(0,0,0,.4);
+  color-scheme:dark;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0}
+body{background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans Arabic",system-ui,sans-serif;font-size:15px;line-height:1.6;overflow:hidden;font-variant-numeric:tabular-nums}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+button:focus-visible{outline:2px solid var(--clay);outline-offset:3px;border-radius:8px}
+svg{display:block}
+h1,h2,p{margin:0}
+.brand{font-family:"Rakkas",serif;color:var(--ink);letter-spacing:0}
+.ayah{font-family:"Scheherazade New",serif}
+
+.device{position:relative;height:100%;max-width:430px;margin:0 auto;display:flex;flex-direction:column;background:var(--paper)}
+/* حبيبات الورق */
+.device::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;z-index:0;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .4 0 0 0 0 .3 0 0 0 0 .2 0 0 0 .08 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+@media(min-width:720px){body{display:flex;align-items:center;justify-content:center;background:#D9CDB4}
+  :root[data-theme="dark"] body{background:#0E0C09}
+  .device{height:min(900px,calc(100% - 40px));width:400px;border-radius:40px;overflow:hidden;border:1px solid var(--line2);box-shadow:var(--shadow)}}
+.screen{position:relative;z-index:1;flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:104px;scrollbar-width:none}
+.screen::-webkit-scrollbar{display:none}
+.pad{padding:0 22px}
+
+/* شريط التنقل: شريط ورقي بخط حبر */
+.nav{position:absolute;inset-inline:0;bottom:0;padding:8px 18px calc(10px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(3,1fr);z-index:30;background:var(--paper);border-top:1.5px solid var(--ink)}
+.nav button{display:flex;flex-direction:column;align-items:center;gap:2px;height:50px;color:var(--mute);font-size:11.5px;font-weight:500;position:relative}
+.nav button[aria-current]{color:var(--ink);font-weight:600}
+.nav button[aria-current]::after{content:"";position:absolute;bottom:-2px;width:22px;height:3px;border-radius:3px;background:var(--clay)}
+.nav svg{width:22px;height:22px}
+
+.card{border-radius:14px;padding:14px 16px;background:var(--paper2);border:1px solid var(--line)}
+.row{display:flex;align-items:center;gap:10px}.between{justify-content:space-between}
+.mute{color:var(--mute)}.small{font-size:12.5px}.xs{font-size:11.5px}
+.tag{display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 10px;border-radius:6px;font-size:11.5px;font-weight:600;border:1px solid var(--line2);color:var(--ink2)}
+.tag.clay{color:var(--clay);border-color:var(--clay)}
+.tag.olive{color:var(--olive);border-color:var(--olive)}
+
+/* شاشة الشجرة */
+.hdr{display:flex;justify-content:space-between;align-items:baseline;padding:calc(16px + env(safe-area-inset-top)) 22px 0}
+.hdr .brand{font-size:30px;line-height:1}
+.daynum{font-family:"Rakkas",serif;font-size:22px;color:var(--clay);line-height:1}
+.daynum small{font-family:"IBM Plex Sans Arabic";font-size:11px;color:var(--mute);font-weight:500;margin-inline-start:4px}
+.goal{padding:6px 22px 0}
+.goal h1{font-size:22px;font-weight:700;line-height:1.3}
+.goal p{font-size:12.5px;color:var(--mute);margin-top:2px}
+.rule{height:1.5px;background:var(--ink);margin:10px 22px 0;opacity:.9}
+svg.tree{width:100%;height:auto}
+
+/* الختم */
+.act{display:flex;flex-direction:column;align-items:center;margin-top:-18px;position:relative;z-index:4}
+.stamp{position:relative;width:112px;height:112px;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;
+  background:var(--paper);border:2.5px solid var(--clay);color:var(--clay);box-shadow:var(--shadow);transform:rotate(-4deg)}
+.stamp::before{content:"";position:absolute;inset:5px;border-radius:12px;border:1px solid var(--clay);opacity:.6}
+.stamp b{font-family:"Rakkas",serif;font-size:40px;line-height:1;margin-top:-4px}
+.stamp span{font-size:10.5px;font-weight:600;letter-spacing:.3px}
+.stamp.done{background:var(--clay);color:var(--paper);border-color:var(--clay2);transform:rotate(-4deg)}
+.stamp.done::before{border-color:rgba(255,255,255,.55)}
+.stamp.done svg{width:36px;height:36px}
+.stat{display:flex;gap:8px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.goldline{margin:14px 22px 0;text-align:center;font-size:12px;color:var(--saffron);font-weight:500}
+.word{margin:14px 22px 0;padding:14px 18px;border-inline-start:3px solid var(--saffron)}
+.word .ayah{font-size:22px;line-height:1.9;color:var(--ink)}
+.buddy{margin:14px 22px 0}
+.av{width:34px;height:34px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex:none;border:1.5px solid var(--ink);color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 16px;border-radius:10px;font-weight:600;font-size:13px;border:1.5px solid var(--ink);transition:transform .12s}
+.btn:active{transform:scale(.96)}
+.dev{margin:18px 22px 0;padding:12px 14px;border-radius:12px;border:1px dashed var(--line2)}
+.dev input{width:100%;accent-color:var(--clay);margin-top:6px}
+.dev .xs{display:flex;justify-content:space-between}
+
+/* بستاني: صفحات دفتر */
+.kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:14px;border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink)}
+.kpi div{text-align:center;padding:12px 6px;border-inline-start:1px solid var(--line)}
+.kpi div:first-child{border:0}
+.kpi b{display:block;font-family:"Rakkas",serif;font-size:30px;line-height:1.1;color:var(--clay)}
+.kpi span{font-size:11px;color:var(--mute)}
+.garden{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.mini{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;padding:12px 10px}
+.mini svg{width:100%;height:auto}
+.mini b{font-size:13px;font-weight:600}
+.seed{border-style:dashed;border-color:var(--line2);justify-content:center;color:var(--mute);min-height:170px;background:transparent}
+.seed .s{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--clay);display:flex;align-items:center;justify-content:center;color:var(--clay)}
+.seed .s svg{width:22px;height:22px}
+
+.toast{position:absolute;left:50%;top:calc(16px + env(safe-area-inset-top));transform:translate(-50%,-160%);opacity:0;padding:10px 16px;border-radius:10px;font-weight:600;font-size:13px;z-index:80;width:max-content;max-width:88%;text-align:center;
+  background:var(--ink);color:var(--paper);box-shadow:var(--shadow);transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .25s}
+.toast.on{transform:translate(-50%,0);opacity:1}
+.fade{animation:fade .4s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.ink{position:absolute;border-radius:50%;background:var(--clay);pointer-events:none;z-index:70;opacity:.85}
+
+/* الحركة: قلم يرسم، وختم يُطبع */
+@media(prefers-reduced-motion:no-preference){
+  .branch{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.3s cubic-bezier(.3,.7,.2,1) both;animation-delay:calc(var(--b) * 50ms)}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  .lf path{stroke-dasharray:1;stroke-dashoffset:1;animation:draw .45s ease-out both;animation-delay:calc(.5s + var(--i) * 25ms)}
+  .lf .fill{animation:bleed .5s ease-out both;animation-delay:calc(.7s + var(--i) * 25ms);transform-box:fill-box;transform-origin:center}
+  @keyframes bleed{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:scale(1)}}
+  .lf.new path{animation:draw .6s ease-out both;animation-delay:.1s}
+  .lf.new .fill{animation:bleed .7s cubic-bezier(.2,.9,.3,1.3) both;animation-delay:.55s}
+  .pend{animation:pend 1.8s ease-in-out infinite}
+  @keyframes pend{0%,100%{opacity:.4}50%{opacity:1}}
+  .fruit{transform-box:fill-box;transform-origin:center;animation:bleed .6s ease-out both;animation-delay:calc(.6s + var(--i) * 70ms)}
+  .stamp{transition:transform .22s cubic-bezier(.34,1.4,.5,1),background .3s,color .3s}
+  .stamp:active{transform:rotate(-4deg) scale(.92) translateY(3px)}
+  .stamp.pop{animation:press .6s cubic-bezier(.34,1.5,.5,1)}
+  @keyframes press{0%{transform:rotate(-4deg) scale(.88) translateY(4px)}45%{transform:rotate(-2deg) scale(1.06)}100%{transform:rotate(-4deg) scale(1)}}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.meta{position:fixed;inset-inline-start:16px;top:16px;width:300px;z-index:99;font-size:13px;line-height:1.7;color:#2A2218;display:none}
+@media(min-width:1100px){.meta{display:block}}
+:root[data-theme="dark"] .meta{color:#E8E0CF}
+.meta h2{font-size:15px;color:#B5542E;margin-bottom:6px}
+.meta .sw{display:flex;gap:6px;margin:8px 0}
+.meta .sw i{width:26px;height:26px;border-radius:8px;border:1px solid rgba(0,0,0,.15)}
+.meta .tools{display:flex;gap:8px;margin-top:10px}
+.meta .tools button{height:36px;padding:0 12px;border-radius:8px;border:1.5px solid currentColor;font-size:12px;color:inherit}
+</style>
+</head>
+<body>
+<aside class="meta">
+  <h2>الاتجاه ب: دفتر البستاني</h2>
+  <div>كأنك فتحت دفتر بستاني قديم: ورق دافئ، حبر، شجرة مرسومة بالقلم، وختم طيني لـ«تم». هادئ، صادق، بلا زجاج ولا لمعان.</div>
+  <div class="sw"><i style="background:#F6F1E6"></i><i style="background:#1F1A14"></i><i style="background:#B5542E"></i><i style="background:#5E7A3A"></i><i style="background:#8FAE5C"></i><i style="background:#C98A1B"></i></div>
+  <div><b>الخطوط:</b> IBM Plex Sans Arabic للواجهة · Scheherazade New للآيات · Rakkas للاسم والأرقام الكبيرة</div>
+  <div><b>مبدأ الحركة:</b> «قلم وختم»: عند الفتح القلم يرسم الأغصان خطًا خطًا ثم الورق؛ عند «تم» الختم يُطبع بضغطة طينية، وورقتك تُرسم بالحبر ثم يسري فيها اللون الأخضر كحبر على ورق. لا بريق ولا شرر.</div>
+  <div class="tools"><button data-theme-toggle>نهاري / ليلي</button></div>
+</aside>
+<div class="device" id="device">
+  <main class="screen" id="screen"></main>
+  <nav class="nav" id="nav" aria-label="التنقل"></nav>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</div>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+function N(n){return Number(n).toLocaleString("ar-EG")}
+var I={tree:'<path d="M12 21v-6M12 15c-4 0-7-3-7-7 3 0 5 1 7 3 2-2 4-3 7-3 0 4-3 7-7 7z"/>',
+ users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c1-3.5 3.5-5.5 6.5-5.5s5.5 2 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c1.8.8 3 2.6 3.5 5.2"/>',
+ garden:'<path d="M4 20h16M7 20v-5a3 3 0 0 1 6 0v5M15 20v-8a3 3 0 0 1 6 0v8"/><circle cx="10" cy="7" r="3"/><circle cx="18" cy="5" r="2"/>',
+ check:'<path d="M5 12.5 10 17.5 19 7"/>',seed:'<path d="M12 3c5 0 8 4 8 9-5 0-8-4-8-9zM12 3c-5 0-8 4-8 9 5 0 8-4 8-9zM12 12v9"/>'};
+function ic(n,w){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="'+(w||1.8)+'" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+I[n]+'</svg>'}
+var NAMES=["أنت","محمد","عبدالله","يوسف","طارق","عمر","سامي","مازن","حسن","علي","زياد","فهد"];
+var MISS={3:[3,7,9,10,11,17,22],4:[2,6,11,12,19,20,21,25],1:[4,16],7:[8,23],9:[5,9,12,13,27],5:[10],2:[],6:[14,28],8:[18],10:[26,29],11:[6,15,24],0:[7]};
+var WORDS=[["كَلِمَةً طَيِّبَةً كَشَجَرَةٍ طَيِّبَةٍ أَصْلُهَا ثَابِتٌ وَفَرْعُهَا فِي السَّمَاءِ","إبراهيم ٢٤"],["تُؤْتِي أُكُلَهَا كُلَّ حِينٍ بِإِذْنِ رَبِّهَا","إبراهيم ٢٥"],["أحبُّ الأعمال إلى الله أدومُها وإن قلَّ","متفق عليه"],["وَتَوَاصَوْا بِالْحَقِّ وَتَوَاصَوْا بِالصَّبْرِ","العصر ٣"],["فَاسْتَبِقُوا الْخَيْرَاتِ","البقرة ١٤٨"]];
+var Q=new URLSearchParams(location.search);var S={tab:Q.get("tab")||"tree",day:+(Q.get("day")||12),done:Q.get("done")==="1",newLeaf:false,goal:"القراءة، ديسمبر",sub:"١٠ صفحات يوميًا",dedic:"لأبي، رحمه الله"};
+
+/* هندسة: شجرة غير متناظرة بلمسة يد (إزاحة ثابتة لكل غصن) */
+var J=[0,-9,6,-4,8,-6,3,-8,5,-3,7,-5];
+function geo(i){
+  var ang=(i/11-.5)*150+J[i]*.6,a=ang*Math.PI/180,k=1-Math.abs(ang)/75;
+  var y0=348-k*80+J[i],s={x:195,y:y0};
+  var L=128+k*80+J[i]*1.5,dir={x:Math.sin(a),y:-Math.cos(a)};
+  var c1={x:s.x+dir.x*L*.35+(ang<0?-16:16),y:s.y+dir.y*L*.35-14};
+  var c2={x:s.x+dir.x*L*.75+J[i],y:s.y+dir.y*L*.75-36};
+  var e={x:s.x+dir.x*L,y:s.y+dir.y*L-26};
+  return {s:s,c1:c1,c2:c2,e:e,d:"M"+s.x+" "+s.y+" C"+c1.x+" "+c1.y+" "+c2.x+" "+c2.y+" "+e.x+" "+e.y};
+}
+function bez(g,t){var u=1-t;return {x:u*u*u*g.s.x+3*u*u*t*g.c1.x+3*u*t*t*g.c2.x+t*t*t*g.e.x,y:u*u*u*g.s.y+3*u*u*t*g.c1.y+3*u*t*t*g.c2.y+t*t*t*g.e.y}}
+function tan(g,t){var p=bez(g,Math.max(0,t-.01)),q=bez(g,Math.min(1,t+.01));return Math.atan2(q.y-p.y,q.x-p.x)}
+function sub(g,tEnd){var pts=[];for(var k=0;k<=14;k++){var p=bez(g,tEnd*k/14);pts.push(p.x.toFixed(1)+" "+p.y.toFixed(1))}return "M"+pts.join(" L")}
+function leafState(r,d,day,done){if(d>day)return null;if(r===0&&d===day)return done?"d":"p";return (MISS[r]||[]).indexOf(d)>-1?"m":"d"}
+function rate(r,day,done){var dd=0,tt=0;for(var d=1;d<=day;d++){var s=leafState(r,d,day,done);if(s==="p")continue;tt++;if(s==="d")dd++}return tt?dd/tt:0}
+/* ورقة بالقلم: شكل ورقة حقيقي بعرق أوسط */
+function leafPath(x,y,rot,sc){return '<g transform="translate('+x+' '+y+') rotate('+rot+') scale('+sc+')"><path class="fill" d="M0 0 C3 -5 9 -6 13 0 C9 6 3 5 0 0Z" stroke="none"/><path d="M0 0 C3 -5 9 -6 13 0 C9 6 3 5 0 0Z M1 0 L11.5 0" pathLength="1" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/></g>'}
+
+function treeSVG(o){
+  var day=o.day,done=o.done,mini=o.mini,h='';
+  h+='<svg class="tree" viewBox="0 '+(mini?'80':'20')+' 390 '+(mini?'380':'460')+'" role="img" aria-label="شجرة الدفعة، اليوم '+N(day)+'">';
+  /* الأرض: خط حبر مع عشب بسيط */
+  h+='<path d="M40 468 Q195 460 350 468" fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linecap="round"/>';
+  h+='<path d="M120 466 l3 -8 M126 466 l-2 -7 M262 466 l3 -9 M270 466 l-2 -6" fill="none" stroke="var(--olive)" stroke-width="1.4" stroke-linecap="round"/>';
+  /* الجذع بخط مزدوج */
+  h+='<path d="M184 468 Q188 410 191 352 M206 468 Q202 410 199 352" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round"/>';
+  h+='<path d="M187 440 q3 -6 2 -14 M203 420 q-2 -8 0 -16" fill="none" stroke="var(--ink)" stroke-width=".9" opacity=".5"/>';
+  var br='',lv='',fr='';
+  for(var i=0;i<12;i++){
+    var g=geo(i),tEnd=Math.min(30,day)/30;
+    br+='<path d="'+g.d+'" fill="none" stroke="var(--line2)" stroke-width="1" stroke-dasharray="1 5" stroke-linecap="round"/>';
+    br+='<path class="branch" style="--b:'+i+'" d="'+sub(g,tEnd)+'" pathLength="1" fill="none" stroke="var(--ink)" stroke-width="'+(i===0?2.6:1.9)+'" stroke-linecap="round" stroke-linejoin="round"/>';
+    for(var d=1;d<=30;d++){
+      var st=leafState(i,d,day,done);if(!st)continue;
+      var t=d/30,p=bez(g,t),a=tan(g,t),side=(d%2?1:-1);
+      var deg=a*180/Math.PI+(side>0?-48:48)+(side>0?0:180);
+      var px=p.x+Math.cos(a+Math.PI/2)*2*side,py=p.y+Math.sin(a+Math.PI/2)*2*side;
+      if(st==="p")lv+='<g class="pend"><g transform="translate('+px+' '+py+') rotate('+deg+')"><path d="M0 0 C3 -5 9 -6 13 0 C9 6 3 5 0 0Z" fill="none" stroke="var(--saffron)" stroke-width="1.4" stroke-dasharray="2 2"/></g></g>';
+      else if(st==="m")lv+='<g class="lf" style="--i:'+d+';fill:var(--wilt)">'+leafPath(px,py,deg+18,.78)+'</g>';
+      else{var nw=(i===0&&d===day&&o.newLeaf);lv+='<g class="lf'+(nw?' new':'')+'" style="--i:'+d+';fill:'+(i===0?'var(--olive2)':'var(--olive)')+'">'+leafPath(px,py,deg,1)+'</g>'}
+    }
+    if(day>=30&&rate(i,day,done)>=.8)fr+='<g class="fruit" style="--i:'+i+'"><circle cx="'+g.e.x+'" cy="'+(g.e.y-3)+'" r="5.5" fill="var(--saffron)" stroke="var(--ink)" stroke-width="1.1"/></g>';
+    if(i===0&&!mini){var tp=bez(g,tEnd);h+='<text x="'+(tp.x-16)+'" y="'+(tp.y-12)+'" font-size="12" font-weight="600" fill="var(--clay)" text-anchor="middle" font-family="IBM Plex Sans Arabic,sans-serif">أنت</text>'}
+  }
+  return h+br+lv+fr+'</svg>';
+}
+function doneCount(){var c=0;for(var r=0;r<12;r++)if(leafState(r,S.day,S.day,S.done)==="d")c++;return c}
+function cohortRate(){var s=0;for(var r=0;r<12;r++)s+=rate(r,S.day,S.done);return Math.round(s/12*100)}
+function vTree(){
+  var w=WORDS[S.day%WORDS.length],harvest=S.day>=30,c=doneCount(),bd=leafState(1,S.day,S.day,S.done)==="d";
+  return '<div class="hdr"><span class="brand">وتواصوا</span><span class="daynum">'+N(S.day)+'<small>من ٣٠</small></span></div>'+
+  '<div class="goal"><h1>'+S.goal+'</h1><p>'+S.sub+' · ١٢ غصنًا على شجرة واحدة</p></div><div class="rule"></div>'+
+  treeSVG({day:S.day,done:S.done,newLeaf:S.newLeaf})+
+  '<div class="act">'+(harvest?'<button class="stamp done" data-act="harvest">'+ic("check",2.6)+'<span>حصاد</span></button>':
+   '<button class="stamp'+(S.done?' done':'')+'" data-act="check" aria-pressed="'+S.done+'">'+(S.done?ic("check",2.6)+'<span>ورقتك اليوم</span>':'<b>تم</b><span>اختم يومك</span>')+'</button>')+
+  '<div class="stat"><span class="tag olive">'+N(c)+' من ١٢ وضعوا ورقتهم</span><span class="tag">الشجرة '+N(cohortRate())+'٪</span></div></div>'+
+  '<p class="goldline">عند الحصاد تُغرس سدرة حقيقية في الدوحة · هدية '+S.dedic+'</p>'+
+  '<div class="word"><p class="ayah">'+w[0]+'</p><p class="xs mute">'+w[1]+' · كلمة اليوم</p></div>'+
+  '<div class="buddy row"><span class="av">م</span><div style="flex:1"><b class="small">رفيقك محمد</b><div class="xs" style="color:'+(bd?'var(--olive)':'var(--mute)')+'">'+(bd?'غصنه أخضر اليوم':'غصنه بلا ورقة بعد')+'</div></div><button class="btn" data-act="nudge">'+(bd?'باركله':'اطمئن عليه')+'</button></div>'+
+  '<div class="dev"><div class="row between"><b class="small">تجربة: شاهد الشجرة تكبر</b><span class="xs mute">اسحب</span></div><input type="range" min="1" max="30" value="'+S.day+'" id="dayS" aria-label="اليوم"><div class="xs mute"><span>اليوم ١</span><span>الحصاد ٣٠</span></div></div>';
+}
+function vGarden(){
+  var trees=[{n:"رمضان: ختمة",r:93},{n:"المشي، أبريل",r:77},{n:"الفجر، يونيو",r:85}];
+  var h='<div class="pad" style="padding-top:calc(16px + env(safe-area-inset-top))"><div class="row between"><span class="brand" style="font-size:30px">وتواصوا</span><span class="tag clay">'+ic("garden")+'بستاني</span></div>'+
+  '<h1 style="font-size:22px;margin-top:10px">بستان خالد</h1><p class="mute small">كل شجرة دفعة أكملتها مع ناسها. البستان لا يُهدم، فقط يكبر.</p>'+
+  '<div class="kpi"><div><b>'+N(3+(S.day>=30?1:0))+'</b><span>أشجار</span></div><div><b>'+N(97+S.day)+'</b><span>ورقة</span></div><div><b>'+N(3)+'</b><span>سدرات حقيقية</span></div></div><div class="garden">';
+  trees.forEach(function(t,i){h+='<div class="card mini">'+treeSVG({day:30,done:true,mini:true})+'<b>'+t.n+'</b><span class="xs mute">'+N(t.r)+'٪ · سدرة رقم '+N(1041+i*37)+'</span><span class="tag olive" style="height:22px;font-size:10.5px">مغروسة في الدوحة</span></div>'});
+  h+='<div class="card mini" style="border-color:var(--clay)">'+treeSVG({day:S.day,done:S.done,mini:true})+'<b>'+S.goal+'</b><span class="xs" style="color:var(--clay)">تنمو الآن · اليوم '+N(S.day)+'</span></div>';
+  h+='<button class="card mini seed" data-act="join"><span class="s">'+ic("seed")+'</span><b>ازرع الشجرة القادمة</b><span class="xs mute">تبدأ ١ يناير</span></button></div>'+
+  '<button class="card" style="margin-top:14px;width:100%;text-align:start" data-act="visit"><div class="row between"><b class="small">غابة وتواصوا، الدوحة</b><span class="tag olive">'+N(3214)+' سدرة حقيقية</span></div><p class="xs mute" style="margin-top:4px">كل دفعة أكملت شجرتها غُرست باسمها سدرة بلوحة فيها الإهداء. تقدر تزورها وتصوّر جنبها.</p></button></div>';
+  return h;
+}
+var TABS=[["tree","tree","الشجرة"],["cohort","users","الأغصان"],["garden","garden","بستاني"]];
+function render(){
+  var v=S.tab==="garden"?vGarden():S.tab==="cohort"?'<div class="pad" style="padding-top:calc(60px + env(safe-area-inset-top))"><p class="mute">شاشة الأغصان تُبنى بعد اختيار الاتجاه.</p></div>':vTree();
+  $("screen").innerHTML='<div class="fade">'+v+'</div>';
+  $("nav").innerHTML=TABS.map(function(x){return '<button data-go="'+x[0]+'"'+(S.tab===x[0]?' aria-current="page"':'')+'>'+ic(x[1])+'<span>'+x[2]+'</span></button>'}).join("");
+  S.newLeaf=false;
+}
+var tT;function toast(m){var el=$("toast");el.textContent=m;el.classList.add("on");clearTimeout(tT);tT=setTimeout(function(){el.classList.remove("on")},2600)}
+/* رذاذ حبر صغير من الختم */
+function inkdrops(x,y){if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;var host=$("device"),r=host.getBoundingClientRect();
+  for(var i=0;i<9;i++){var s=document.createElement("i");s.className="ink";var sz=3+Math.random()*4;s.style.width=s.style.height=sz+"px";s.style.left=(x-r.left)+"px";s.style.top=(y-r.top)+"px";host.appendChild(s);
+    var a=Math.random()*Math.PI*2,d=40+Math.random()*50;
+    s.animate([{transform:"translate(0,0)",opacity:.85},{transform:"translate("+Math.cos(a)*d+"px,"+Math.sin(a)*d+"px)",opacity:0}],{duration:600+Math.random()*300,easing:"cubic-bezier(.1,.8,.3,1)"}).onfinish=(function(el){return function(){el.remove()}})(s)}}
+
+document.addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;var d=b.dataset;
+  if(b.hasAttribute("data-theme-toggle")){var r=document.documentElement;r.dataset.theme=r.dataset.theme==="dark"?"":"dark";return}
+  if(d.go){S.tab=d.go;render();$("screen").scrollTop=0;return}
+  if(d.act==="check"){
+    var rc=b.getBoundingClientRect();S.done=!S.done;S.newLeaf=S.done;render();
+    if(S.done){document.querySelector(".stamp").classList.add("pop");inkdrops(rc.left+rc.width/2,rc.top+rc.height/2);
+      if(navigator.vibrate)navigator.vibrate([20,30,10]);toast("خُتم يومك. "+N(doneCount())+" من ١٢ اليوم")}
+    else toast("أزلنا ورقة اليوم");
+  }
+  else if(d.act==="nudge")toast("وصلته رسالة لطيفة باسمك");
+  else if(d.act==="harvest")toast("الحصاد: شاشة الشهادة تُبنى بعد اختيار الاتجاه");
+  else if(d.act==="join")toast("الدفعة القادمة تفتح يوم ٢٥ ديسمبر. سنذكّرك.");
+  else if(d.act==="visit")toast("غابة وتواصوا، منطقة الروضة.");
+});
+document.addEventListener("input",function(e){if(e.target.id==="dayS"){S.day=+e.target.value;if(S.day<12)S.done=true;if(S.day>12)S.done=false;var sv=$("screen").scrollTop;render();$("screen").scrollTop=sv}});
+if(Q.get("w"))$("device").style.maxWidth=Q.get("w")+"px";render();
+})();
+</script>
+</body>
+</html>
