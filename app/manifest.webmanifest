@@ -1,0 +1,17 @@
+{
+  "name": "وتواصوا",
+  "short_name": "وتواصوا",
+  "description": "لا أحد يلتزم وحده. ١٢ شخصًا، هدف واحد، ٣٠ يومًا، وسدرة حقيقية في الدوحة.",
+  "start_url": "/watawasaw-directions/app/",
+  "scope": "/watawasaw-directions/app/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "dir": "rtl",
+  "lang": "ar",
+  "background_color": "#050914",
+  "theme_color": "#050914",
+  "icons": [
+    { "src": "/watawasaw-directions/app/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/watawasaw-directions/app/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
