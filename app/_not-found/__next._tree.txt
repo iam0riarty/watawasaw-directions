@@ -1,4 +1,4 @@
-:HL["/watawasaw-directions/app/_next/static/chunks/31j_ftf316cyu.css","style"]
+:HL["/watawasaw-directions/app/_next/static/chunks/1mj7m499whex3.css","style"]
 2:[["children",{"s":"__PAGE__","h":160}]]
 1:[["children",{"s":"/_not-found","h":96,"c":"$Q2"}]]
-0:{"b":"hNQLxM1scXzCfEBVSnEac","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"OlmuKMSVZ2wwmIJ0cS1Zi","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
