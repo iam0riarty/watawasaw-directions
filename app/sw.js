@@ -12,3 +12,8 @@ self.addEventListener("notificationclick", (e) => {
   const url = new URL(e.notification.data?.url || "./", self.registration.scope).href;
   e.waitUntil(self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((cs) => { const c = cs.find((x) => x.url.startsWith(self.registration.scope)); return c ? c.focus().then(() => c.navigate ? c.navigate(url) : undefined) : self.clients.openWindow(url); }));
 });
+/* صفحة التطبيق تُجلب دائمًا من الشبكة مع إعادة التحقق (GitHub Pages يخزّنها ١٠ دقائق) حتى تصل النسخة الجديدة فور النشر */
+self.addEventListener("fetch", (e) => {
+  const r = e.request; if (r.mode !== "navigate") return;
+  e.respondWith(fetch(r, { cache: "no-cache" }).catch(() => fetch(r)));
+});
