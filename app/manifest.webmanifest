@@ -8,8 +8,8 @@
   "orientation": "portrait",
   "dir": "rtl",
   "lang": "ar",
-  "background_color": "#013f25",
-  "theme_color": "#0e1a3a",
+  "background_color": "#fff9fa",
+  "theme_color": "#fff9fa",
   "icons": [
     { "src": "/watawasaw-directions/app/icon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "/watawasaw-directions/app/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
