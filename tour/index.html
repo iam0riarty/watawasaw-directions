@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>وتواصوا الجديد · جولة</title>
+<link rel="icon" href="../app/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@700&family=Amiri+Quran&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#1B2535;--bg2:#0D1017;--ink:#F3EEE4;--ink2:#C9C3B6;--mute:#8C93A3;
+  --gold:#E2B862;--gold2:#C7973A;--glass:rgba(255,255,255,.06);--glass2:rgba(255,255,255,.1);
+  --edge:rgba(255,255,255,.12);--good:#8FC79A;--bad:#E58C7E;--calm:#A9B6E8;
+  --sys:-apple-system,BlinkMacSystemFont,"SF Arabic","Segoe UI","Noto Sans Arabic",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg2);color:var(--ink);font-family:var(--sys);-webkit-font-smoothing:antialiased;overflow:hidden}
+body{background:radial-gradient(120% 70% at 50% 0%,#24324a 0%,var(--bg1) 35%,var(--bg2) 85%)}
+.brand{font-family:"Aref Ruqaa",serif;color:var(--gold)}
+.stage{position:fixed;inset:0;display:flex;flex-direction:column;max-width:520px;margin:0 auto}
+.top{display:flex;align-items:center;gap:10px;padding:calc(env(safe-area-inset-top) + 12px) 18px 8px}
+.top img{width:30px;height:30px;border-radius:8px}
+.top .brand{font-size:20px}
+.top .step{margin-inline-start:auto;font-size:13px;color:var(--mute)}
+.bar{height:3px;margin:0 18px;background:var(--glass2);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold2),var(--gold));width:0;transition:width .5s cubic-bezier(.2,.8,.2,1);margin-inline-start:0}
+.slides{flex:1;position:relative;overflow:hidden}
+.slide{position:absolute;inset:0;overflow-y:auto;padding:18px 18px 120px;opacity:0;transform:translateX(-24px);pointer-events:none;transition:opacity .45s ease,transform .45s cubic-bezier(.2,.8,.2,1)}
+.slide.on{opacity:1;transform:none;pointer-events:auto}
+.slide.prev{transform:translateX(24px)}
+.kick{font-size:12px;letter-spacing:.02em;color:var(--gold);margin-bottom:6px}
+h1{font-size:27px;line-height:1.3;margin-bottom:10px}
+h2{font-size:23px;line-height:1.35;margin-bottom:8px}
+h3{font-size:16px;margin-bottom:6px}
+p.lead{color:var(--ink2);font-size:15.5px;line-height:1.75;margin-bottom:16px}
+.card{background:var(--glass);border:1px solid var(--edge);border-radius:20px;padding:16px;margin-bottom:12px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.card p,.card li{color:var(--ink2);font-size:14.5px;line-height:1.7}
+.card ul{list-style:none}
+.card li{position:relative;padding-inline-start:16px;margin-bottom:6px}
+.card li::before{content:"";position:absolute;inset-inline-start:0;top:.7em;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.card.good li::before{background:var(--good)}
+.card.bad li::before{background:var(--bad)}
+.tag{display:inline-block;font-size:11.5px;padding:3px 9px;border-radius:99px;border:1px solid var(--edge);color:var(--ink2);margin-bottom:8px}
+.tag.g{color:var(--good);border-color:rgba(143,199,154,.4)}
+.tag.r{color:var(--bad);border-color:rgba(229,140,126,.4)}
+.tag.y{color:var(--gold);border-color:rgba(226,184,98,.4)}
+.why{font-size:13.5px;color:var(--mute);line-height:1.7;margin-top:10px}
+.why b{color:var(--ink2)}
+/* phone mockup */
+.phone{width:min(300px,82vw);margin:6px auto 18px;border-radius:40px;padding:10px;background:linear-gradient(160deg,#2a3346,#0b0e14);border:1px solid rgba(255,255,255,.14);box-shadow:0 30px 60px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.12)}
+.scr{border-radius:31px;overflow:hidden;background:linear-gradient(180deg,#1B2535,#0D1017 90%);min-height:520px;position:relative;padding:14px 12px 70px}
+.notch{width:90px;height:24px;border-radius:14px;background:#000;margin:0 auto 10px}
+.dock{position:absolute;inset-inline:14px;bottom:12px;height:50px;border-radius:25px;background:rgba(255,255,255,.08);border:1px solid var(--edge);display:flex;justify-content:space-around;align-items:center;font-size:10.5px;color:var(--mute);backdrop-filter:blur(10px)}
+.dock span{display:flex;flex-direction:column;align-items:center;gap:3px}
+.dock span i{width:18px;height:18px;border-radius:6px;border:1.6px solid currentColor;display:block}
+.dock span.on{color:var(--gold)}
+.hello{font-size:12px;color:var(--mute)}
+.hello b{display:block;font-size:17px;color:var(--ink);margin-top:2px}
+.today{margin-top:12px;border-radius:22px;overflow:hidden;position:relative;border:1px solid var(--edge);background:var(--glass)}
+.today .img{height:150px;background-size:cover;background-position:center 30%;position:relative}
+.today .img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(13,16,23,.95))}
+.today .meta{position:absolute;inset-inline:12px;bottom:10px;z-index:1}
+.today .meta b{font-size:15px;display:block}
+.today .meta small{font-size:11.5px;color:var(--ink2)}
+.today .row{display:flex;align-items:center;gap:10px;padding:10px 12px 12px}
+.today .row .goal{flex:1;font-size:12.5px;color:var(--ink2)}
+.done{border:0;border-radius:99px;padding:10px 20px;font:700 14px var(--sys);color:#3A2408;background:linear-gradient(135deg,#F0CF86,#C7973A);box-shadow:0 6px 18px rgba(199,151,58,.35)}
+.done.ok{background:rgba(143,199,154,.18);color:var(--good);box-shadow:none;border:1px solid rgba(143,199,154,.35)}
+.mini{display:flex;align-items:center;gap:10px;margin-top:10px;padding:10px 12px;border-radius:18px;background:var(--glass);border:1px solid var(--edge)}
+.mini .th{width:42px;height:42px;border-radius:12px;background-size:cover;background-position:center}
+.mini div{flex:1;font-size:12.5px}
+.mini div small{display:block;color:var(--mute);font-size:11px}
+.notif{position:absolute;inset-inline:10px;top:40px;z-index:5;border-radius:18px;padding:10px 12px;background:rgba(40,46,60,.92);border:1px solid var(--edge);display:flex;gap:10px;align-items:flex-start;box-shadow:0 14px 30px rgba(0,0,0,.45);animation:drop 3.6s ease-in-out infinite}
+.notif img{width:28px;height:28px;border-radius:7px}
+.notif div{font-size:11.5px;color:var(--ink2);line-height:1.5}
+.notif b{color:var(--ink);font-size:12px}
+.notif .act{margin-top:6px;display:inline-block;padding:3px 10px;border-radius:99px;background:rgba(226,184,98,.18);color:var(--gold);font-size:11px}
+@keyframes drop{0%,8%{transform:translateY(-120%);opacity:0}16%,78%{transform:none;opacity:1}90%,100%{transform:translateY(-120%);opacity:0}}
+/* day grid */
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:10px}
+.d{aspect-ratio:1;border-radius:10px;display:grid;place-items:center;font-size:11px;color:var(--mute);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06)}
+.d.k{background:linear-gradient(135deg,rgba(240,207,134,.9),rgba(199,151,58,.9));color:#3A2408;border:0}
+.d.e{border:1.5px dashed var(--calm);color:var(--calm);background:rgba(169,182,232,.08)}
+.d.q{background:linear-gradient(135deg,rgba(240,207,134,.9) 50%,rgba(255,255,255,.05) 50%);color:#3A2408;border:0}
+.d.m{border:1.5px solid rgba(229,140,126,.6);color:var(--bad)}
+.d.t{outline:2px solid var(--gold);outline-offset:2px;color:var(--ink)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:10px;font-size:11px;color:var(--ink2)}
+.legend span{display:flex;align-items:center;gap:5px}
+.legend i{width:12px;height:12px;border-radius:4px;display:block}
+.sheet{position:absolute;inset-inline:0;bottom:0;z-index:4;border-radius:24px 24px 0 0;padding:14px 14px 18px;background:rgba(32,38,52,.97);border-top:1px solid var(--edge)}
+.sheet .h{width:36px;height:4px;border-radius:4px;background:rgba(255,255,255,.2);margin:0 auto 10px}
+.sheet h4{font-size:14px;margin-bottom:4px}
+.sheet p{font-size:11.5px;color:var(--mute);line-height:1.6;margin-bottom:10px}
+.opt{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;background:var(--glass);border:1px solid var(--edge);margin-bottom:8px;font-size:12.5px}
+.opt i{width:10px;height:10px;border-radius:50%;display:block}
+.opt small{display:block;color:var(--mute);font-size:10.5px;margin-top:2px}
+/* members */
+.mem{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:16px;background:var(--glass);border:1px solid var(--edge);margin-top:8px;font-size:12.5px}
+.av{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;color:#1B2535}
+.mem div{flex:1}
+.mem small{display:block;color:var(--mute);font-size:10.5px}
+.duab{border:1px solid rgba(226,184,98,.45);background:rgba(226,184,98,.1);color:var(--gold);border-radius:99px;padding:6px 12px;font:600 11.5px var(--sys)}
+.duab.sent{color:var(--good);border-color:rgba(143,199,154,.4);background:rgba(143,199,154,.1)}
+.hadith{font-family:"Amiri Quran",serif;font-size:17px;line-height:2;color:var(--ink);text-align:center;padding:6px 4px}
+.src{font-size:12px;color:var(--mute);text-align:center}
+/* templates */
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+.chip{padding:7px 11px;border-radius:99px;font-size:11.5px;background:var(--glass);border:1px solid var(--edge);color:var(--ink2)}
+.chip.on{background:rgba(226,184,98,.16);border-color:rgba(226,184,98,.5);color:var(--gold)}
+.field{margin-top:12px;border-radius:14px;padding:10px 12px;background:rgba(0,0,0,.25);border:1px solid var(--edge);font-size:12.5px;color:var(--ink);line-height:1.6}
+.field small{display:block;color:var(--mute);font-size:10.5px;margin-bottom:4px}
+.niyya{margin-top:12px;border-radius:18px;padding:14px;text-align:center;background:linear-gradient(160deg,rgba(226,184,98,.14),rgba(255,255,255,.03));border:1px solid rgba(226,184,98,.3)}
+.niyya small{color:var(--mute);font-size:10.5px}
+.niyya p{font-size:14px;margin-top:6px;line-height:1.7}
+/* proof */
+.proof{border-radius:20px;overflow:hidden;border:1px solid var(--edge);margin-top:4px}
+.proof .ph{height:200px;background-size:cover;background-position:center 40%}
+.proof .info{padding:12px;background:var(--glass)}
+.proof .info b{font-size:14px}
+.kv{display:flex;justify-content:space-between;font-size:11.5px;color:var(--ink2);padding:6px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.kv:last-child{border:0}
+.kv span:first-child{color:var(--mute)}
+/* removals */
+.rm{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:18px;background:var(--glass);border:1px solid var(--edge);margin-bottom:10px}
+.rm .x{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;border:1.5px solid rgba(229,140,126,.6);color:var(--bad);font-size:15px;line-height:1}
+.rm .x.m{border-color:rgba(226,184,98,.6);color:var(--gold)}
+.rm h3 s{text-decoration-color:var(--bad);text-decoration-thickness:2px}
+.rm p{font-size:13.5px;color:var(--ink2);line-height:1.7}
+.rm p b{color:var(--ink)}
+/* nav compare */
+.navcmp{display:flex;flex-direction:column;gap:10px}
+.navrow{border-radius:20px;padding:12px;background:var(--glass);border:1px solid var(--edge)}
+.navrow small{font-size:11.5px;color:var(--mute)}
+.pills{display:flex;justify-content:space-around;margin-top:10px}
+.pills span{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;color:var(--ink2)}
+.pills span i{width:22px;height:22px;border-radius:7px;border:1.8px solid currentColor;display:block}
+.pills.old span{color:var(--mute)}
+.pills.old span.cut{color:var(--bad);text-decoration:line-through}
+.pills.new span{color:var(--gold)}
+.map{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.map .card{margin:0}
+.map h3{color:var(--gold);font-size:15px}
+.map p{font-size:12.5px}
+.steps{counter-reset:s;list-style:none}
+.steps li{counter-increment:s;position:relative;padding:12px 52px 12px 14px;border-radius:16px;background:var(--glass);border:1px solid var(--edge);margin-bottom:10px;font-size:14px;line-height:1.7;color:var(--ink2)}
+.steps li b{color:var(--ink)}
+.steps li::before{content:counter(s,arabic-indic);position:absolute;inset-inline-start:12px;top:12px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:rgba(226,184,98,.15);color:var(--gold);font-weight:700}
+.cover{text-align:center;padding-top:30px}
+.cover img{width:150px;height:150px;border-radius:34px;box-shadow:0 24px 60px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.1)}
+.cover .brand{font-size:52px;display:block;margin:18px 0 6px}
+.cover p{color:var(--ink2);line-height:1.8;font-size:15px}
+.toc{margin-top:22px;text-align:start}
+.toc .card{display:flex;gap:12px;align-items:center;padding:12px 14px}
+.toc .card b{color:var(--gold);font-size:20px;width:24px;text-align:center}
+.score{display:flex;gap:10px;margin:4px 0 14px}
+.score div{flex:1;text-align:center;padding:12px 6px;border-radius:16px;background:var(--glass);border:1px solid var(--edge)}
+.score b{display:block;font-size:24px;color:var(--gold)}
+.score small{font-size:11.5px;color:var(--mute)}
+.nav{position:fixed;inset-inline:0;bottom:0;max-width:520px;margin:0 auto;display:flex;gap:10px;padding:14px 18px calc(env(safe-area-inset-bottom) + 14px);background:linear-gradient(180deg,transparent,rgba(13,16,23,.92) 40%)}
+.nav button{flex:1;height:50px;border-radius:99px;font:700 15px var(--sys);border:1px solid var(--edge);background:var(--glass2);color:var(--ink);backdrop-filter:blur(10px)}
+.nav button.go{flex:2;border:0;color:#3A2408;background:linear-gradient(135deg,#F0CF86,#C7973A);box-shadow:0 10px 26px rgba(199,151,58,.35)}
+.nav button:disabled{opacity:.35}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="top"><img src="../app/icon-192.png" alt=""><span class="brand">وتواصوا</span><span class="step" id="step"></span></div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="slides" id="slides">
+
+    <!-- ٠ غلاف -->
+    <section class="slide cover">
+      <img src="../app/icon-512.png" alt="أيقونة وتواصوا">
+      <span class="brand">وتواصوا الجديد</span>
+      <p>جولة تجريبية لرأيي بصراحة، وللإضافات القوية اللي أقترحها، واللي هنشيله، وشكل التطبيق بعدها.<br>دي معاينة بس. مفيش حاجة منها اتغيّرت في التطبيق لسه.</p>
+      <div class="toc">
+        <div class="card"><b>١</b><span>رأيي من غير تجميل</span></div>
+        <div class="card"><b>٢</b><span>٥ إضافات قوية، كل واحدة بشكلها</span></div>
+        <div class="card"><b>٣</b><span>اللي هنشيله ونخفّفه</span></div>
+        <div class="card"><b>٤</b><span>الشكل الجديد والخطوة الجاية</span></div>
+      </div>
+    </section>
+
+    <!-- ١ الرأي -->
+    <section class="slide">
+      <div class="kick">رأيي بصراحة</div>
+      <h1>الفكرة قوية. التطبيق اتبنى أكبر من اللازم قبل ما يتجرّب.</h1>
+      <p class="lead">الفكرة نفسها حقيقية ومفيدة: ناس قليلين يعرفوا بعض يلتزموا بعبادة ٣٠ يوم، وشجرة بتكبر بالتزامهم كلهم. ده بيحلّ مشكلة حقيقية. أغلب الناس بتبدأ وبتقطع، والصحبة هي أقوى حاجة بتثبّت. والشكل نفسه مميّز ومحدّش عامل زيه.</p>
+      <div class="score">
+        <div><b>٩</b><small>الفكرة</small></div>
+        <div><b>٨</b><small>الشكل</small></div>
+        <div><b>٥</b><small>التركيز</small></div>
+      </div>
+      <div class="card good">
+        <span class="tag g">نقاط القوة</span>
+        <ul>
+          <li><b>الصحبة الصغيرة:</b> حلقة من ٢ لـ ١٥ أحسن بكتير من تطبيق فردي. لما حد يعرف إن صاحبه شايفه، احتمال إنه يكمّل بيزيد جدًا.</li>
+          <li><b>الشجرة:</b> صورة واحدة بتقول للكل «إحنا فين» من غير أرقام. دي روح التطبيق.</li>
+          <li><b>الهوية الإسلامية الهادية:</b> الختمة الشخصية، وخريطة الحفظ، والرفيق، كلها حاجات مدروسة ومش تقليد لتطبيقات غربية.</li>
+        </ul>
+      </div>
+      <div class="card bad">
+        <span class="tag r">المخاطر الحقيقية</span>
+        <ul>
+          <li><b>مفيش ولا حلقة حقيقية كمّلت ٣٠ يوم لسه.</b> والبوتات بتغطي ده. التطبيق باين عايش، بس إحنا لسه منعرفش هل الناس هتكمّل ولا لأ.</li>
+          <li><b>مزايا كتير قبل الأساس:</b> السباق، والتزكية، وتبويبين إحصائيات، والبستان ثلاثي الأبعاد، والنشاط. كل واحدة حلوة لوحدها، بس كلها مع بعض بتشتّت المستخدم الجديد عن الزرار الوحيد المهم: «تم».</li>
+          <li><b>المنافس الحقيقي جروب واتساب.</b> الناس النهارده بتكتب «خلصت وردي» في الجروب. لو التسجيل عندنا أبطأ من رسالة واتساب، هيرجعوا للجروب.</li>
+          <li><b>الآيفون من المتصفح:</b> الإشعارات ضعيفة ومحتاجة «إضافة للشاشة الرئيسية». التذكير هو اللي بيرجّع الناس، فنسخة آب ستور مش رفاهية.</li>
+        </ul>
+      </div>
+      <p class="why"><b>الخلاصة:</b> هيبقى مفيد فعلًا لشريحة واضحة: عيلة، وأصحاب، وحلقة مسجد، وبنات بيحفظوا مع بعض. مش هينفع كمكان تقابل فيه غرباء. وعشان كده الإضافات اللي جاية كلها بتخدم حاجة واحدة: إن الحلقة تكمّل لحد يوم ٣٠.</p>
+    </section>
+
+    <!-- ٢ إضافة: اليوم -->
+    <section class="slide">
+      <div class="kick">إضافة ١ من ٥ · الأهم</div>
+      <h2>شاشة «اليوم»: نقرة واحدة من الإشعار</h2>
+      <p class="lead">أول ما تفتح التطبيق، أو تضغط على الإشعار، تلاقي حلقاتك وجنب كل واحدة زرار «تم». مفيش دخول في الحلقة ولا تبويبات. تسجيل اليوم ياخد ثانيتين، أسرع من رسالة واتساب.</p>
+      <div class="phone"><div class="scr">
+        <div class="notch"></div>
+        <div class="notif"><img src="../app/icon-192.png" alt=""><div><b>حلقة الفجر</b><br>٨ من ١٢ أنجزوا النهارده. فاضل إنت عشان الغصن يكمل.<br><span class="act">تم بفضل الله</span></div></div>
+        <div class="hello">مساء الخير<b>وردك النهارده</b></div>
+        <div class="today">
+          <div class="img" style="background-image:url(../app/art/full.jpg)"><div class="meta"><b>حلقة الفجر</b><small>اليوم ١٨ من ٣٠ · السدرة ٧٤٪</small></div></div>
+          <div class="row"><span class="goal">ربع حزب · من «ولقد آتينا موسى»</span><button class="done" onclick="this.classList.toggle('ok');this.textContent=this.classList.contains('ok')?'تم':'تم بفضل الله'">تم بفضل الله</button></div>
+        </div>
+        <div class="mini"><span class="th" style="background-image:url(../app/art/trees/t4-full.jpg)"></span><div>أذكار الصباح مع أختي<small>أنجزتها الساعة ٦:١٢ ص</small></div><button class="done ok" style="padding:7px 12px;font-size:12px">تم</button></div>
+        <div class="dock"><span class="on"><i></i>اليوم</span><span><i></i>اكتشف</span><span><i></i>البستان</span><span><i></i>ملفي</span></div>
+      </div></div>
+      <p class="why"><b>ليه قوية:</b> كل ضغطة زيادة بتخسّرك ناس. العادة بتتبني لما الفعل يكون أسهل حاجة ممكنة. والإشعار نفسه بيقولك إن الغصن مستنيك إنت، ودي مسؤولية قدام الحلقة، مش مجرد تذكير.</p>
+    </section>
+
+    <!-- ٣ إضافة: العذر والقضاء -->
+    <section class="slide">
+      <div class="kick">إضافة ٢ من ٥</div>
+      <h2>أيام العذر والقضاء: يوم فايت ما يكسرش الحلقة</h2>
+      <p class="lead">أكتر لحظة الناس بتقطع فيها هي لما يفوتهم يوم: «خلاص باظت». الحل نوعين من الأيام: <b>يوم عذر</b> (سفر، مرض، أو عذر شرعي للبنات)، ما بيتحسبش عليك وسببه مش بيظهر لحد. و<b>قضاء</b>، تعوّض فيه اليوم اللي فاتك خلال ٤٨ ساعة.</p>
+      <div class="phone"><div class="scr">
+        <div class="notch"></div>
+        <div class="hello">حلقة البنات · حفظ<b>أيامك الـ٣٠</b></div>
+        <div class="grid">
+          <div class="d k">١</div><div class="d k">٢</div><div class="d k">٣</div><div class="d k">٤</div><div class="d q">٥</div><div class="d k">٦</div>
+          <div class="d e">٧</div><div class="d e">٨</div><div class="d e">٩</div><div class="d e">١٠</div><div class="d e">١١</div><div class="d k">١٢</div>
+          <div class="d k">١٣</div><div class="d m">١٤</div><div class="d t">١٥</div><div class="d">١٦</div><div class="d">١٧</div><div class="d">١٨</div>
+        </div>
+        <div class="legend"><span><i style="background:#D9B061"></i>تم</span><span><i style="border:1.5px dashed var(--calm)"></i>عذر</span><span><i style="background:linear-gradient(135deg,#D9B061 50%,#333 50%)"></i>قضاء</span><span><i style="border:1.5px solid var(--bad)"></i>فات</span></div>
+        <div class="sheet"><div class="h"></div>
+          <h4>فاتك يوم ١٤</h4>
+          <p>لسه قدامك ٣١ ساعة تقضيه، والغصن هيكمل كأنه ما فاتش.</p>
+          <div class="opt"><i style="background:var(--gold)"></i><div>اقضِه دلوقتي<small>اقرأ ورد يوم ١٤ وسجّله</small></div></div>
+          <div class="opt"><i style="background:var(--calm)"></i><div>كان عندي عذر<small>الحلقة هتشوف «معذورة» من غير أي سبب</small></div></div>
+        </div>
+        <div class="dock" style="display:none"></div>
+      </div></div>
+      <p class="why"><b>ليه قوية:</b> مفيش تطبيق التزام بيراعي إن البنات عندهم أيام عذر شرعي كل شهر. من غير الميزة دي، حلقات البنات هتبان فاشلة ظلم. وده بيطابق روح الدين: «إذا مرض العبد أو سافر كُتب له مثل ما كان يعمل مقيمًا صحيحًا».</p>
+    </section>
+
+    <!-- ٤ إضافة: الدعاء بظهر الغيب -->
+    <section class="slide">
+      <div class="kick">إضافة ٣ من ٥</div>
+      <h2>«ادعُ له»: دعاء بظهر الغيب في نقرة</h2>
+      <p class="lead">جنب كل عضو زرار «ادعُ له». بتدعي له بينك وبين ربنا، وتضغط. يوصله إشعار هادي: «أحد إخوتك في الحلقة دعا لك الآن». ما بيعرفش مين، ومفيش عدّاد ولا ترتيب.</p>
+      <div class="phone"><div class="scr">
+        <div class="notch"></div>
+        <div class="notif" style="animation-delay:.6s"><img src="../app/icon-192.png" alt=""><div><b>حلقة الفجر</b><br>أحد إخوتك في الحلقة دعا لك الآن بظهر الغيب.</div></div>
+        <div class="hello">حلقة الفجر<b>الأعضاء</b></div>
+        <div class="mem"><span class="av" style="background:#E7C77F">ع</span><div>عبد الرحمن<small>أنجز النهارده · رفيقك</small></div><button class="duab" onclick="this.classList.add('sent');this.textContent='دعوت له'">ادعُ له</button></div>
+        <div class="mem"><span class="av" style="background:#9FC8A8">م</span><div>مصطفى<small>لسه ما أنجزش</small></div><button class="duab" onclick="this.classList.add('sent');this.textContent='دعوت له'">ادعُ له</button></div>
+        <div class="mem"><span class="av" style="background:#AEB9E6">ي</span><div>يوسف<small>معذور النهارده</small></div><button class="duab sent">دعوت له</button></div>
+        <div class="mem"><span class="av" style="background:#E6A99B">خ</span><div>خالد<small>أنجز النهارده</small></div><button class="duab" onclick="this.classList.add('sent');this.textContent='دعوت له'">ادعُ له</button></div>
+      </div></div>
+      <div class="card"><div class="hadith">«دعوةُ المرءِ المسلمِ لأخيه بظهرِ الغيبِ مستجابةٌ، عند رأسه ملَكٌ موكَّلٌ، كلما دعا لأخيه بخيرٍ قال الملَكُ الموكَّلُ به: آمين، ولك بمِثْل»</div><div class="src">رواه مسلم</div></div>
+      <p class="why"><b>ليه قوية:</b> بتربط الحلقة ببعض من غير زحمة شات، ومن غير رياء لأن مفيش اسم ولا رقم. وهي سبب حلو إن الواحد يفتح التطبيق حتى لو خلّص ورده. ومفيش تطبيق تاني فيها.</p>
+    </section>
+
+    <!-- ٥ إضافة: النية والنماذج -->
+    <section class="slide">
+      <div class="kick">إضافة ٤ من ٥</div>
+      <h2>حلقة في ٢٠ ثانية: نماذج جاهزة ونية مكتوبة</h2>
+      <p class="lead">بدل ما تكتب الهدف من الصفر، تختار من نماذج جاهزة. وكل عضو يكتب نيته في سطر أول يوم. السطر ده مش بيشوفه غيره، وبيرجع يظهر له يوم ٣٠.</p>
+      <div class="phone"><div class="scr">
+        <div class="notch"></div>
+        <div class="hello">حلقة جديدة<b>هتلتزموا بإيه؟</b></div>
+        <div class="chips">
+          <span class="chip on">ورد قرآن</span><span class="chip">حفظ</span><span class="chip">أذكار الصباح والمساء</span>
+          <span class="chip">ركعتين قيام</span><span class="chip">صيام الإثنين والخميس</span><span class="chip">صدقة يومية ولو قليلة</span>
+          <span class="chip">استغفار ١٠٠</span><span class="chip">الصلاة في وقتها</span><span class="chip">هدف من عندك</span>
+        </div>
+        <div class="field"><small>نيتي (محدّش بيشوفها غيري)</small>أختم قبل رمضان، وأهدي ثوابها لأمي.</div>
+        <div class="niyya"><small>يوم ٣٠ · نيتك اللي كتبتها أول يوم</small><p>«أختم قبل رمضان، وأهدي ثوابها لأمي.»</p><small>كمّلت ٢٨ من ٣٠ يوم. تقبّل الله.</small></div>
+      </div></div>
+      <p class="why"><b>ليه قوية:</b> صفحة فاضية بتوقّف الناس، والنماذج بتخلّي القائد يبدأ في ثواني. وكتابة النية أول يوم ورجوعها يوم ٣٠ بتدّي الإنجاز معنى، وتقفل الـ٣٠ يوم بلحظة مؤثرة الناس هتحب تشاركها.</p>
+    </section>
+
+    <!-- ٦ إضافة: إثبات السدرة -->
+    <section class="slide">
+      <div class="kick">إضافة ٥ من ٥ · قرار مش كود</div>
+      <h2>السدرة الحقيقية لازم يبقى ليها إثبات</h2>
+      <p class="lead">«تُغرس سدرة حقيقية في الدوحة» أقوى وعد في التطبيق، وأخطر وعد. لو اتحقق، الحلقة تستلم صورة شجرتها ومكانها وتاريخ غرسها، وده هيبقى أقوى إعلان للتطبيق. لو مااتحققش، هيبقى أكبر نقطة ضعف فيه.</p>
+      <div class="proof">
+        <div class="ph" style="background-image:url(../app/art/asr-full.jpg)"></div>
+        <div class="info"><b>سدرة حلقة الفجر</b>
+          <div class="kv"><span>غُرست</span><span>١٢ جمادى الآخرة ١٤٤٨</span></div>
+          <div class="kv"><span>المكان</span><span>حديقة …، الدوحة · على الخريطة</span></div>
+          <div class="kv"><span>الحلقة</span><span>١٢ عضو · ٨٦٪ التزام</span></div>
+          <div class="kv"><span>صورة كل ٣ شهور</span><span>هتوصلكم وهي بتكبر</span></div>
+        </div>
+      </div>
+      <p class="why"><b>المطلوب منك:</b> شريك غرس، زي جهة تشجير أو بلدية أو مشتل في قطر، بتكلفة ثابتة للشجرة. الكود سهل وأعمله في يوم. الصعب هو الاتفاق. ولحد ما يتعمل، أقترح نكتب «نسعى لغرس سدرة» بدل «تُغرس» عشان الوعد يفضل صادق.</p>
+    </section>
+
+    <!-- ٧ نشيل إيه -->
+    <section class="slide">
+      <div class="kick">اللي هنشيله ونخفّفه</div>
+      <h2>أقل حاجات، ونفس الروح</h2>
+      <p class="lead">كل ميزة مالهاش لازمة بتزوّد التحميل، وبتشتّت المستخدم الجديد، وبتزوّد صيانتك إنت. دي اللي شايف إنها لازم تمشي أو تتدمج:</p>
+      <div class="rm"><span class="x">×</span><div><h3><s>البوتات وكل «الحياة» الوهمية</s></h3><p>تطبيق اسمه «وتواصوا بالحق» مينفعش يبدأ بنشاط مش حقيقي. البوتات كمان مخبّية عننا أهم معلومة: هل الناس الحقيقيين بيكمّلوا؟ <b>نقفلها قبل أول تجربة حقيقية، ونشيل شريط «العالم» اللي بيعتمد عليها.</b></p></div></div>
+      <div class="rm"><span class="x">×</span><div><h3><s>السباق الشهري العام</s></h3><p>ترتيب الحلقات والأفراد قدام الكل في العبادة بيفتح باب رياء، وبيحبط اللي في آخر الترتيب. <b>بداله:</b> «إنت النهارده أحسن من الشهر اللي فات» على مستواك إنت، والمنافسة تفضل جوه الحلقة على الشجرة.</p></div></div>
+      <div class="rm"><span class="x">×</span><div><h3><s>تبويب «النشاط»</s></h3><p>اللي فيه بيتكرّر في صفحة الحلقة والإشعارات. <b>يتدمج في «اليوم».</b></p></div></div>
+      <div class="rm"><span class="x m">−</span><div><h3>الإحصائيات: تبويبين بأرقام كتير</h3><p>عدد الرسائل والتشجيعات ومتوسطات كتير محدّش بيقراها. <b>نخلّيها كارت واحد بسيط</b> فيه أيامك، وختماتك، وأحسن وقت ليك.</p></div></div>
+      <div class="rm"><span class="x m">−</span><div><h3>التزكية الأسبوعية كنظام لوحدها</h3><p>فكرة حلوة، بس عاملة شاشة وقواعد زيادة. <b>تبقى نموذج من نماذج الحلقة</b> (الصمت، السخاء، غض البصر).</p></div></div>
+      <div class="rm"><span class="x m">−</span><div><h3>الإعدادات كتبويب في الشريط</h3><p>بتتفتح نادرًا. <b>تدخل جوه «ملفي».</b> كده الشريط يبقى ٤ أماكن بس.</p></div></div>
+      <p class="why"><b>هيفضل زي ما هو:</b> الشجرة، والرفيق، والختمة الشخصية، وخريطة الحفظ، وكروت الستوري، والبستان. البستان بيتحمّل بس لما تفتحه، فمش مثقّل على التطبيق.</p>
+    </section>
+
+    <!-- ٨ الشكل الجديد -->
+    <section class="slide">
+      <div class="kick">الشكل الجديد</div>
+      <h2>٤ أماكن بس، والأول هو الأهم</h2>
+      <div class="navcmp">
+        <div class="navrow"><small>دلوقتي · ٥ تبويبات</small>
+          <div class="pills old"><span><i></i>الرئيسية</span><span><i></i>اكتشف</span><span class="cut"><i></i>النشاط</span><span><i></i>ملفي</span><span class="cut"><i></i>الإعدادات</span></div></div>
+        <div class="navrow" style="border-color:rgba(226,184,98,.35)"><small>الجديد · ٤ أماكن</small>
+          <div class="pills new"><span><i></i>اليوم</span><span><i></i>اكتشف</span><span><i></i>البستان</span><span><i></i>ملفي</span></div></div>
+      </div>
+      <div class="map">
+        <div class="card"><h3>اليوم</h3><p>حلقاتك بزرار «تم»، وحالة رفيقك، والقضاء لو فاتك يوم. ٩٠٪ من الاستخدام هنا.</p></div>
+        <div class="card"><h3>اكتشف</h3><p>حلقات عامة تنضم لها، وكروت تعرّفك بالفكرة. من غير ترتيب ولا سباق.</p></div>
+        <div class="card"><h3>البستان</h3><p>السدرات اللي اتغرست بإثباتها. مكان فخر الحلقات.</p></div>
+        <div class="card"><h3>ملفي</h3><p>خريطة الحفظ، وكارت إحصائيات واحد، وسدراتك، والإعدادات.</p></div>
+      </div>
+      <div class="phone" style="margin-top:16px"><div class="scr">
+        <div class="notch"></div>
+        <div class="hello">صباح الخير<b>حلقاتك النهارده</b></div>
+        <div class="today">
+          <div class="img" style="background-image:url(../app/art/trees/t8-full.jpg)"><div class="meta"><b>أصحاب الجامعة · قيام</b><small>اليوم ٩ من ٣٠ · ٥ من ٨ أنجزوا</small></div></div>
+          <div class="row"><span class="goal">ركعتين قيام · رفيقك أنجز</span><button class="done">تم بفضل الله</button></div>
+        </div>
+        <div class="mini"><span class="th" style="background-image:url(../app/art/full.jpg)"></span><div>حلقة الفجر<small>تم · ادعُ لإخوتك</small></div><button class="duab">ادعُ</button></div>
+        <div class="mini"><span class="th" style="background-image:url(../app/art/trees/t3-full.jpg)"></span><div>البيت · أذكار<small>فاتك أمس · قدامك ٢٠ ساعة للقضاء</small></div><button class="duab">اقضِ</button></div>
+        <div class="dock"><span class="on"><i></i>اليوم</span><span><i></i>اكتشف</span><span><i></i>البستان</span><span><i></i>ملفي</span></div>
+      </div></div>
+    </section>
+
+    <!-- ٩ الخطوة الجاية -->
+    <section class="slide">
+      <div class="kick">الخطوة الجاية</div>
+      <h2>الترتيب اللي أنصح بيه</h2>
+      <ol class="steps">
+        <li><b>نشيل ونخفّف</b> (البوتات، والسباق، والنشاط، والإعدادات من الشريط). يوم شغل واحد، والتطبيق يبقى أخف وأوضح فورًا.</li>
+        <li><b>شاشة «اليوم» وأيام العذر والقضاء.</b> دول الأساس اللي بيخلّي الحلقة تكمّل.</li>
+        <li><b>«ادعُ له» والنماذج والنية.</b> دول الروح اللي بتفرّق وتواصوا عن أي تطبيق تاني.</li>
+        <li><b>تجربة حقيقية:</b> ٣ حلقات بس (عيلتك، وأصحابك، وحلقة مسجد أو بنات) لمدة ٣٠ يوم، ونقيس كام واحد كمّل. الرقم ده أهم من أي ميزة.</li>
+        <li><b>نسخة آب ستور</b> عشان الإشعارات تبقى مضمونة، و<b>شريك الغرس</b> عشان وعد السدرة يبقى حقيقي.</li>
+      </ol>
+      <div class="card" style="text-align:center"><p>قولّي «نفّذ» وأبدأ بالخطوة ١ و٢، أو اختار من الجولة اللي يعجبك وأشيل اللي مش عاجبك.</p></div>
+    </section>
+
+  </div>
+  <div class="nav"><button id="prev">السابق</button><button class="go" id="next">التالي</button></div>
+</div>
+<script>
+const S=[...document.querySelectorAll('.slide')],ar=n=>String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+let i=0;
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach((s,k)=>{s.classList.toggle('on',k===i);s.classList.toggle('prev',k<i)});
+  S[i].scrollTop=0;document.getElementById('bar').style.width=((i+1)/S.length*100)+'%';
+  document.getElementById('step').textContent=ar(i+1)+' من '+ar(S.length);
+  document.getElementById('prev').disabled=i===0;document.getElementById('next').textContent=i===S.length-1?'من الأول':'التالي';
+  history.replaceState(null,'','#'+(i+1));}
+document.getElementById('next').onclick=()=>show(i===S.length-1?0:i+1);
+document.getElementById('prev').onclick=()=>show(i-1);
+let x0=null,y0=null;document.getElementById('slides').addEventListener('touchstart',e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
+document.getElementById('slides').addEventListener('touchend',e=>{if(x0==null)return;const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)show(dx>0?i+1:i-1);x0=null});
+addEventListener('keydown',e=>{if(e.key==='ArrowLeft')show(i+1);if(e.key==='ArrowRight')show(i-1)});
+show((parseInt(location.hash.slice(1))||1)-1);
+</script>
+</body>
+</html>
