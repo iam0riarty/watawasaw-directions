@@ -1,77 +1,115 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>وتواصوا — لا أحد يلتزم وحده</title>
-<meta name="description" content="لا أحد يلتزم وحده. حلقة صغيرة، هدف واحد، ثلاثون يومًا، وسدرة تكبر بالتزامكم.">
-<meta name="theme-color" content="#C9DCC2">
-<link rel="icon" href="./app/favicon.ico">
-<link rel="apple-touch-icon" href="./app/apple-touch-icon.png">
+<title>وتواصوا — عزم لا يلين، وصحبة تعين</title>
+<meta name="description" content="عزم لا يلين، وصحبة تعين. حلقة صغيرة، هدف واحد، ثلاثون يومًا، وشجرة تكبر بالتزامكم.">
+<meta name="theme-color" content="#E9E5EF">
+<!-- الثيم قبل أول رسم: اختيار المستخدم المحفوظ في التطبيق إن وُجد (العنوان واحد فالتخزين واحد)، وإلا قانون الساعة السادسة:
+     من السادسة صباحًا نهاري ومن السادسة مساءً ليلي. ثم يُطلب ملف صورة الثيم الصحيح وحده مبكرًا. -->
+<script>(function(){var l=true;try{var m=localStorage.getItem('ww-theme')||'auto';var h=new Date().getHours();l=m==='light'||(m==='auto'&&h>=6&&h<18);}catch(e){}var r=document.documentElement;r.dataset.theme=l?'light':'dark';try{var c=document.querySelector('meta[name="theme-color"]');if(c)c.content=l?'#E9E5EF':'#1B2535';var k=document.createElement('link');k.rel='preload';k.as='image';k.href='./app/art/courtyard/'+(l?'day':'night')+((window.devicePixelRatio||1)>=2?'-2240':'-1350')+'.webp';document.head.appendChild(k);}catch(e){}})();</script>
+<link rel="icon" href="./app/favicon.ico" id="ic-tab">
+<link rel="apple-touch-icon" href="./app/apple-touch-icon.png" id="ic-apple">
+<!-- أيقونة التبويب وأيقونة «أضف إلى الشاشة الرئيسية» تتبعان الثيم كما في التطبيق: النهارية للنهاري والليلية للّيلي -->
+<script>if(document.documentElement.dataset.theme==="light"){var a=document.getElementById("ic-tab"),b=document.getElementById("ic-apple");a.href="./app/favicon-day.png";a.type="image/png";b.href="./app/apple-touch-icon-day.png";}</script>
 <meta property="og:type" content="website">
-<meta property="og:title" content="وتواصوا — لا أحد يلتزم وحده">
-<meta property="og:description" content="لا أحد يلتزم وحده. حلقة صغيرة، هدف واحد، ثلاثون يومًا، وسدرة تكبر بالتزامكم.">
-<meta property="og:image" content="https://iam0riarty.github.io/watawasaw-directions/app/art/trees/t12-full.jpg">
+<meta property="og:title" content="وتواصوا — عزم لا يلين، وصحبة تعين">
+<meta property="og:description" content="عزم لا يلين، وصحبة تعين. حلقة صغيرة، هدف واحد، ثلاثون يومًا، وشجرة تكبر بالتزامكم.">
+<meta property="og:image" content="https://iam0riarty.github.io/watawasaw-directions/app/og/day.jpg">
 <meta property="og:locale" content="ar_QA">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- خط العلامة (الرقعة) بحروف الكلمة وحدها فيخفّ ملفه، وبعرض block كي لا تظهر الكلمة بخط بديل ثم تتبدّل -->
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@700&display=block&text=%D9%88%D8%AA%D9%88%D8%A7%D8%B5%D9%88%D8%A7" rel="stylesheet">
 <style>
-/* ===== الاتجاه ج: السدرة =====
-   السدرة الحقيقية — فنّ التطبيق نفسه — تملأ الشاشة، وفوقها لوحٌ زجاجي.
-   يرى الزائر ما سيراه داخل التطبيق قبل أن يدخل: شجرةٌ تكبر بالتزام حلقةٍ صغيرة. */
+/* ===== الصفحة البرّانية: صورة سورة العصر كاملةً أعلى الصفحة وأمامها بطاقة زجاجية منخفضة =====
+   هو شكل صفحة التسجيل داخل التطبيق نفسه (الصورة والآيات والبطاقة وألوان الثيمين)، ليرى الزائر قبل الدخول ما سيراه بعده.
+   الألوان منقولة من نظام التطبيق (app/app/globals.css) لا مخترعة هنا، فإن تغيّرت هناك تُنقل. */
 :root{
-  --ink:#10180F; --ink2:#36432F; --mute:#6B7A62;
-  --gold:#A8640F; --gold2:#C7973A; --on-gold:#fff;
-  --glass:rgba(255,255,255,.62); --edge:rgba(255,255,255,.75);
+  --bg:#DCE2EC; --ink:#1F2230; --ink2:#454A5E; --mute:#7A7F93;
+  --accent:#A8640F; --on-accent:#3A2408; --grad:linear-gradient(135deg,#C7973A,#DDAE5E); --glow:rgba(199,151,58,.16);
+  --card:rgba(249,248,252,.52); --edge:rgba(255,255,255,.62); --chip:rgba(255,255,255,.46); --hair:rgba(30,34,60,.10);
+  --shadow:0 14px 34px rgba(40,46,90,.11);
+  --pic:url("./app/art/courtyard/day-1350.webp"); --vs:url("./app/art/courtyard/verses-day.webp");
+  --lq:url("data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAABwBACdASoYAB4APsFMokqnpCMhsBgMAPAYCWUArABX76UMf3YuxmkPGdRH0AD+79CUgmNIkheGvRXugsbFKMBMv1kLxKomtIg97e9B6lY2aNttTgNgz7pLOyPdOAtzu/7YoGIwAAA=");
+  color-scheme:light;
+}
+:root[data-theme="dark"]{
+  --bg:#0D1017; --ink:#EEF1F7; --ink2:#C9CFDC; --mute:#99A2B4;
+  --accent:#F0CE83; --on-accent:#2A1A05; --grad:linear-gradient(135deg,#F0CE83,#E2B35E); --glow:rgba(240,206,131,.14);
+  --card:rgba(32,40,56,.60); --edge:rgba(255,255,255,.15); --chip:rgba(255,255,255,.06); --hair:rgba(255,255,255,.09);
+  --shadow:0 16px 38px rgba(0,0,0,.42);
+  --pic:url("./app/art/courtyard/night-1350.webp"); --vs:url("./app/art/courtyard/verses-night.webp");
+  --lq:url("data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAACQBACdASoYAB4APsFSoEqnpKMhsAgA8BgJYwCdM1XECxwO8+8B/bmw0ZhIegAA/u+EesW1gEzAp7fidbnFnwYx3ge6q2evG+A+Qrye7pvnFvf5KP4xOnkwj/txyyRiX/x77jEk4LlAqrcAAAA=");
+  color-scheme:dark;
+}
+/* الملف الكبير للشاشات بكثافة ٢ فأعلى، والمتوسط لغيرها. المتغيّر الذي لا يدخل خلفية لا يُحمَّل، فلا يُجلب إلا ملف واحد */
+@media (min-resolution:2dppx),(-webkit-min-device-pixel-ratio:2){
+  :root{--pic:url("./app/art/courtyard/day-2240.webp")}
+  :root[data-theme="dark"]{--pic:url("./app/art/courtyard/night-2240.webp")}
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;margin:0}
-body{margin:0;font-family:"Alexandria",system-ui,sans-serif;font-weight:300;color:var(--ink);background:#C9DCC2;
-  display:flex;align-items:flex-end;justify-content:center}
-.wrap{position:relative;width:100%;max-width:440px;min-height:100%;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
-/* الصورة ملء الشاشة (WebP وبديل JPG)، ويتدرّج أسفلها إلى لون الأرض فيستقرّ عليه اللوح */
-.hero{position:absolute;inset:0;background:#C9DCC2}
-.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%;display:block}
-.hero::after{content:"";position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(255,255,255,.18) 0%,rgba(255,255,255,0) 26%,rgba(236,243,232,.55) 60%,rgba(240,246,237,.96) 86%,#F2F7EF 100%)}
-.card{position:relative;margin:0 18px 26px;padding:24px 22px 22px;border-radius:26px;
-  background:var(--glass);backdrop-filter:blur(22px) saturate(1.1);-webkit-backdrop-filter:blur(22px) saturate(1.1);
-  box-shadow:inset 0 1px 0 var(--edge),0 22px 46px rgba(16,32,14,.16)}
-.badge{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:600;
-  color:var(--gold);background:rgba(168,100,15,.09)}
-.badge i{width:6px;height:6px;border-radius:50%;background:var(--gold)}
-h1{margin:14px 0 0;font-size:28px;font-weight:600;line-height:1.45;letter-spacing:-.015em}
-h1 em{font-style:normal;color:var(--gold)}
-p{margin:10px 0 0;font-size:14.5px;line-height:1.95;color:var(--ink2);font-weight:300}
-.steps{margin:18px 0 0;padding:0;list-style:none;display:flex;gap:8px}
-.steps li{flex:1;padding:11px 8px;border-radius:14px;text-align:center;background:rgba(255,255,255,.55);
-  box-shadow:inset 0 0 0 .5px rgba(255,255,255,.8)}
-.steps b{display:block;font-size:15px;font-weight:700;color:var(--gold)}
-.steps span{display:block;margin-top:3px;font-size:12px;color:var(--mute)}
-.cta{margin:18px 0 0;display:block;width:100%;padding:17px;border:0;border-radius:15px;
-  font:inherit;font-size:15.5px;font-weight:600;color:var(--on-gold);text-align:center;text-decoration:none;
-  background:linear-gradient(145deg,var(--gold2),var(--gold));box-shadow:0 10px 28px rgba(168,100,15,.26)}
+html{height:100%;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;min-height:100%;font-family:"Alexandria",system-ui,sans-serif;font-weight:300;color:var(--ink);background:var(--bg)}
+.wrap{position:relative;width:100%;max-width:480px;margin:0 auto;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end}
+/* الصورة ٤:٥ بعرض الصفحة أعلاها، وأسفلها يذوب في خلفية الثيم بقناع فلا يلزم لون يطابقه */
+.pic{position:absolute;top:0;left:0;right:0;aspect-ratio:4/5;pointer-events:none;isolation:isolate}
+.pic-img{position:absolute;inset:0;background-image:var(--pic),var(--lq);background-size:100% 100%;background-repeat:no-repeat;
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 84%,rgba(0,0,0,.94) 86.4%,rgba(0,0,0,.72) 89.6%,rgba(0,0,0,.5) 92%,rgba(0,0,0,.28) 94.4%,rgba(0,0,0,.06) 97.6%,transparent 100%);
+  mask-image:linear-gradient(180deg,#000 0%,#000 84%,rgba(0,0,0,.94) 86.4%,rgba(0,0,0,.72) 89.6%,rgba(0,0,0,.5) 92%,rgba(0,0,0,.28) 94.4%,rgba(0,0,0,.06) 97.6%,transparent 100%)}
+/* الآيات صورة شفافة مرسومة من النص الحرفي، لا نص يُصفّ في المتصفح. مكانها ومقاسها كما في التطبيق */
+.verses{position:absolute;z-index:2;left:4.015%;top:12.727%;width:37.803%;height:34%;background-image:var(--vs);background-size:100% 100%;background-repeat:no-repeat}
+:root[data-theme="dark"] .verses{filter:drop-shadow(0 1px 5px rgba(8,12,22,.55))}
+@media (prefers-reduced-motion:no-preference){.verses{animation:fade 1.4s ease-in-out .3s both}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+/* على الشاشة العريضة الصفحة عمود في الوسط، فتذوب حافتا الصورة في الخلفية بدل أن تنقطعا.
+   الصورة سياق تراكم مستقل (isolation) كي تبقى الحافتان تحت البطاقة وظلّها، والآيات فوق الحافتين فلا يبهت أولها */
+@media (min-width:520px){
+  .pic::before,.pic::after{content:"";position:absolute;top:0;bottom:0;width:9%;z-index:1}
+  .pic::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
+  .pic::after{right:0;background:linear-gradient(270deg,var(--bg),transparent)}
+}
+.sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+/* فراغ يحجز ٧٨٪ من ارتفاع الصورة: البطاقة لا تصعد فوق الماشي مهما قصرت الشاشة، وما زاد ينزل بالتمرير */
+.gap{flex:none;height:min(97.5vw,468px)}
+.card{position:relative;margin:0 14px calc(14px + env(safe-area-inset-bottom));padding:20px 18px 18px;border-radius:24px;
+  background:var(--card);-webkit-backdrop-filter:blur(22px) saturate(165%);backdrop-filter:blur(22px) saturate(165%);
+  border:1px solid var(--edge);box-shadow:var(--shadow),inset 0 1px 0 var(--edge)}
+/* «وتواصوا» بالرقعة وتحتها الشعار، كما في افتتاح التطبيق */
+.brand{margin:0;font-family:"Aref Ruqaa",serif;font-weight:700;font-size:44px;line-height:1.05;color:var(--accent)}
+.tag{margin:8px 0 0;font-size:15px;font-weight:400;line-height:1.6;color:var(--ink)}
+.lead{margin:8px 0 0;font-size:14px;line-height:1.9;color:var(--ink2)}
+/* الزر قبل الخطوات: على الشاشة القصيرة (متصفح الهاتف بأشرطته) يبقى الزر ظاهرًا بلا تمرير، والخطوات شرح تحته */
+.cta{margin:16px 0 0;display:flex;align-items:center;justify-content:center;width:100%;height:50px;border-radius:14px;
+  font:inherit;font-size:16px;font-weight:600;color:var(--on-accent);text-decoration:none;
+  background:var(--grad);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 5px 14px var(--glow)}
+.steps{margin:14px 0 0;padding:0;list-style:none;display:flex;gap:8px}
+.steps li{flex:1;padding:10px 6px;border-radius:14px;text-align:center;background:var(--chip);box-shadow:inset 0 0 0 .5px var(--hair)}
+.steps b{display:block;font-size:15px;font-weight:700;color:var(--accent)}
+.steps span{display:block;margin-top:3px;font-size:12px;font-weight:400;color:var(--mute)}
 </style>
 </head>
 <body>
 <main class="wrap">
-  <div class="hero" aria-hidden="true">
-    <picture>
-      <source srcset="./app/art/trees/t12-full.webp" type="image/webp">
-      <img src="./app/art/trees/t12-full.jpg" alt="" fetchpriority="high" decoding="async">
-    </picture>
+  <div class="pic">
+    <div class="pic-img" aria-hidden="true"></div>
+    <div class="verses" aria-hidden="true"></div>
+    <!-- نص السورة لقارئ الشاشة: منقول حرفيًّا كما في التطبيق، لا يُعاد كتابته ولا يُزخرف -->
+    <p class="sr" lang="ar">وَٱلْعَصْرِ ۝ إِنَّ ٱلْإِنسَـٰنَ لَفِى خُسْرٍ ۝ إِلَّا ٱلَّذِينَ ءَامَنُوا۟ وَعَمِلُوا۟ ٱلصَّـٰلِحَـٰتِ وَتَوَاصَوْا۟ بِٱلْحَقِّ وَتَوَاصَوْا۟ بِٱلصَّبْرِ ۝ <span>سورة العصر</span></p>
   </div>
+  <div class="gap" aria-hidden="true"></div>
   <section class="card">
-    <span class="badge"><i></i>حلقة صغيرة · سِدرة واحدة</span>
-    <h1>لا أحد يلتزم <em>وحده</em>.</h1>
-    <p>حلقة صغيرة حتى عشرة، هدف واحد، ثلاثون يومًا. كل يوم تلتزمون فيه تورق السدرة، وعند الحصاد تُغرس سدرةٌ حقيقية.</p>
+    <h1 class="brand">وتواصوا</h1>
+    <p class="tag">عزم لا يلين، وصحبة تعين</p>
+    <p class="lead">حلقة صغيرة حتى عشرة، هدف واحد، ثلاثون يومًا. كل يوم تلتزمون فيه تورق شجرتكم، وإذا أتممتم العهد أزهرت.</p>
+    <a class="cta" href="./app/">ابدأ حلقتك</a>
     <ul class="steps">
       <li><b>١</b><span>أنشئ حلقتك</span></li>
       <li><b>٢</b><span>التزموا يوميًا</span></li>
-      <li><b>٣</b><span>احصدوا سدرة</span></li>
+      <li><b>٣</b><span>تُزهر شجرتكم</span></li>
     </ul>
-    <a class="cta" href="./app/">ابدأ حلقتك</a>
   </section>
 </main>
 </body>

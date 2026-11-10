@@ -1,0 +1,21 @@
+{
+ "canvas": {
+  "w": 1360,
+  "h": 3024
+ },
+ "clip": {
+  "left": -2.353,
+  "top": 20.37,
+  "width": 100.515,
+  "height": 56.506
+ },
+ "verses": {
+  "left": 1.683,
+  "top": 27.562,
+  "width": 37.998,
+  "height": 19.212
+ },
+ "versesFadeAt": 0.8,
+ "versesFade": 2.4,
+ "clipSeconds": 8
+}
