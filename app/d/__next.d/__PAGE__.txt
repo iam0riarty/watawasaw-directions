@@ -3,7 +3,7 @@
 3:I[39756,["$2"],"default"]
 4:I[37457,["$2"],"default"]
 5:I[54387,["$2"],"default"]
-c:"/watawasaw-directions/app/_next/static/chunks/34b5u-j2h_idy.js"
+c:"/watawasaw-directions/app/_next/static/chunks/06zvag-3_5v79.js"
 d:I[20385,["$2","$c"],"default"]
 e:I[97367,["$2"],"OutletBoundary"]
 f:"$Sreact.suspense"
@@ -11,40 +11,48 @@ f:"$Sreact.suspense"
 13:I[97367,["$2"],"$12"]
 14:"MetadataBoundary"
 15:I[97367,["$2"],"$14"]
-:HL["/watawasaw-directions/app/_next/static/chunks/1h_9vme92-r2u.css","style"]
-:HL["/watawasaw-directions/app/_next/static/chunks/0zx5ugy530rma.css","style"]
-:HL["/watawasaw-directions/app/_next/static/chunks/18kyfpgyoiz-y.css","style"]
+:HL["/watawasaw-directions/app/_next/static/chunks/0dvo22o6a2jr6.css","style"]
+:HL["/watawasaw-directions/app/_next/static/chunks/2llskn5k90eja.css","style"]
+:HL["/watawasaw-directions/app/_next/static/chunks/27ehabemhxac8.css","style"]
 7:X
 a:X
 a:C
-b:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$1","c",{"children":[["$","$Ld",null,{}],[["$","script","script-0",{"src":"/watawasaw-directions/app/_next/static/chunks/34b5u-j2h_idy.js","async":true}]],["$","$Le",null,{"children":["$","$f",null,{"name":"Next.MetadataOutlet","children":"$@10"}]}]]}],"p":"$@11","v":null,"s":"$7"}}]]
+b:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$1","c",{"children":[["$","$Ld",null,{}],[["$","script","script-0",{"src":"/watawasaw-directions/app/_next/static/chunks/06zvag-3_5v79.js","async":true}]],["$","$Le",null,{"children":["$","$f",null,{"name":"Next.MetadataOutlet","children":"$@10"}]}]]}],"p":"$@11","v":null,"s":"$7"}}]]
 8:[["children",{"s":"d","h":96,"d":{"r":["$","$1","c",{"children":[null,["$","$L3",null,{"parallelRouterKey":"children","template":["$","$L4",null,{}]}]]}],"p":"$@9","v":"$a","s":"$7"},"c":"$Qb"}]]
-0:{"t":{"t":{"s":"","h":80,"d":{"r":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/watawasaw-directions/app/_next/static/chunks/1h_9vme92-r2u.css","precedence":"next"}],["$","link","1",{"rel":"stylesheet","href":"/watawasaw-directions/app/_next/static/chunks/0zx5ugy530rma.css","precedence":"next"}],["$","link","2",{"rel":"stylesheet","href":"/watawasaw-directions/app/_next/static/chunks/18kyfpgyoiz-y.css","precedence":"next"}],["$","script","script-0",{"src":"/watawasaw-directions/app/_next/static/chunks/2w765aad9lg7q.js","async":true}]],["$","html",null,{"lang":"ar","dir":"rtl","className":"_1bvvta_variable qOBwSG_variable","suppressHydrationWarning":true,"children":[["$","head",null,{"children":["$","script",null,{"dangerouslySetInnerHTML":{"__html":"(function(){try{var L=localStorage.getItem('ww-lang')||((navigator.language||'').indexOf('ar')===0?'ar':'en');document.documentElement.lang=L;document.documentElement.dir=L==='ar'?'rtl':'ltr';}catch(e){}try{var m=localStorage.getItem('ww-theme')||'auto';var d=function(){var h=new Date().getHours();return h>=6&&h<18;};var a=function(){var l=m==='light'||(m==='auto'&&d());document.documentElement.dataset.theme=l?'light':'dark';};a();}catch(e){}try{var s=location.pathname.split('/').filter(Boolean).pop();if(s!=='d'&&s!=='n'){var k=document.createElement('link');k.rel='preload';k.as='image';k.href='/watawasaw-directions/app/art/opening/open-'+(document.documentElement.dataset.theme==='dark'?'night':'day')+(matchMedia('(prefers-reduced-motion: reduce)').matches?'-end':'')+'.webp';document.head.appendChild(k);}}catch(e){}})();"}}]}],["$","body",null,{"children":[["$","$L3",null,{"parallelRouterKey":"children","template":["$","$L4",null,{}],"notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]]}],["$","$L5",null,{}]]}]]}]]}],"p":"$@6","v":null,"s":"$7"},"c":"$Q8"},"h":{"r":["$","$1","h",{"children":[null,["$","$L13",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"}],["$","meta","2",{"name":"theme-color","content":"#E9E5EF","media":"(prefers-color-scheme: light)"}],["$","meta","3",{"name":"theme-color","content":"#1B2535","media":"(prefers-color-scheme: dark)"}]]}],["$","$L15",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$f",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"وتواصوا"}],["$","meta","1",{"name":"description","content":"عزم لا يلين، وصحبة تعين. حلقة صغيرة، هدف واحد، ٣٠ يومًا، وشجرة تكبر بالتزامكم."}],["$","link","2",{"rel":"manifest","href":"/watawasaw-directions/app/manifest.webmanifest"}],["$","meta","3",{"name":"robots","content":"noindex, follow"}],["$","meta","4",{"name":"apple-mobile-web-app-capable","content":"yes"}],["$","meta","5",{"name":"mobile-web-app-capable","content":"yes"}],["$","meta","6",{"name":"apple-mobile-web-app-title","content":"وتواصوا"}],["$","meta","7",{"name":"apple-mobile-web-app-status-bar-style","content":"black-translucent"}],["$","meta","8",{"property":"og:title","content":"وتواصوا"}],["$","meta","9",{"property":"og:description","content":"عزم لا يلين، وصحبة تعين. حلقة صغيرة، هدف واحد، ٣٠ يومًا، وشجرة تكبر بالتزامكم."}],"$L16","$L17","$L18","$L19","$L1a","$L1b","$L1c","$L1d","$L1e","$L1f","$L20","$L21","$L22","$L23","$L24","$L25","$L26"]}]}],null]}],"$L27"]}],"p":"$@28","v":null,"s":"$7"}},"a":"$@29","u":"$@2a","b":"NgnKm619-_R8qxOLMaPCU"}
-2b:I[27201,["$2"],"IconMark"]
+0:{"t":{"t":{"s":"","h":80,"d":{"r":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/watawasaw-directions/app/_next/static/chunks/0dvo22o6a2jr6.css","precedence":"next"}],["$","link","1",{"rel":"stylesheet","href":"/watawasaw-directions/app/_next/static/chunks/2llskn5k90eja.css","precedence":"next"}],["$","link","2",{"rel":"stylesheet","href":"/watawasaw-directions/app/_next/static/chunks/27ehabemhxac8.css","precedence":"next"}],["$","script","script-0",{"src":"/watawasaw-directions/app/_next/static/chunks/2w765aad9lg7q.js","async":true}]],["$","html",null,{"lang":"ar","dir":"rtl","className":"_1bvvta_variable qOBwSG_variable","suppressHydrationWarning":true,"children":[["$","head",null,{"children":["$","script",null,{"dangerouslySetInnerHTML":{"__html":"(function(){try{var L=localStorage.getItem('ww-lang')||((navigator.language||'').indexOf('ar')===0?'ar':'en');document.documentElement.lang=L;document.documentElement.dir=L==='ar'?'rtl':'ltr';}catch(e){}try{var m=localStorage.getItem('ww-theme')||'auto';var d=function(){var h=new Date().getHours();return h>=6&&h<18;};var a=function(){var l=m==='light'||(m==='auto'&&d());document.documentElement.dataset.theme=l?'light':'dark';};a();}catch(e){}try{var s=location.pathname.split('/').filter(Boolean).pop();if(s!=='d'&&s!=='n'){var k=document.createElement('link');k.rel='preload';k.as='image';k.href='/watawasaw-directions/app/art/opening/open-'+(document.documentElement.dataset.theme==='dark'?'night':'day')+'.webp';document.head.appendChild(k);}}catch(e){}})();"}}]}],["$","body",null,{"children":[["$","$L3",null,{"parallelRouterKey":"children","template":["$","$L4",null,{}],"notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]]}],["$","div",null,{"className":"rot","role":"status","children":[["$","svg",null,{"viewBox":"0 0 48 48","fill":"none","stroke":"currentColor","strokeWidth":"2","strokeLinecap":"round","strokeLinejoin":"round","aria-hidden":true,"children":[["$","path",null,{"d":"M27.5 4.3A20 20 0 0 1 43.7 20.5"}],["$","path",null,{"d":"M39.9 17.3L43.7 20.5L46.2 16.2"}],["$","path",null,{"d":"M20.5 43.7A20 20 0 0 1 4.3 27.5"}],["$","path",null,{"d":"M8.1 30.7L4.3 27.5L1.8 31.8"}],["$","g",null,{"className":"rot-ph","children":[["$","rect",null,{"x":"17","y":"9","width":"14","height":"30","rx":"3"}],["$","path",null,{"d":"M22.5 34.5h3"}]]}]]}],["$","p",null,{"lang":"ar","dir":"rtl","className":"rot-ar","children":"أدِر الهاتف إلى الوضع العمودي"}],["$","p",null,{"lang":"en","dir":"ltr","className":"rot-en","children":"Turn your phone upright"}]]}],["$","$L5",null,{}]]}]]}]]}],"p":"$@6","v":null,"s":"$7"},"c":"$Q8"},"h":{"r":["$","$1","h",{"children":[null,["$","$L13",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"}],["$","meta","2",{"name":"theme-color","content":"#E9E5EF","media":"(prefers-color-scheme: light)"}],["$","meta","3",{"name":"theme-color","content":"#1B2535","media":"(prefers-color-scheme: dark)"}]]}],["$","$L15",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$f",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"وتواصوا"}],["$","meta","1",{"name":"description","content":"عزم لا يلين، وصحبة تعين. حلقة صغيرة، هدف واحد، ٣٠ يومًا، وشجرة تكبر بالتزامكم."}],"$L16","$L17","$L18","$L19","$L1a","$L1b","$L1c","$L1d","$L1e","$L1f","$L20","$L21","$L22","$L23","$L24","$L25","$L26","$L27","$L28","$L29","$L2a","$L2b","$L2c","$L2d","$L2e"]}]}],null]}],"$L2f"]}],"p":"$@30","v":null,"s":"$7"}},"a":"$@31","u":"$@32","b":"a7zMAbLtvKj0pzA2mqBSz"}
+33:I[27201,["$2"],"IconMark"]
 10:null
-16:["$","meta","10",{"property":"og:url","content":"https://iam0riarty.github.io/watawasaw-directions/app/d/"}]
-17:["$","meta","11",{"property":"og:site_name","content":"وتواصوا"}]
-18:["$","meta","12",{"property":"og:locale","content":"ar"}]
-19:["$","meta","13",{"property":"og:image","content":"https://iam0riarty.github.io/watawasaw-directions/app/og/day.jpg"}]
-1a:["$","meta","14",{"property":"og:image:type","content":"image/jpeg"}]
-1b:["$","meta","15",{"property":"og:image:width","content":"1200"}]
-1c:["$","meta","16",{"property":"og:image:height","content":"630"}]
-1d:["$","meta","17",{"property":"og:image:alt","content":"حلقة تقرأ حول شجرة في ضوء النهار، وبجانبها آيات سورة العصر"}]
-1e:["$","meta","18",{"property":"og:type","content":"website"}]
-1f:["$","meta","19",{"name":"twitter:card","content":"summary_large_image"}]
-20:["$","meta","20",{"name":"twitter:title","content":"وتواصوا"}]
-21:["$","meta","21",{"name":"twitter:description","content":"عزم لا يلين، وصحبة تعين. حلقة صغيرة، هدف واحد، ٣٠ يومًا، وشجرة تكبر بالتزامكم."}]
-22:["$","meta","22",{"name":"twitter:image","content":"https://iam0riarty.github.io/watawasaw-directions/app/og/day.jpg"}]
-23:["$","meta","23",{"name":"twitter:image:alt","content":"حلقة تقرأ حول شجرة في ضوء النهار، وبجانبها آيات سورة العصر"}]
-24:["$","link","24",{"rel":"icon","href":"/watawasaw-directions/app/icon-192.png","sizes":"192x192","type":"image/png"}]
-25:["$","link","25",{"rel":"apple-touch-icon","href":"/watawasaw-directions/app/apple-touch-icon.png"}]
-26:["$","$L2b","26",{}]
-27:["$","meta",null,{"name":"next-size-adjust","content":""}]
+16:["$","link","2",{"rel":"manifest","href":"/watawasaw-directions/app/manifest.webmanifest"}]
+17:["$","meta","3",{"name":"robots","content":"noindex, follow"}]
+18:["$","meta","4",{"name":"apple-mobile-web-app-capable","content":"yes"}]
+19:["$","meta","5",{"name":"mobile-web-app-capable","content":"yes"}]
+1a:["$","meta","6",{"name":"apple-mobile-web-app-title","content":"وتواصوا"}]
+1b:["$","meta","7",{"name":"apple-mobile-web-app-status-bar-style","content":"black-translucent"}]
+1c:["$","meta","8",{"property":"og:title","content":"وتواصوا"}]
+1d:["$","meta","9",{"property":"og:description","content":"عزم لا يلين، وصحبة تعين. حلقة صغيرة، هدف واحد، ٣٠ يومًا، وشجرة تكبر بالتزامكم."}]
+1e:["$","meta","10",{"property":"og:url","content":"https://iam0riarty.github.io/watawasaw-directions/app/d/"}]
+1f:["$","meta","11",{"property":"og:site_name","content":"وتواصوا"}]
+20:["$","meta","12",{"property":"og:locale","content":"ar"}]
+21:["$","meta","13",{"property":"og:image","content":"https://iam0riarty.github.io/watawasaw-directions/app/og/day.jpg"}]
+22:["$","meta","14",{"property":"og:image:type","content":"image/jpeg"}]
+23:["$","meta","15",{"property":"og:image:width","content":"1200"}]
+24:["$","meta","16",{"property":"og:image:height","content":"630"}]
+25:["$","meta","17",{"property":"og:image:alt","content":"حلقة تقرأ حول شجرة في ضوء النهار، وبجانبها آيات سورة العصر"}]
+26:["$","meta","18",{"property":"og:type","content":"website"}]
+27:["$","meta","19",{"name":"twitter:card","content":"summary_large_image"}]
+28:["$","meta","20",{"name":"twitter:title","content":"وتواصوا"}]
+29:["$","meta","21",{"name":"twitter:description","content":"عزم لا يلين، وصحبة تعين. حلقة صغيرة، هدف واحد، ٣٠ يومًا، وشجرة تكبر بالتزامكم."}]
+2a:["$","meta","22",{"name":"twitter:image","content":"https://iam0riarty.github.io/watawasaw-directions/app/og/day.jpg"}]
+2b:["$","meta","23",{"name":"twitter:image:alt","content":"حلقة تقرأ حول شجرة في ضوء النهار، وبجانبها آيات سورة العصر"}]
+2c:["$","link","24",{"rel":"icon","href":"/watawasaw-directions/app/icon-192.png","sizes":"192x192","type":"image/png"}]
+2d:["$","link","25",{"rel":"apple-touch-icon","href":"/watawasaw-directions/app/apple-touch-icon.png"}]
+2e:["$","$L33","26",{}]
+2f:["$","meta",null,{"name":"next-size-adjust","content":""}]
 7:300
-2a:true
+32:true
 7:C
-29:0
+31:0
 9:"$undefined"
 6:"$undefined"
-28:"$undefined"
+30:"$undefined"
 11:"$undefined"
