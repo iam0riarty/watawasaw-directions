@@ -816,6 +816,9 @@ function chunk(pieces: Span[], size: number): Span[][] {
   let cur: Span[] = [], acc = 0;
   for (const [a, b] of pieces) {
     if (b - a <= EPS) continue;
+    // قطعة السورة كلها لا تتّسع لها بقية الكتلة: تبدأ كتلةً جديدة، فلا تُقسم السورة إلا إن زادت وحدها على size
+    // (كانت الكتلة تُملأ بآيتين من أول سورةٍ وباقيها في كتلةٍ أخرى: هود ١ و٢ مع الرعد، لاحظه صاحب المشروع 2026-11-15)
+    if (cur.length && acc + (b - a) > size + EPS) { out.push(norm(cur)); cur = []; acc = 0; }
     const n = surahAt(a), xs: number[] = [];
     for (let k = firstEndAfter(n, a), ay = SURAHS[n - 1].ayas; k <= ay; k++) { const x = ayahEnd(n, k); if (x >= b - EPS) break; xs.push(x); }
     xs.push(b);
@@ -992,8 +995,26 @@ function baseOf(w0: Week | undefined, c: Ctx): { w: Week; moved: boolean } {
     const s0 = cur.new != null ? surahAt(cur.new) : orderOf(an, "new", p).anchor;
     for (const ch of chunk(recency(U, p, s0), p.recent)) w.q.push({ id: w.k++, s: ch });
   }
+  healSplits(w);
   capBlocks(w);
   return { w, moved };
+}
+/** إصلاح الكتل المحفوظة بالتقسيم القديم: قطعةٌ من سورةٍ أقل من وجهٍ في كتلة، وباقي السورة في كتلةٍ أخرى، تعود إلى كتلة سورتها الكبرى.
+    لا يُحذف شيء، والحبس يبقى على كتلته */
+function healSplits(w: Week) {
+  for (let n = 1; n <= LAST; n++) {
+    const S: Span[] = [surahSpan(n)];
+    const parts = w.q.map((b) => ({ b, f: faces(and(b.s, S)) })).filter((x) => x.f > EPS);
+    if (parts.length < 2) continue;
+    const main = parts.reduce((x, y) => (y.f > x.f ? y : x));
+    for (const x of parts) {
+      if (x === main || x.f >= 1 - EPS) continue;
+      const frag = and(x.b.s, S);
+      x.b.s = minus(x.b.s, frag);
+      main.b.s = norm([...main.b.s, ...frag]);
+    }
+  }
+  w.q = w.q.filter((b) => faces(b.s) > EPS);
 }
 /** ستون كتلةً على الأكثر: تُدمج الأقدم في التي تليها ولا تُحذف كتلة (وإلا عاد ما فيها حفظًا قريبًا بلا ترتيب) */
 function capBlocks(w: Week) {

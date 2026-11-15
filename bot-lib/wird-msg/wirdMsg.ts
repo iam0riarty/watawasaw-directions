@@ -117,12 +117,13 @@ const testPending = (d: Day) => !d.logged && shown(d).some((x) =>
     المطلع يُقَصّ هنا إلى HEAD_WORDS كلمة مهما أعاد المُزوِّد (نصّ الآية كاملًا عادةً)، ويُختَم بـ«…» إن قُصّ — فالمقتبس بين ﴿﴾
     قرآن، وبترُه بلا علامة يُقرأ آيةً تامّة */
 function segLine(g: Seg, times: Times, opening?: Opening): string {
-  let line = `• <a href="${tarteelUrl(g.surah, g.from)}">${esc(`${surahName(g.surah)} ${rangeWords(g)}`)}</a>، ${esc(timesText(times))}`;
+  let line = `• <a href="${tarteelUrl(g.surah, g.from)}">${esc(`${surahName(g.surah)} ${rangeWords(g)}`)}</a> — <b>${esc(timesText(times))}</b>`;
   const head = opening?.(g.surah, g.from)?.trim();
   if (head) {
     const words = head.split(/\s+/);
     const cut = words.slice(0, HEAD_WORDS).join(" ") + (words.length > HEAD_WORDS ? "…" : "");
-    line += `\n<i>﴿${esc(cut)}﴾</i>`;
+    // المطلع في اقتباسٍ بخطٍّ عاديّ: يبين منفصلًا عن سطر الرابط وعدد المرات (طلبه 2026-11-15: «الآيات في اقتباس عشان تبقى واضحة»)
+    line += `\n<blockquote>﴿${esc(cut)}﴾</blockquote>`;
   }
   return line;
 }
@@ -136,9 +137,9 @@ function itemsOf(x: DayPart, repeat: boolean, women: boolean, opening?: Opening)
     const lead = first ? leadOf(r.role, repeat, women) : null, note = last ? NOTE[r.role] : undefined;
     r.segs.forEach((g, j) => {
       const lines: string[] = [];
-      if (lead && j === 0) lines.push(`${esc(lead)}:`);
+      if (lead && j === 0) lines.push(`<b>${esc(lead)}:</b>`);
       lines.push(segLine(g, r.times, opening));
-      if (note && j === r.segs.length - 1) lines.push(esc(t(note)));
+      if (note && j === r.segs.length - 1) lines.push(`<i>${esc(t(note))}</i>`);
       out.push(lines.join("\n"));
     });
   });
@@ -157,7 +158,9 @@ function compose(d: Day, opening: Opening | undefined, women: boolean, max: numb
   const tail = ["", say(d.logged ? "tailLogged" : "tail", women)];
   if (testPending(d)) tail.push(say("testTail", women));
   const repeat = !!d.week?.repeat;
-  const title = (x: DayPart) => `<b>${esc(t(LABEL[x.k]))}</b> · ${esc(pages(x.pages))}`;
+  // تنسيقٌ يفصل المستويات (طلبه 2026-11-15 «يبقى الكلام واضح»): العنوان عريض ومقداره مائل، وقيادة المجموعة عريضة، وعدد المرات
+  // عريضٌ بعد شَرطة، ومعيار الاختبار مائل، ومطلع الآية في اقتباس
+  const title = (x: DayPart) => `<b>${esc(t(LABEL[x.k]))}</b> · <i>${esc(pages(x.pages))}</i>`;
   const cost = (s: string) => tgLen(s) + 1; // الحرف الزائد لفاصل السطر
   const items = parts.map((x) => itemsOf(x, repeat, women, opening));
   let used = [...out, ...tail].reduce((s, l) => s + cost(l), 0)
