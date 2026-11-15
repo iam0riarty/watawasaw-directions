@@ -86,7 +86,7 @@ export const rangeWords = (g: Pick<Seg, "from" | "to">) =>
 export const timesText = (x: Times) => t(TIMES[x]);
 
 /** سطر ما قُصّ من قسم: «…و١٢ مقطعًا آخر في التطبيق» — بلا فعلٍ كي لا تتعثّر المطابقة بين المفرد والجمع */
-const more = (n: number) => `…و${plural(n, "مقطع آخر", "مقطعان آخران", "مقاطع أخرى", "مقطعًا آخر", ["more segment", "more segments"])} في التطبيق`;
+const more = (n: number) => `${RLM}…و${plural(n, "مقطع آخر", "مقطعان آخران", "مقاطع أخرى", "مقطعًا آخر", ["more segment", "more segments"])} في التطبيق`;
 
 /** قيادة مجموعة الصفوف، أو null لما لا قيادة له */
 function leadOf(role: Role, repeat: boolean, women: boolean): string | null {
@@ -113,6 +113,12 @@ const shown = (d: Day): DayPart[] =>
 const testPending = (d: Day) => !d.logged && shown(d).some((x) =>
   (x.k === "new" && x.ask?.kind === "w" && x.ask.ok === undefined && !x.answered) || (!!x.exit && x.exit.ok === undefined));
 
+/** علامة اتجاه من اليمين (U+200F) أوّل كل سطر: تلغرام على الآيفون يحاذي السطر الذي يبدأ بمحايد («•» أو «﴿» أو وسم) إلى اليسار،
+    فتتبعثر الرسالة؛ العلامة تجعل كل سطرٍ يبدأ من اليمين (طلبه 2026-11-15 «التنسيق ما ينفعش يبقى من اليمين؟»).
+    سطر الاقتباس يأخذها داخل الوسم (segLine) لا قبله */
+const RLM = "\u200F";
+export const rtl = (s: string) => s.split("\n").map((l) => (l && !l.startsWith("<blockquote>") ? RLM + l : l)).join("\n");
+
 /** سطر المقطع: رابط ترتيل على أوّل آية فيه، ثم عدد مراته؛ وتحته مطلع الآية إن توفّر.
     المطلع يُقَصّ هنا إلى HEAD_WORDS كلمة مهما أعاد المُزوِّد (نصّ الآية كاملًا عادةً)، ويُختَم بـ«…» إن قُصّ — فالمقتبس بين ﴿﴾
     قرآن، وبترُه بلا علامة يُقرأ آيةً تامّة */
@@ -123,7 +129,7 @@ function segLine(g: Seg, times: Times, opening?: Opening): string {
     const words = head.split(/\s+/);
     const cut = words.slice(0, HEAD_WORDS).join(" ") + (words.length > HEAD_WORDS ? "…" : "");
     // المطلع في اقتباسٍ بخطٍّ عاديّ: يبين منفصلًا عن سطر الرابط وعدد المرات (طلبه 2026-11-15: «الآيات في اقتباس عشان تبقى واضحة»)
-    line += `\n<blockquote>﴿${esc(cut)}﴾</blockquote>`;
+    line += `\n<blockquote>${RLM}﴿${esc(cut)}﴾</blockquote>`;
   }
   return line;
 }
@@ -140,7 +146,7 @@ function itemsOf(x: DayPart, repeat: boolean, women: boolean, opening?: Opening)
       if (lead && j === 0) lines.push(`<b>${esc(lead)}:</b>`);
       lines.push(segLine(g, r.times, opening));
       if (note && j === r.segs.length - 1) lines.push(`<i>${esc(t(note))}</i>`);
-      out.push(lines.join("\n"));
+      out.push(rtl(lines.join("\n")));
     });
   });
   return out;
@@ -152,15 +158,15 @@ function itemsOf(x: DayPart, repeat: boolean, women: boolean, opening?: Opening)
 function compose(d: Day, opening: Opening | undefined, women: boolean, max: number): string {
   const parts = shown(d);
   // لم يبقَ إلا اختبارٌ سُجّلت نتيجته (ما كان معه أُطفئ، كاسترجاعٍ صار مقداره صفرًا): يُقال ذلك، لا إن الخريطة فارغة. ولا يُقال ما النتيجة
-  if (!parts.length && d.parts.some((x) => x.answered)) return [header(d), "", say("answered", women)].join("\n");
-  if (!parts.length) return [`<b>${esc(t("wrTitle"))}</b>`, "", say("none", women)].join("\n");
-  const out: string[] = [header(d), `<i>${esc(tg("wrRule1", women))}</i>`];
-  const tail = ["", say(d.logged ? "tailLogged" : "tail", women)];
-  if (testPending(d)) tail.push(say("testTail", women));
+  if (!parts.length && d.parts.some((x) => x.answered)) return rtl([header(d), "", say("answered", women)].join("\n"));
+  if (!parts.length) return rtl([`<b>${esc(t("wrTitle"))}</b>`, "", say("none", women)].join("\n"));
+  const out: string[] = [header(d), `<i>${esc(tg("wrRule1", women))}</i>`].map(rtl);
+  const tail = ["", rtl(say(d.logged ? "tailLogged" : "tail", women))];
+  if (testPending(d)) tail.push(rtl(say("testTail", women)));
   const repeat = !!d.week?.repeat;
   // تنسيقٌ يفصل المستويات (طلبه 2026-11-15 «يبقى الكلام واضح»): العنوان عريض ومقداره مائل، وقيادة المجموعة عريضة، وعدد المرات
   // عريضٌ بعد شَرطة، ومعيار الاختبار مائل، ومطلع الآية في اقتباس
-  const title = (x: DayPart) => `<b>${esc(t(LABEL[x.k]))}</b> · <i>${esc(pages(x.pages))}</i>`;
+  const title = (x: DayPart) => rtl(`<b>${esc(t(LABEL[x.k]))}</b> · <i>${esc(pages(x.pages))}</i>`);
   const cost = (s: string) => tgLen(s) + 1; // الحرف الزائد لفاصل السطر
   const items = parts.map((x) => itemsOf(x, repeat, women, opening));
   let used = [...out, ...tail].reduce((s, l) => s + cost(l), 0)
@@ -198,12 +204,12 @@ export function morningMessage(d: Day, opening?: Opening, women = false, max = T
 
 /** رسالة المساء لمن لم يسجّل: مقدار اليوم، وأن التسجيل في التطبيق، وأن الورد يبقى كما هو إن لم يُسمَّع، ورخصة اليوم الضيّق */
 export function eveningMessage(d: Day, women = false): string {
-  return [`<b>${say("eveTitle", women)}</b>`, say("eveBody", women).replace("{n}", esc(pages(d.total)))].join("\n");
+  return rtl([`<b>${say("eveTitle", women)}</b>`, say("eveBody", women).replace("{n}", esc(pages(d.total)))].join("\n"));
 }
 
 /** لمن لا صفّ له في wird_state: التطبيق هو الذي يرفع الورد إلى الخادم عند فتحه، والبوت لا يحسب */
 export function notSyncedMessage(women = false): string {
-  return [`<b>${say("nsTitle", women)}</b>`, say("nsBody", women)].join("\n");
+  return rtl([`<b>${say("nsTitle", women)}</b>`, say("nsBody", women)].join("\n"));
 }
 
 /** لوحة الزر الواحد: يفتح ورد اليوم في التطبيق (?tab=me تتولّاها الصفحة، و?open=wird تفتحها WirdMap).
