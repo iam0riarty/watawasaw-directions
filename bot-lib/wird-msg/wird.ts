@@ -995,9 +995,26 @@ function baseOf(w0: Week | undefined, c: Ctx): { w: Week; moved: boolean } {
     const s0 = cur.new != null ? surahAt(cur.new) : orderOf(an, "new", p).anchor;
     for (const ch of chunk(recency(U, p, s0), p.recent)) w.q.push({ id: w.k++, s: ch });
   }
+  resizeFree(w, p, state);
   healSplits(w);
   capBlocks(w);
   return { w, moved };
+}
+/** «حجم القريب» يسري في الحال (طلبه 2026-11-15): كتلةٌ أكبر من الحجم بأكثر من وجه تُقسَم بالحجم الجديد، والقِطع بترتيبها في الكتلة
+    (الأولى أقدم). لا تُمَسّ كتلةٌ لها في الأسبوع نتيجة أو اختبار: محبوسة (hold)، أو في خطوة اختبار خروج، أو اختبار اليوم في الخطّة.
+    ولا دمج حين يكبر الحجم: النافذة تتّسع وحدها بالحجم الأكبر. وهامش الوجه يمنع إعادة التقسيم يومًا بعد يوم إن ردّ healSplits فتاتًا */
+function resizeFree(w: Week, p: Prefs, state: State) {
+  const locked = new Set<number>();
+  for (const q of state.steps ?? []) if (q.k === "fix" && q.t === "x" && q.b != null) locked.add(q.b);
+  if (state.plan?.x) locked.add(state.plan.x.b);
+  const out: Block[] = [];
+  for (const b of w.q) {
+    if (b.hold || locked.has(b.id) || faces(b.s) <= p.recent + 1 + EPS) { out.push(b); continue; }
+    const parts = chunk(orderSpans(b.s, p), p.recent);
+    if (parts.length < 2) { out.push(b); continue; }
+    for (const ch of parts) out.push({ id: w.k++, s: ch });
+  }
+  w.q = out;
 }
 /** إصلاح الكتل المحفوظة بالتقسيم القديم: قطعةٌ من سورةٍ أقل من وجهٍ في كتلة، وباقي السورة في كتلةٍ أخرى، تعود إلى كتلة سورتها الكبرى.
     لا يُحذف شيء، والحبس يبقى على كتلته */
