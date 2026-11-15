@@ -128,8 +128,8 @@ function segLine(g: Seg, times: Times, opening?: Opening): string {
   if (head) {
     const words = head.split(/\s+/);
     const cut = words.slice(0, HEAD_WORDS).join(" ") + (words.length > HEAD_WORDS ? "…" : "");
-    // المطلع في اقتباسٍ بخطٍّ عاديّ: يبين منفصلًا عن سطر الرابط وعدد المرات (طلبه 2026-11-15: «الآيات في اقتباس عشان تبقى واضحة»)
-    line += `\n<blockquote>${RLM}﴿${esc(cut)}﴾</blockquote>`;
+    // المطلع سطرٌ مائل بين ﴿﴾ تحت سطره؛ كان في اقتباس (طلبه 2026-11-15) لكن تلغرام الآيفون يقطع الرسالة عند كل اقتباس ويلصق القطع يسارًا، فاختار هذا
+    line += `\n<i>﴿${esc(cut)}﴾</i>`;
   }
   return line;
 }
