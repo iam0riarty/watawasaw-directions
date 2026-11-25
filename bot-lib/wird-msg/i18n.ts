@@ -13,6 +13,13 @@ const D = {
   share: ["مشاركة", "Share"],
   next: ["التالي", "Next"],
   today: ["اليوم", "Today"],
+  rchOne: ["شجّعك", "cheered you on"],
+  rchOneF: ["شجّعتكِ", "cheered you on"],
+  rchTwo: ["شجّعاك", "cheered you on"],
+  rchTwoF: ["شجّعتاكِ", "cheered you on"],
+  rchMany: ["شجّعوك", "cheered you on"],
+  rchManyF: ["شجّعنكِ", "cheered you on"],
+  start: ["ابدأ", "Get started"],
   hzPg1: ["وجه", "face"],
   hzPg2: ["وجهان", "faces"],
   hzPgFew: ["أوجه", "faces"],
@@ -101,6 +108,12 @@ export function t(k: Key) { return D[k][lang === "ar" ? 0 : 1]; }
 export const num = (n: number) => n.toLocaleString(lang === "ar" ? "ar-EG" : "en-US");
 /** صيغة المؤنث إن وُجدت (المفتاح + F) وكانت الحلقة نسائية */
 export const tg = (k: Key, women: boolean) => women && (k + "F") in D ? t((k + "F") as Key) : t(k);
+/** صيغة لطرفين في «حلقة عائلة» (042): المخاطَب self والعضو المقصود other. إن اتّفقا فهي tg، وإلا المفتاح بلاحقة MF (رجل عن امرأة) أو FM */
+export const tg2 = (k: Key, self: boolean, other: boolean) => {
+  if (self === other) return tg(k, self);
+  const x = k + (self ? "FM" : "MF");
+  return x in D ? t(x as Key) : tg(k, self);
+};
 /** العدد مع معدوده: واحد، مثنى، ٣–١٠ جمع، ١١+ مفرد منصوب؛ وبالإنجليزية مفرد/جمع */
 export const plural = (n: number, one: string, two: string, few: string, many: string, en: [string, string]) =>
   lang === "ar" ? (n === 1 ? one : n === 2 ? two : n >= 3 && n <= 10 ? `${num(n)} ${few}` : `${num(n)} ${many}`) : `${n} ${n === 1 ? en[0] : en[1]}`;
@@ -111,6 +124,8 @@ export const daysN = (n: number) => plural(n, "يوم واحد", "يومان", "
 /** الأيام مجرورةً بعد حرف جرّ أو مضافٍ أو معطوفةً على مجرور («ويومين بعده»، «من دورة يومين»): يوم · يومين · ٣ أيام · ١١ يومًا،
     لا «٢ يومان» ولا «١ يوم». نصوصٌ حرفية لا مفاتيح: البوت (wirdMsg) يقرؤها ولا يُقصّ منها شيءٌ من قاموسه */
 export const daysGen = (n: number) => plural(n, "يوم", "يومين", "أيام", "يومًا", ["day", "days"]);
+/** العدد منصوبًا بعد فعل: «أتمّ يومًا واحدًا»، «أتمّ يومين»، «أتمّ ٣ أيام» */
+export const daysAcc = (n: number) => plural(n, "يومًا واحدًا", "يومين", "أيام", "يومًا", ["day", "days"]);
 /** المقاعد المتبقية بالمطابقة العددية: مكان واحد متبقٍ · مكانان · ٣ أماكن متبقية · ١١ مكانًا متبقيًا */
 export const seatsCountN = (n: number) => plural(n, "مقعد واحد", "مقعدان", "مقاعد", "مقعدًا", ["seat", "seats"]);
 export const seatsN = (n: number) => plural(n, "مكان واحد متبقٍ", "مكانان متبقيان", "أماكن متبقية", "مكانًا متبقيًا", ["seat left", "seats left"]);
@@ -126,6 +141,12 @@ export const treesPlantedWord = (n: number) => lang === "ar" ? (n === 2 ? "شج�
 export const plantedCountN = (n: number) => lang === "ar" && n <= 2 && n >= 1 ? (n === 1 ? "شجرة واحدة أزهرت" : "شجرتان أزهرتا") : `${num(n)} ${treesPlantedWord(n)}`;
 /** مجموع الإنجازات بمعدوده: إنجاز واحد · إنجازان · ٥ إنجازات · ٥٢٧٥ إنجازًا */
 export const doneTotalN = (n: number) => lang === "ar" ? plural(n, "إنجاز واحد", "إنجازان", "إنجازات", "إنجازًا", ["", ""]) : `${num(n)} ${n === 1 ? "check-in" : "check-ins"}`;
+/** «وصلك»: فعل التشجيع بعدد المشجّعين (واحد · اثنان · ثلاثة فأكثر) وبصيغة الطرفين: toWomen المخاطَب، fromWomen المشجّعون كلهم نساء (المختلط مذكّر) */
+export const cheeredYou = (n: number, toWomen: boolean, fromWomen: boolean) => tg2(n <= 1 ? "rchOne" : n === 2 ? "rchTwo" : "rchMany", toWomen, fromWomen);
+/** «وصلك»: الدعاء بعدده وإعرابه: دعاء · دعاءان · ٣ أدعية · ١١ دعاءً، ثم «بظهر الغيب». «دعاء» لا «دعوة»: «دعوة» تُقرأ في التطبيق دعوةَ انضمام */
+export const duasReached = (n: number) => lang === "ar" ? `${plural(n, "دعاء", "دعاءان", "أدعية", "دعاءً", ["", ""])} بظهر الغيب` : `${n} ${n === 1 ? "prayer" : "prayers"} for you`;
+/** فاصل الأسماء المعطوفة قبل الاسم i من n: «خالد وسعيد وعمر» · "Khalid, Saeed and Omar"؛ tail: بعد الأسماء «وغيرهما» فلا and قبل آخر اسم */
+export const nameSep = (i: number, n: number, tail = false) => i === 0 ? "" : lang === "ar" ? " و" : i === n - 1 && !tail ? " and " : ", ";
 /** الحلقات الساعية الآن: حلقة واحدة تسعى الآن · حلقتان تسعيان الآن · ٤ حلقات تسعى الآن · ١٢ حلقة تسعى الآن */
 export const strivingN = (n: number) => lang === "ar"
   ? (n === 1 ? "حلقة واحدة تسعى الآن" : n === 2 ? "حلقتان تسعيان الآن" : n >= 3 && n <= 10 ? `${num(n)} حلقات تسعى الآن` : `${num(n)} ${t("circlesStriving")}`)

@@ -843,19 +843,23 @@ export function planWeek(an: Analysis, prefs: Prefs, curNew: number | null): Spa
   const o = orderOf(an, "new", p);
   const at = locate(o, curNew) ?? firstPos(o);
   if (!at) return [];
-  const pos = ayahHead(o, at);
+  return splitFrom(o, ayahHead(o, at), W, NEW_DAYS);
+}
+/** من الموضع: W وجهًا تنتهي عند أقرب رأس آية، مقسومةً n أقساطًا عند رؤوس الآي الأقرب إلى i × L ÷ n (planWeek و«غيّر» سواءً) */
+function splitFrom(o: Order, pos: Pos, W: number, n: number): Span[][] {
+  if (n < 1 || W <= EPS) return [];
   const E = endsFrom(o, pos, W + 1.5, false, false);
   const end = nearest(E, W);
   if (!end) return [];
   const L = end.off, A = E.filter((e) => e.off <= L + 1e-12);
   const cuts: number[] = [];
-  if (A.length <= NEW_DAYS) for (let j = 0; j < A.length; j++) cuts.push(j);
+  if (A.length <= n) for (let j = 0; j < A.length; j++) cuts.push(j);
   else {
     let prev = -1;
-    for (let i = 1; i < NEW_DAYS; i++) {
-      const want = (i * L) / NEW_DAYS;
+    for (let i = 1; i < n; i++) {
+      const want = (i * L) / n;
       let best = -1;
-      for (let j = prev + 1; j <= A.length - 1 - (NEW_DAYS - i); j++) if (best < 0 || Math.abs(A[j].off - want) < Math.abs(A[best].off - want) - 1e-12) best = j;
+      for (let j = prev + 1; j <= A.length - 1 - (n - i); j++) if (best < 0 || Math.abs(A[j].off - want) < Math.abs(A[best].off - want) - 1e-12) best = j;
       cuts.push(best); prev = best;
     }
     cuts.push(A.length - 1);
@@ -869,6 +873,154 @@ export function planWeek(an: Analysis, prefs: Prefs, curNew: number | null): Spa
     from = to;
   }
   return out;
+}
+
+/* ===== «غيّر» جديد هذا الأسبوع (طلبه 2026-11-19، واعتمد العيّنة 2026-11-20) =====
+   طريقتان لا تجتمعان: بالأوجه (الكمية وحدها، والبداية من حيث وقف) وبالآيات (السورة ومن آية إلى آية بالضبط).
+   يسري في الحال على هذا الأسبوع: ما أتمّه من أقساطه يبقى كما هو محسوبًا، والأيام الباقية تُقسم الباقي بقاعدة planWeek نفسها.
+   لا يُكتب شيء في الخريطة: الأقساط التي لم تُحفظ فراغٌ كما كانت، والمحفوظة باقية. والتراجع يعيد الأقساط والمؤشّر كما كانا */
+export type NewSpec = { by: "faces"; weekly: number } | { by: "ayat"; surah: number; from: number; to: number };
+/** لماذا لا يُغيَّر الآن: لا أقساط هذا الأسبوع، أو أسبوعٌ معاد، أو انتهت أيام الحفظ، أو الكمية أقل مما أتمّه، أو الآيات محفوظةٌ كلها */
+export type NewWhy = "none" | "repeat" | "late" | "small" | "empty";
+/** حال جديد الأسبوع للكارت وشاشة «غيّر»: الأقساط، وكم منها أتمّه (used)، وكم يومًا بقي (slots)، ومن أين يبدأ الباقي */
+export type NewNow = { p: Span[][]; used: number; slots: number; segs: Seg[]; pages: number; can: NewWhy | null; start: { surah: number; aya: number } | null };
+export type NewPlan = { ok: true; p: Span[][]; used: number; segs: Seg[]; pages: number } | { ok: false; why: NewWhy };
+/** علامة التغيير للتراجع: الأسبوع الذي وقع فيه، وما كان (الأقساط والمؤشّر)، وما صار، وعدد خطوات الجديد فيه حينها */
+export type NewMark = { day: string; n: number; a: string; was: { p: Span[][]; cur: number | null }; now: Span[][]; cnt: number; g?: GapMark };
+/** «آياتٌ ناقصة في الوسط»: ما لم يُحفظ بين موضع البداية الطبيعي (بعد آخر قسطٍ أتمّه، وإلا أول أقساط الأسبوع) وأول ما اختاره بالآيات،
+    في السورة نفسها. from أول آيةٍ منه (لـ«أضِفها»). اعتمد عيّنتها 2026-11-20 */
+export type NewGap = { surah: number; from: number; spans: Span[]; segs: Seg[]; pages: number };
+/** حالها كما يختار: تدخل الجديد، أو تُصبغ قريبًا أو قديمًا أو منسيًّا، أو تبقى لم تُحفظ */
+export type GapPick = "add" | "new_fix" | "reviewing" | "old_review" | "none";
+/** صبغها في الخريطة للتراجع: المدَيات وصورة سورها قبله */
+export type GapMark = { ranges: PaintRange[]; painted: Painted[] };
+
+/** أتمّ قسط اليوم (لا نتيجة اختبار) */
+const newDoneToday = (d: Day) => { const x = d.parts.find((q) => q.k === "new"); return !!x?.step && x.step.t !== "w"; };
+const weekSegs = (p: Span[][], pf: Prefs) => toSegs(orderSpans(flat(p), pf));
+/** أقساطٌ متساوية؛ tol لما يمرّ بالصبغ (كسور السورة تعود إلى المحور بفرقٍ دون جزءٍ من ألف وجه) */
+const sameP = (x: Span[][], y: Span[][], tol = EPS) => x.length === y.length && x.every((s, i) => s.length === y[i].length && s.every(([a, b], j) => Math.abs(a - y[i][j][0]) <= tol && Math.abs(b - y[i][j][1]) <= tol));
+/** قطع الترتيب ناقصًا منها K، بترتيبها */
+function orderMinus(o: Order, K: Span[]): Order {
+  const pieces: Piece[] = [];
+  for (const q of o.pieces) for (const [a, b] of minus([[q.a, q.b]], K)) if (b - a > EPS) pieces.push({ n: q.n, a, b });
+  return { ...o, pieces };
+}
+export function newNow(d: Day): NewNow {
+  const w = d.wk, m = w.p.length, pos = d.week?.pos ?? 1;
+  const used = Math.min(NEW_DAYS, pos - 1 + (newDoneToday(d) ? 1 : 0)), slots = NEW_DAYS - used;
+  // يومٌ مضى بلا قسط (أقساطٌ أقل من خمسة) يجعل قسط اليوم غير قسط موضعه: لا يُعاد التقسيم حينها
+  const can: NewWhy | null = !m ? "none" : w.r ? "repeat" : pos >= 6 || slots < 1 || used > m ? "late" : null;
+  let start: NewNow["start"] = null;
+  const nx = w.p[used];
+  if (nx && nx.length) { const g = toSegs(orderSpans(nx, d.prefs))[0]; if (g) start = { surah: g.surah, aya: g.from }; }
+  return { p: w.p, used: Math.min(used, m), slots, segs: weekSegs(w.p, d.prefs), pages: faces(flat(w.p)), can, start };
+}
+/** الأقساط الجديدة لـ spec دون كتابة شيء: المعاينة ونافذة التأكيد والتطبيق من الحساب نفسه */
+export function newPlan(map: HifzMapT, bands: BandsMapT | undefined, d: Day, spec: NewSpec): NewPlan {
+  const nw = newNow(d);
+  if (nw.can) return { ok: false, why: nw.can };
+  const w = d.wk, pf = d.prefs, used = nw.used, keep = w.p.slice(0, used), K = flat(keep);
+  const an = analyze(map, bands);
+  let rest: Span[][];
+  if (spec.by === "faces") {
+    const R = spec.weekly - faces(K);
+    if (R < 0.1) return { ok: false, why: "small" };
+    const o = orderMinus(orderOf(an, "new", pf), K);
+    // من حيث وقف: بعد آخر قسطٍ أتمّه، وإلا من أول أقساط الأسبوع
+    const last = keep.length ? orderSpans(keep[keep.length - 1], pf) : [];
+    const x0 = last.length ? last[last.length - 1][1] : orderSpans(w.p[0], pf)[0]?.[0] ?? null;
+    const at = locate(o, x0);
+    if (!at) return { ok: false, why: "empty" };
+    rest = splitFrom(o, ayahHead(o, at), R, nw.slots);
+  } else {
+    const n = clampSurah(spec.surah), ay = SURAHS[n - 1].ayas;
+    const a = Math.max(1, Math.min(ay, Math.round(spec.from))), b = Math.max(a, Math.min(ay, Math.round(spec.to)));
+    const lo = a <= 1 ? surahSpan(n)[0] : ayahEnd(n, a - 1), hi = ayahEnd(n, b);
+    // الآيات المحفوظة من قبل لا تدخل الجديد، ولا ما أتمّه هذا الأسبوع
+    const R = minus(and([[lo, hi]], an.pieces.new.map(toSpan)), K);
+    if (faces(R) <= HAS) return { ok: false, why: "empty" };
+    const o: Order = { pieces: cutsOf(R).map((c) => ({ n: c.n, a: c.lo, b: c.hi })), anchor: n, dir: 1, fromMissing: false };
+    rest = splitFrom(o, { i: 0, x: o.pieces[0].a }, faces(R), nw.slots);
+  }
+  if (!rest.length) return { ok: false, why: "empty" };
+  // المدى نفسه (٣ أوجه وهي ٣ أوجه): تبقى الأقساط كما هي، فلا تتحرّك حدودها بإعادة القسمة على أيامٍ أقل
+  if (sameP([flat(rest)], [flat(w.p.slice(used))], 1e-3)) rest = w.p.slice(used).map((x) => x.map(cp));
+  const p = [...keep.map((x) => x.map(cp)), ...rest];
+  return { ok: true, p, used, segs: weekSegs(p, pf), pages: faces(flat(p)) };
+}
+/** يكتب أقساطًا للأسبوع الجاري: المؤشّر على أول ما لم يُحفظ، وخطّة اليوم (إن ثُبّتت ولم يُحفظ جديدها) تأخذ قسطها الجديد،
+    وصورة الأسبوع قبل اليوم (wkAt) تأخذ الأقساط نفسها، فلا يمحو التغييرَ إلغاءُ أفعال اليوم */
+function setWeekP(map: HifzMapT, bands: BandsMapT | undefined, d: Day, state0: State, p: Span[][], used: number, cur?: number | null): State {
+  const state = upgraded(state0, d.day), day = d.day, pf = d.prefs;
+  const wk = cloneWeek(d.wk);
+  wk.p = p.map((x) => x.map(cp));
+  const nx = p[used];
+  const curNew = cur !== undefined ? cur : nx && nx.length ? orderSpans(nx, pf)[0][0] : state.cur.new;
+  const curs: Cursors = { ...state.cur, new: curNew };
+  const wkAt = { ...(state.wkAt ?? {}) };
+  if (hasOwn(wkAt, day)) { const was = wkAt[day]; if (was && was.n === wk.n && was.a === wk.a) { const y = cloneWeek(was); y.p = wk.p.map((x) => x.map(cp)); wkAt[day] = y; } }
+  const plan = planOf(state, day) ? clonePlan(state.plan!) : state.plan;
+  if (plan && plan.day === day && plan.cur && plan.next && plan.taken && plan.today && !newDoneToday(d)) {
+    const d2 = dayOf(map, bands, pf, mk(curs, state.log, state.steps, undefined, wk, wkAt), day);
+    const x = d2.parts.find((q) => q.k === "new"), r = x && mainOf(x);
+    plan.cur.new = curNew;
+    plan.next.new = d2.next.new;
+    plan.taken.new = r ? r.spans.map(cp) : [];
+    plan.today.new = x ? x.pages : 0;
+    if (x && !plan.need.includes("new")) plan.need = TRACKS.filter((k) => k === "new" || plan.need.includes(k));
+  }
+  return syncDay(mk(curs, state.log, state.steps, plan, wk, wkAt), day);
+}
+const newCount = (state: State, w: Week) => (state.steps ?? []).filter((q) => q.k === "new" && q.day > w.a).length;
+/** «تأكيد»: الحالة الجديدة وعلامة التراجع. خطّةٌ لا تصلح ⇒ null */
+export function newApply(map: HifzMapT, bands: BandsMapT | undefined, d: Day, state: State, plan: NewPlan): { state: State; mark: NewMark } | null {
+  if (!plan.ok || newNow(d).can) return null;
+  const ns = setWeekP(map, bands, d, state, plan.p, plan.used);
+  const mark: NewMark = { day: d.day, n: d.wk.n, a: d.wk.a, was: { p: d.wk.p.map((x) => x.map(cp)), cur: state.cur.new }, now: plan.p.map((x) => x.map(cp)), cnt: newCount(ns, d.wk) };
+  return { state: ns, mark };
+}
+/** أيصلح التراجع عن التغيير؟ true: الأسبوع نفسه وأقساطه كما تركها ولم يُحفظ منه قسطٌ بعده. "step": أتمّ قسطًا بعده (يتراجع عنه أولًا).
+    "gone": تغيّر الأسبوع أو أقساطه (أسبوعٌ جديد، أو تغييرٌ آخر، أو جهازٌ آخر) */
+export function newBackable(d: Day, state: State, m: NewMark): true | "step" | "gone" {
+  const w = d.wk;
+  if (w.n !== m.n || w.a !== m.a || !sameP(w.p, m.now)) return "gone";
+  return newCount(state, w) === m.cnt ? true : "step";
+}
+/** التراجع: الأقساط والمؤشّر كما كانا قبل التغيير */
+export function newBack(map: HifzMapT, bands: BandsMapT | undefined, d: Day, state: State, m: NewMark): State | null {
+  if (newBackable(d, state, m) !== true) return null;
+  return setWeekP(map, bands, d, state, m.was.p, newNow(d).used, m.was.cur);
+}
+/** الآيات الناقصة لاختيارٍ بالآيات (null: لا فجوة، أو طريقة الأوجه وبدايتها تلقائية بلا فجوة) */
+export function newGap(map: HifzMapT, bands: BandsMapT | undefined, d: Day, spec: NewSpec): NewGap | null {
+  if (spec.by !== "ayat") return null;
+  const nw = newNow(d);
+  if (nw.can) return null;
+  const w = d.wk, pf = d.prefs, keep = w.p.slice(0, nw.used), K = flat(keep);
+  const last = keep.length ? orderSpans(keep[keep.length - 1], pf) : [];
+  const x0 = last.length ? last[last.length - 1][1] : orderSpans(w.p[0], pf)[0]?.[0] ?? null;
+  if (x0 == null) return null;
+  const n = clampSurah(spec.surah), ay = SURAHS[n - 1].ayas;
+  const a = Math.max(1, Math.min(ay, Math.round(spec.from)));
+  const s0 = surahSpan(n)[0], lo = a <= 1 ? s0 : ayahEnd(n, a - 1);
+  if (x0 < s0 - EPS || x0 >= lo - EPS) return null;
+  const G = minus(and([[x0, lo]], analyze(map, bands).pieces.new.map(toSpan)), K);
+  if (faces(G) <= HAS) return null;
+  const segs = toSegs(G);
+  if (!segs.length) return null;
+  return { surah: n, from: segs[0].from, spans: G, segs, pages: faces(G) };
+}
+/** صبغ الآيات الناقصة بحالةٍ اختارها: مدخلات الخريطة، وعلامة التراجع */
+export function gapPaint(map: HifzMapT, bands: BandsMapT | undefined, g: NewGap, status: RowPaint["status"]): { entries: Entry[]; mark: GapMark } {
+  const ranges: PaintRange[] = cutsOf(g.spans).map((c) => [c.n, c.f0, c.f1]);
+  const painted: Painted[] = [...new Set(ranges.map(([n]) => n))].map((n) => ({ surah: n, before: piecesOf(n, map, bands).map((b) => [...b] as Band) }));
+  return { entries: paintEntries(map, bands, [{ ranges, status }]), mark: { ranges, painted } };
+}
+/** عكسه: ما في مدَياته يعود كما كان، وما خارجها يبقى */
+export function gapUnpaint(map: HifzMapT, bands: BandsMapT | undefined, m: GapMark): Entry[] {
+  const q = { day: "", k: "new", prev: null, next: null, spans: [], pages: 0, ranges: m.ranges, painted: m.painted } as Step;
+  return unpaintEntries([q], map, bands);
 }
 function cloneWeek(w: Week): Week {
   const y: Week = {
@@ -898,10 +1050,25 @@ function planOf(state: State, day: string): Plan | undefined {
   const pl = state.plan;
   return pl && pl.day === day && pl.cur && pl.next && pl.taken && pl.today && state.wk ? pl : undefined;
 }
-/** الأيام المحسوبة من الأسبوع قبل اليوم: المحفوظة بعد بدايته، بلا الضيّقة. التقويم لا يدخل */
-function counted(log: Record<string, LogEntry>, w: Week, day: string): string[] {
-  const z = new Set(w.z ?? []);
-  return Object.keys(log).filter((d) => isYmd(d) && d > w.a && d < day && !z.has(d)).sort();
+/** الأيام المحسوبة من الأسبوع قبل اليوم: المحفوظة بعد بدايته، بلا الضيّقة. التقويم لا يدخل.
+    ويُحسب معها يومٌ من الأيام الستة الأولى لم يُحفظ وقد أتمّ فيه قسمَ الجديد بما يطلبه موضعه (قسطُ الموضع، أو صفّ الأسبوع):
+    وفي أسبوعٍ بلا أقساط جديد يُحسب يومٌ أتمّ فيه مراجعة القريب. موضع الأسبوع يتبع الجديد، وإلا وقف الأسبوع على يومٍ واحد ما دام قسمٌ آخر (الاسترجاع مثلًا) لم يُضغط، وعاد القسط نفسه كل يوم.
+    وخطوةٌ أعادت قسطًا غير قسط موضعها (أيامٌ وقف فيها الأسبوع قبل هذا) لا تُحسب، فلا يُقفز إلى أقساطٍ لم تُحفظ.
+    واليوم السابع كما كان: لا يُطوى الأسبوع إلا بيومٍ محفوظ من يوم النتيجة (W27) */
+function counted(state: State, w: Week, day: string): string[] {
+  const z = new Set(w.z ?? []), log = state.log, inWeek = (d: string) => isYmd(d) && d > w.a && d < day && !z.has(d);
+  const newOn = new Map<string, Step[]>();
+  for (const q of state.steps ?? []) if (q.k === "new" && !q.t && inWeek(q.day) && faces(q.spans) > HAS) newOn.set(q.day, [...(newOn.get(q.day) ?? []), q]);
+  // أسبوعٌ بلا جديد: مراجعة القريب وحدها تقدّم اليوم، فلا يقف أسبوعٌ ما دام قسمٌ آخر لم يُضغط
+  const fixOn = new Set(w.p.length ? [] : (state.steps ?? []).filter((q) => q.k === "fix" && !q.t && inWeek(q.day)).map((q) => q.day));
+  const days = [...new Set([...Object.keys(log).filter(inWeek), ...newOn.keys(), ...fixOn])].sort();
+  const out: string[] = [];
+  for (const d of days) {
+    const pos = out.length + 1, portion = pos <= NEW_DAYS ? w.p[pos - 1] : undefined;
+    const fits = (q: Step) => pos <= 6 && (!portion || (faces(minus(portion, q.spans)) <= HAS && faces(minus(q.spans, portion)) <= HAS));
+    if (log[d] || fixOn.has(d) || newOn.get(d)?.some(fits)) out.push(d);
+  }
+  return out;
 }
 /** ما استُرجع بعد after حتى upTo: ما قُرئ وما صُبغ معًا (الصبغ بالآيات قد يجاوز المقروء بفتات آية، فلا يبقى الفتات خارجهما كتلةً وحده) */
 const restoredIn = (state: State, after: string, upTo: string): Span[] =>
@@ -954,7 +1121,7 @@ function baseOf(w0: Week | undefined, c: Ctx): { w: Week; moved: boolean } {
   const oldOf = (hi: string) => minus(and(or(w.c ?? [], oldNew(state, w.a, hi)), st.NF), flat(w.p));
   const carry = (x: Span[]) => { if (faces(x) > HAS) w.c = x; else delete w.c; };
   for (let guard = 0; guard < 60; guard++) {
-    const C = counted(state.log, w, day);
+    const C = counted(state, w, day);
     if (C.length < 7) break;
     let T = C[6];
     // أسبوعٌ فيه جديد (أقساطه، أو ما حفظه جهازٌ قديم فيه): لا ينتهي بلا نتيجة؛ وينتهي عند أول يومٍ محسوب من يوم النتيجة، لا قبل السابع (B4)
@@ -980,7 +1147,7 @@ function baseOf(w0: Week | undefined, c: Ctx): { w: Week; moved: boolean } {
   if (w0 && !w.p.length && p.weekly > EPS) {
     const np = planWeek(an, p, cur.new);
     if (np.length) {
-      const C = counted(state.log, w, day);
+      const C = counted(state, w, day);
       if (C.length) { const T = C[C.length - 1], X = oldOf(T); enter(restored(T)); turn(T); carry(X); }
       w.p = np; delete w.r; moved = true;
     }
@@ -1108,7 +1275,7 @@ export function dayOf(map: HifzMapT, bands: BandsMapT | undefined, prefs: Prefs,
   let w: Week, frozen: boolean;
   if (plan) { w = state.wk!; frozen = true; }
   else { const b = baseOf(state.wk, { an, p, st, state, day }); w = b.w; frozen = !b.moved; }
-  const pos = Math.min(7, counted(state.log, w, day).length + 1);
+  const pos = Math.min(7, counted(state, w, day).length + 1);
   const X = extraOf(w, state, day, st), E = excl(w, state, day, st);
   const present = (k: Track) => !plan || plan.today![k] > HAS || mine.some((q) => q.k === k);
   const next: Cursors = { ...state.cur };
