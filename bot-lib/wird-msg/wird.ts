@@ -1224,7 +1224,14 @@ function shareOf(o: Order, pool: number, rate: number, cur: number | null): { kk
   let pos = locate(o, cur) ?? p0, at = offsetOf(o, pos);
   if (at >= pool - EPS) { pos = p0; at = 0; }
   const kk = Math.floor((at + rate / 2) / rate) + 1, target = Math.min(pool, kk * rate);
-  const end = nearest(endsFrom(o, p0, pool + 1, false, false).filter((e) => e.off > at + EPS), target);
+  // السورة التي لا تزيد وحدها على نصيب اليوم لا تُقسم: ينتهي النصيب على آخرها لا وسطها، كما في chunk
+  // (كان نصيب جزء عمّ يبدأ بآخر آيةٍ من الفجر وينتهي بأربع من العلق، لاحظه صاحب المشروع 2026-11-26)
+  const whole = (e: End) => { const n = surahAt(e.x - EPS), [s0, s1] = surahSpan(n); return e.x >= s1 - EPS || s1 - s0 > rate + EPS; };
+  // ولا يترك من قطعته ذيلًا أقل من نصف وجه (آيةً أو آيتين) يصير للغد صفًّا وحده، مثل «هود ٤٢-٤٢» قبل الرعد
+  const TAIL = 0.5;
+  const left = (x: number) => { const q = o.pieces.find((q) => x > q.a + EPS && x <= q.b + EPS); return q ? q.b - x : 0; };
+  const es = endsFrom(o, p0, pool + 1, false, false);
+  const end = nearest(es.filter((e) => e.off > at + EPS && whole(e) && !(left(e.x) > EPS && left(e.x) < TAIL)), target);
   const endOff = !end || target >= pool - EPS || pool - end.off < EPS ? pool : end.off;
   const t = takeFrom(o, pos, endOff - at, true);
   return { kk, spans: t.spans.map(toSpan), next: t.end.x };
@@ -1236,7 +1243,9 @@ function restoreShare(o: Order, pool: number, want: number, cur: number | null):
   if (want >= pool - EPS) t = takeFrom(o, pos, pool, true);
   else {
     const whole = Math.abs(want - Math.round(want)) < EPS;
-    const end = nearest(endsFrom(o, pos, want + 1.5, true, whole).filter((e) => e.off > EPS), want);
+    // والسورة التي لا تزيد وحدها على المقدار لا تُقسم هنا أيضًا (كما في shareOf)
+    const short = (e: End) => { const n = surahAt(e.x - EPS), [s0, s1] = surahSpan(n); return e.x < s1 - EPS && s1 - s0 <= want + EPS; };
+    const end = nearest(endsFrom(o, pos, want + 1.5, true, whole).filter((e) => e.off > EPS && !short(e)), want);
     t = takeFrom(o, pos, end ? end.off : want, true);
   }
   return { spans: t.spans.map(toSpan), next: t.end.x };
