@@ -1221,7 +1221,11 @@ function mainOf(x: DayPart): Row | undefined {
     وآخر يومٍ ينتهي بآخر المحفوظ */
 function shareOf(o: Order, pool: number, rate: number, cur: number | null): { kk: number; spans: Span[]; next: number } {
   const p0 = firstPos(o)!;
-  let pos = locate(o, cur) ?? p0, at = offsetOf(o, pos);
+  let pos = locate(o, cur) ?? p0;
+  // مؤشّرٌ وسط سورةٍ قصيرة (تركه تقسيمٌ قبل القاعدة التي تحتها، مثل «العلق من ٥» بعد نصيبٍ انتهى بأربعٍ منها): يرجع إلى أولها فتُقرأ كلها
+  { const q = o.pieces[pos.i], [s0, s1] = surahSpan(q.n);
+    if (pos.x > q.a + EPS && q.a <= s0 + EPS && s1 - s0 <= rate + EPS) pos = { i: pos.i, x: q.a }; }
+  let at = offsetOf(o, pos);
   if (at >= pool - EPS) { pos = p0; at = 0; }
   const kk = Math.floor((at + rate / 2) / rate) + 1, target = Math.min(pool, kk * rate);
   // السورة التي لا تزيد وحدها على نصيب اليوم لا تُقسم: ينتهي النصيب على آخرها لا وسطها، كما في chunk
