@@ -4,4 +4,4 @@
 :HL["/watawasaw-directions/app/_next/static/chunks/128u1kkh0sf75.css","style"]
 2:[["children",{"s":"__PAGE__","h":160}]]
 1:[["children",{"s":"/_not-found","h":96,"c":"$Q2"}]]
-0:{"b":"UfmtfaIV-qWziDBN6dRvj","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"mHo8HrHVLGYsGNCj-DVtv","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
